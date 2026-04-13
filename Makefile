@@ -11,7 +11,6 @@ migrate:
 	cd backend && mvn flyway:migrate -Dspring.profiles.active=local
 
 clean:
-      docker compose down -v
-
+	docker compose down -v
 
 .PHONY: dev test migrate clean

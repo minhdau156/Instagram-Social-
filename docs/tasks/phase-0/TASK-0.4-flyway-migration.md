@@ -21,7 +21,7 @@ Integrate Flyway into the Spring Boot backend and seed the database schema from 
 
 ## Checklist
 
-- [ ] Add Flyway dependencies to `backend/pom.xml` (if not already present):
+- [x] Add Flyway dependencies to `backend/pom.xml` (if not already present):
   ```xml
   <dependency>
       <groupId>org.flywaydb</groupId>
@@ -32,11 +32,11 @@ Integrate Flyway into the Spring Boot backend and seed the database schema from 
       <artifactId>flyway-database-postgresql</artifactId>
   </dependency>
   ```
-- [ ] Create directory `backend/src/main/resources/db/migration/`
-- [ ] Copy `docs/database/schema.sql` → `backend/src/main/resources/db/migration/V1__initial_schema.sql`
+- [x] Create directory `backend/src/main/resources/db/migration/`
+- [x] Copy `docs/database/schema.sql` → `backend/src/main/resources/db/migration/V1__initial_schema.sql`
   - Review the copy for any psql-client-only syntax (e.g., `\c`, `\i`) that must be removed
   - Ensure all `CREATE TABLE` statements include `IF NOT EXISTS` or rely on Flyway's versioned guarantee
-- [ ] Ensure `spring.flyway.enabled=true` in `application.yml`
-- [ ] Start the application on `local` profile and verify: `mvn spring-boot:run -Dspring.profiles.active=local`
-- [ ] Confirm migration success in logs: `Successfully applied 1 migration to schema "public"`
-- [ ] Run `mvn flyway:migrate` via the Makefile target and confirm it is a no-op on second run
+- [x] Ensure `spring.flyway.enabled=true` in `application.yml`
+- [x] Start the application on `local` profile and verify: `mvn spring-boot:run -Dspring.profiles.active=local`
+- [x] Confirm migration success in logs: `Successfully applied 1 migration to schema "public"`
+- [x] Run `mvn flyway:migrate` via the Makefile target and confirm it is a no-op on second run
