@@ -22,11 +22,11 @@ Set up the local development infrastructure using Docker Compose. This task prov
 
 ## Checklist
 
-- [ ] Create `docker-compose.yml` at project root
-  - [ ] Service `postgres`: image `postgres:15`, port `5432`, named volume `postgres_data`, env vars `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, healthcheck using `pg_isready`
-  - [ ] Service `minio`: image `minio/minio`, ports `9000` and `9001`, named volume `minio_data`, env vars `MINIO_ROOT_USER` / `MINIO_ROOT_PASSWORD`, command `server /data --console-address ":9001"`, healthcheck via `curl -f http://localhost:9000/minio/health/live`
-  - [ ] Service `redis`: image `redis:7-alpine`, port `6379`, healthcheck via `redis-cli ping`
-- [ ] Create `.env.example` at project root with all required variables:
+- [x] Create `docker-compose.yml` at project root
+  - [x] Service `postgres`: image `postgres:15`, port `5432`, named volume `postgres_data`, env vars `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, healthcheck using `pg_isready`
+  - [x] Service `minio`: image `minio/minio`, ports `9000` and `9001`, named volume `minio_data`, env vars `MINIO_ROOT_USER` / `MINIO_ROOT_PASSWORD`, command `server /data --console-address ":9001"`, healthcheck via `curl -f http://localhost:9000/minio/health/live`
+  - [x] Service `redis`: image `redis:7-alpine`, port `6379`, healthcheck via `redis-cli ping`
+- [x] Create `.env.example` at project root with all required variables:
   ```
   POSTGRES_DB=instagram
   POSTGRES_USER=instagram
@@ -35,5 +35,5 @@ Set up the local development infrastructure using Docker Compose. This task prov
   MINIO_ROOT_PASSWORD=minioadmin
   REDIS_URL=redis://localhost:6379
   ```
-- [ ] Verify all services start cleanly: `docker compose up -d`
-- [ ] Verify all health checks pass: `docker compose ps` shows `(healthy)` for all services
+- [x] Verify all services start cleanly: `docker compose up -d`
+- [x] Verify all health checks pass: `docker compose ps` shows `(healthy)` for all services
