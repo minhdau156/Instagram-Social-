@@ -11,11 +11,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
       timeout: 5s
       retries: 5
-    
+
   minio:
     image: minio/minio
     restart: always
@@ -29,18 +29,18 @@ services:
     volumes:
       - minio_data:/data
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:9000/minio/health/live"]
+      test: [ "CMD-SHELL", "curl -f http://localhost:9000/minio/health/live" ]
       interval: 5s
       timeout: 5s
       retries: 5
-    
+
   redis:
     image: redis:7-alpine
     restart: always
     ports:
       - "6379:6379"
     healthcheck:
-      test: ["CMD-SHELL", "redis-cli ping"]
+      test: [ "CMD-SHELL", "redis-cli ping" ]
       interval: 5s
       timeout: 5s
       retries: 5

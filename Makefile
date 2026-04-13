@@ -13,3 +13,5 @@ migrate:
 clean:
       docker compose down -v
 
+
+.PHONY: dev test migrate clean

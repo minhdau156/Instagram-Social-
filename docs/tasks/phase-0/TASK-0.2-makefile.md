@@ -20,29 +20,29 @@ Create a `Makefile` at the project root to provide short, memorable commands for
 
 ## Checklist
 
-- [ ] Create `Makefile` at project root
-- [ ] Add `dev` target:
+- [x] Create `Makefile` at project root
+- [x] Add `dev` target:
   ```makefile
   dev:
       docker compose up -d
       cd backend && mvn spring-boot:run &
       cd frontend && npm run dev
   ```
-- [ ] Add `test` target:
+- [x] Add `test` target:
   ```makefile
   test:
       cd backend && mvn test
       cd frontend && npm run test
   ```
-- [ ] Add `migrate` target:
+- [x] Add `migrate` target:
   ```makefile
   migrate:
       cd backend && mvn flyway:migrate -Dspring.profiles.active=local
   ```
-- [ ] Add `clean` target:
+- [x] Add `clean` target:
   ```makefile
   clean:
       docker compose down -v
   ```
-- [ ] Add `.PHONY` declaration for all targets to prevent conflicts with files of the same name
-- [ ] Verify each target runs without error on a clean checkout
+- [x] Add `.PHONY` declaration for all targets to prevent conflicts with files of the same name
+- [x] Verify each target runs without error on a clean checkout
