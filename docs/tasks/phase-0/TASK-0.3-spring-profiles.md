@@ -21,12 +21,12 @@ Configure Spring Boot's `application.yml` profile system so the backend can run 
 
 ## Checklist
 
-- [ ] Create `backend/src/main/resources/application.yml` with shared config:
+- [x] Create `backend/src/main/resources/application.yml` with shared config:
   - `spring.application.name: instagram`
   - `spring.jpa.hibernate.ddl-auto: validate`
   - `spring.flyway.enabled: true`
   - OpenAPI / Swagger base info
-- [ ] Create `backend/src/main/resources/application-local.yml`:
+- [x] Create `backend/src/main/resources/application-local.yml`:
   - `spring.datasource.url: jdbc:postgresql://localhost:5432/instagram`
   - `spring.datasource.username: ${POSTGRES_USER:instagram}`
   - `spring.datasource.password: ${POSTGRES_PASSWORD:changeme}`
@@ -34,12 +34,12 @@ Configure Spring Boot's `application.yml` profile system so the backend can run 
   - MinIO endpoint, access key, secret (from env vars with defaults)
   - `spring.jpa.show-sql: true`
   - `logging.level.com.instagram: DEBUG`
-- [ ] Create `backend/src/main/resources/application-test.yml`:
+- [x] Create `backend/src/main/resources/application-test.yml`:
   - Use Testcontainers PostgreSQL auto-configuration **or** H2 in-memory with `MODE=PostgreSQL`
   - `spring.flyway.enabled: true` (run migrations against test DB)
   - `spring.jpa.show-sql: false`
-- [ ] Create `backend/src/main/resources/application-prod.yml`:
+- [x] Create `backend/src/main/resources/application-prod.yml`:
   - All values as `${ENV_VAR}` with no defaults (fail fast if env is missing)
   - `spring.jpa.show-sql: false`
   - `logging.level.root: WARN`
-- [ ] Verify the application starts on the `local` profile: `mvn spring-boot:run -Dspring.profiles.active=local`
+- [x] Verify the application starts on the `local` profile: `mvn spring-boot:run -Dspring.profiles.active=local`

@@ -100,7 +100,7 @@ frontend/src/
 #### Infrastructure
 - [ ] `docker-compose.yml` — PostgreSQL 15, MinIO (S3-compatible), Redis
 - [x] `Makefile` with `make dev`, `make test`, `make migrate` targets
-- [ ] Environment config: `application.yml` profiles (`local`, `test`, `prod`)
+- [x] Environment config: `application.yml` profiles (`local`, `test`, `prod`)
 - [ ] Flyway migrations — integrate `docs/database/schema.sql` as `V1__initial_schema.sql`
 - [ ] GitHub Actions CI: build → test → lint
 

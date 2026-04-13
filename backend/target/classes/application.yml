@@ -2,30 +2,16 @@ server:
   port: 8080
 
 spring:
-  application:
-    name: social-media-backend
 
-  datasource:
-    url: jdbc:postgresql://localhost:5432/instagram_db
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
-    hikari:
-      maximum-pool-size: 10
-      minimum-idle: 2
-      connection-timeout: 30000
-      idle-timeout: 600000
-      max-lifetime: 1800000
+  profiles:
+    active: local
+  application:
+    name: instagram
+
 
   jpa:
     hibernate:
       ddl-auto: validate          # Flyway manages DDL — Hibernate only validates
-    show-sql: false
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
-        default_schema: public
 
   flyway:
     enabled: true
@@ -42,8 +28,4 @@ springdoc:
     tags-sorter: alpha
   default-produces-media-type: application/json
 
-logging:
-  level:
-    com.instagram: DEBUG
-    org.springframework.web: INFO
-    org.hibernate.SQL: DEBUG
+
