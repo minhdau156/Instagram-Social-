@@ -184,7 +184,7 @@ export default function PostDetailPage() {
               { icon: <BookmarkBorderIcon />,     label: 'Saves',    value: post.saveCount,    color: 'success.main' },
               { icon: <ShareOutlinedIcon />,      label: 'Shares',   value: post.shareCount,   color: 'secondary.main' },
             ].map(({ icon, label, value, color }) => (
-              <Grid key={label} size={{ xs: 6, sm: 4, md: 'auto' }}>
+              <Grid key={label} item xs={6} sm={4} md="auto">
                 <Box
                   sx={{
                     display: 'flex',

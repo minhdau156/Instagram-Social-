@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  CircularProgress,
   Fab,
   Grid,
   Snackbar,
@@ -102,12 +101,12 @@ export default function PostListPage() {
       <Grid container spacing={3}>
         {isLoading
           ? Array.from({ length: 6 }).map((_, i) => (
-              <Grid key={i} size={{ xs: 12, sm: 6, md: 4 }}>
+              <Grid key={i} item xs={12} sm={6} md={4}>
                 <Skeleton variant="rounded" height={260} sx={{ borderRadius: 3 }} />
               </Grid>
             ))
           : data?.content.map((post) => (
-              <Grid key={post.id} size={{ xs: 12, sm: 6, md: 4 }}>
+              <Grid key={post.id} item xs={12} sm={6} md={4}>
                 <PostCard post={post} onDelete={setDeleteTarget} />
               </Grid>
             ))}
