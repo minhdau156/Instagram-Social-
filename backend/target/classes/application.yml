@@ -7,6 +7,10 @@ spring:
     active: local
   application:
     name: instagram
+    
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
 
 
   jpa:
