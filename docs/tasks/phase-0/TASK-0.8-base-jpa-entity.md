@@ -22,7 +22,7 @@ Create a `@MappedSuperclass` JPA base entity that automatically populates `creat
 
 ## Checklist
 
-- [ ] Create `BaseJpaEntity.java` in `backend/.../adapter/out/persistence/`
+- [x] Create `BaseJpaEntity.java` in `backend/.../adapter/out/persistence/`
   ```java
   @Getter
   @MappedSuperclass
@@ -38,12 +38,12 @@ Create a `@MappedSuperclass` JPA base entity that automatically populates `creat
       private OffsetDateTime updatedAt;
   }
   ```
-- [ ] Create or update `JpaConfig.java` in `backend/.../infrastructure/config/`:
+- [x] Create or update `JpaConfig.java` in `backend/.../infrastructure/config/`:
   ```java
   @Configuration
   @EnableJpaAuditing
   public class JpaConfig {}
   ```
-- [ ] Ensure Jackson knows how to serialize `OffsetDateTime` (covered in TASK-0.7, but double-check here)
-- [ ] Update any existing JPA entities (e.g., `PostJpaEntity`) to extend `BaseJpaEntity` and remove manually managed `createdAt`/`updatedAt` fields if present
-- [ ] Write a quick `@DataJpaTest` to verify that `createdAt` and `updatedAt` are populated on save
+- [x] Ensure Jackson knows how to serialize `OffsetDateTime` (covered in TASK-0.7, but double-check here)
+- [x] Update any existing JPA entities (e.g., `PostJpaEntity`) to extend `BaseJpaEntity` and remove manually managed `createdAt`/`updatedAt` fields if present
+- [x] Write a quick `@DataJpaTest` to verify that `createdAt` and `updatedAt` are populated on save

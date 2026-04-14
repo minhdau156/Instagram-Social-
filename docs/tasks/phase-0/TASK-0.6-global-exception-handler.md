@@ -21,25 +21,25 @@ Implement a centralized exception handler (`@RestControllerAdvice`) that maps al
 
 ## Checklist
 
-- [ ] Create `GlobalExceptionHandler.java` in `backend/.../adapter/in/web/`
-- [ ] Annotate the class with `@RestControllerAdvice`
-- [ ] Inject `Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class)`
-- [ ] Add handler for `EntityNotFoundException` (or project-level base `NotFoundException`):
+- [x] Create `GlobalExceptionHandler.java` in `backend/.../adapter/in/web/`
+- [x] Annotate the class with `@RestControllerAdvice`
+- [x] Inject `Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class)`
+- [x] Add handler for `EntityNotFoundException` (or project-level base `NotFoundException`):
   - HTTP `404 Not Found`
   - Body: `ApiResponse.error(e.getMessage())`
-- [ ] Add handler for `MethodArgumentNotValidException`:
+- [x] Add handler for `MethodArgumentNotValidException`:
   - HTTP `400 Bad Request`
   - Extract field errors: `e.getBindingResult().getFieldErrors()` → join messages
   - Body: `ApiResponse.error(combinedMessage)`
-- [ ] Add handler for `ConstraintViolationException`:
+- [x] Add handler for `ConstraintViolationException`:
   - HTTP `400 Bad Request`
-- [ ] Add handler for `AccessDeniedException` (Spring Security):
+- [x] Add handler for `AccessDeniedException` (Spring Security):
   - HTTP `403 Forbidden`
-- [ ] Add handler for `HttpMessageNotReadableException` (malformed JSON):
+- [x] Add handler for `HttpMessageNotReadableException` (malformed JSON):
   - HTTP `400 Bad Request`
   - Body: `ApiResponse.error("Malformed request body")`
-- [ ] Add catch-all handler for `Exception`:
+- [x] Add catch-all handler for `Exception`:
   - HTTP `500 Internal Server Error`
   - Log error with stack trace: `log.error("Unhandled exception", e)`
   - Body: `ApiResponse.error("An unexpected error occurred")`
-- [ ] Write a unit test `GlobalExceptionHandlerTest` verifying each handler returns the correct HTTP status
+- [x] Write a unit test `GlobalExceptionHandlerTest` verifying each handler returns the correct HTTP status

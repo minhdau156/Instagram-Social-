@@ -21,7 +21,7 @@ Define a single, generic response envelope (`ApiResponse<T>`) that all REST endp
 
 ## Checklist
 
-- [ ] Create `ApiResponse.java` in `backend/.../adapter/in/web/dto/`
+- [x] Create `ApiResponse.java` in `backend/.../adapter/in/web/dto/`
   ```java
   public record ApiResponse<T>(
       T data,
@@ -37,12 +37,12 @@ Define a single, generic response envelope (`ApiResponse<T>`) that all REST endp
       }
   }
   ```
-- [ ] Verify Jackson serializes `Instant` as an ISO-8601 string (not epoch millis):
+- [x] Verify Jackson serializes `Instant` as an ISO-8601 string (not epoch millis):
   - Set `spring.jackson.serialization.write-dates-as-timestamps=false` in `application.yml`
   - Or configure `ObjectMapper` bean with `JavaTimeModule`
-- [ ] Update `GlobalExceptionHandler` (TASK-0.6) to return `ApiResponse.error(...)` from all handlers
-- [ ] Update any existing controllers (e.g., `PostController`) to wrap responses in `ApiResponse.ok(...)`
-- [ ] Verify the serialized JSON shape matches the expected contract:
+- [x] Update `GlobalExceptionHandler` (TASK-0.6) to return `ApiResponse.error(...)` from all handlers
+- [x] Update any existing controllers (e.g., `PostController`) to wrap responses in `ApiResponse.ok(...)`
+- [x] Verify the serialized JSON shape matches the expected contract:
   ```json
   {
     "data": { ... },

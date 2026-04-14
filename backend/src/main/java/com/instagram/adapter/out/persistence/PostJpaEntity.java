@@ -11,7 +11,10 @@ import java.util.UUID;
 /**
  * JPA entity mapping to the {@code posts} table.
  *
- * <p>Lives exclusively in the persistence adapter — the domain layer never sees this class.</p>
+ * <p>
+ * Lives exclusively in the persistence adapter — the domain layer never sees
+ * this class.
+ * </p>
  */
 @Entity
 @Table(name = "posts")
@@ -20,7 +23,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostJpaEntity {
+public class PostJpaEntity extends BaseJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -55,25 +58,12 @@ public class PostJpaEntity {
     @Column(name = "share_count", nullable = false)
     private int shareCount;
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false,
-            columnDefinition = "TIMESTAMPTZ")
-    private OffsetDateTime createdAt;
-
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMPTZ")
-    private OffsetDateTime updatedAt;
-
     @Column(name = "deleted_at", columnDefinition = "TIMESTAMPTZ")
     private OffsetDateTime deletedAt;
 
     @PrePersist
     protected void onPrePersist() {
         if (status == null) status = PostStatus.PUBLISHED;
-        updatedAt = OffsetDateTime.now();
     }
 
-    @PreUpdate
-    protected void onPreUpdate() {
-        updatedAt = OffsetDateTime.now();
-    }
 }
