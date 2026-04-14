@@ -14,7 +14,7 @@ Not Started
 
 ## History
 
-- TASK-0.1 — Project Setup
-- TASK-0.2 — Makefile Setup
-- TASK-0.3 — Docker Compose Setup
+- TASK-0.1 — Initialize Project Setup and Configuration
+- TASK-0.2 — Makefile Automation Hub
+- TASK-0.3 — Docker Local Infrastructure
 - TASK-0.4 — Flyway Initial Migration
