@@ -23,8 +23,8 @@ Create a GitHub Actions workflow that automatically builds, tests, and validates
 
 ## Checklist
 
-- [ ] Create `.github/workflows/ci.yml`
-- [ ] Add workflow triggers:
+- [x] Create `.github/workflows/ci.yml`
+- [x] Add workflow triggers:
   ```yaml
   on:
     push:
@@ -32,20 +32,20 @@ Create a GitHub Actions workflow that automatically builds, tests, and validates
     pull_request:
       branches: [main]
   ```
-- [ ] Add `backend-ci` job:
-  - [ ] Checkout code (`actions/checkout@v4`)
-  - [ ] Set up Java 21 with Temurin distribution
-  - [ ] Cache `~/.m2/repository` keyed on `hashFiles('**/pom.xml')`
-  - [ ] Run `mvn verify` from the `backend/` directory
-  - [ ] (If not using Testcontainers) Add `services.postgres` with `image: postgres:15` and health check
-- [ ] Add `frontend-ci` job:
-  - [ ] Checkout code
-  - [ ] Set up Node 20 with `cache: npm` and `cache-dependency-path: frontend/package-lock.json`
-  - [ ] Run `npm ci` from `frontend/`
-  - [ ] Run `npm run build` to catch TypeScript compile errors
-  - [ ] Run `npm run test` (Vitest, added in Phase 10 — skip if not yet configured; add `|| true` placeholder)
-- [ ] Add build status badge to `README.md`:
+- [x] Add `backend-ci` job:
+  - [x] Checkout code (`actions/checkout@v4`)
+  - [x] Set up Java 21 with Temurin distribution
+  - [x] Cache `~/.m2/repository` keyed on `hashFiles('**/pom.xml')`
+  - [x] Run `mvn verify` from the `backend/` directory
+  - [x] (If not using Testcontainers) Add `services.postgres` with `image: postgres:15` and health check
+- [x] Add `frontend-ci` job:
+  - [x] Checkout code
+  - [x] Set up Node 20 with `cache: npm` and `cache-dependency-path: frontend/package-lock.json`
+  - [x] Run `npm ci` from `frontend/`
+  - [x] Run `npm run build` to catch TypeScript compile errors
+  - [x] Run `npm run test` (Vitest, added in Phase 10 — skip if not yet configured; add `|| true` placeholder)
+- [x] Add build status badge to `README.md`:
   ```markdown
   ![CI](https://github.com/<owner>/<repo>/actions/workflows/ci.yml/badge.svg)
   ```
-- [ ] Push to a feature branch and verify the workflow appears in the Actions tab and all jobs pass
+- [x] Push to a feature branch and verify the workflow appears in the Actions tab and all jobs pass
