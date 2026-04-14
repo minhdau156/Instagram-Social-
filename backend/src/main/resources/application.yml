@@ -11,7 +11,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate          # Flyway manages DDL — Hibernate only validates
+      ddl-auto: none          # Flyway manages DDL — Hibernate only validates
 
   flyway:
     enabled: true
