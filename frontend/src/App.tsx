@@ -7,6 +7,8 @@ import PostListPage   from './pages/posts/PostListPage';
 import PostDetailPage from './pages/posts/PostDetailPage';
 import { navigationRef } from './lib/navigationRef';
 
+import { ErrorBoundary } from './components/common/ErrorBoundary';
+
 function GlobalNavigation() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -24,8 +26,8 @@ export default function App() {
         <Routes>
           <Route element={<AppShell />}>
             <Route index element={<Navigate to="/posts" replace />} />
-            <Route path="/posts"     element={<PostListPage />} />
-            <Route path="/posts/:id" element={<PostDetailPage />} />
+            <Route path="/posts"     element={<ErrorBoundary><PostListPage /></ErrorBoundary>} />
+            <Route path="/posts/:id" element={<ErrorBoundary><PostDetailPage /></ErrorBoundary>} />
           </Route>
         </Routes>
       </BrowserRouter>

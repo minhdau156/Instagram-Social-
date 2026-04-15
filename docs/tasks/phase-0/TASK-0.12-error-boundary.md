@@ -21,7 +21,7 @@ Create a React error boundary component that catches JavaScript errors thrown du
 
 ## Checklist
 
-- [ ] Create `frontend/src/components/common/ErrorBoundary.tsx`
+- [x] Create `frontend/src/components/common/ErrorBoundary.tsx`
   ```tsx
   interface Props {
     children: ReactNode;
@@ -39,12 +39,12 @@ Create a React error boundary component that catches JavaScript errors thrown du
     render() { ... }
   }
   ```
-- [ ] Implement `getDerivedStateFromError` — return `{ hasError: true, error }`
-- [ ] Implement `componentDidCatch` — `console.error` the error and info (placeholder for Sentry)
-- [ ] Implement `render()`:
+- [x] Implement `getDerivedStateFromError` — return `{ hasError: true, error }`
+- [x] Implement `componentDidCatch` — `console.error` the error and info (placeholder for Sentry)
+- [x] Implement `render()`:
   - If `hasError` and custom `fallback` provided: render `fallback`
   - If `hasError` and no `fallback`: render default fallback UI (MUI `Box` centered, error icon, message, "Try again" `Button`)
   - Otherwise: render `children`
-- [ ] Export `ErrorBoundary` as a named export
-- [ ] Wrap each route-level page in `App.tsx` with `<ErrorBoundary>` (or add to the router layout)
+- [x] Export `ErrorBoundary` as a named export
+- [x] Wrap each route-level page in `App.tsx` with `<ErrorBoundary>` (or add to the router layout)
 - [ ] Manually verify by temporarily throwing inside a component renders the fallback instead of a white screen
