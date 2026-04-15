@@ -34,3 +34,6 @@ app:
       access-key: ${MINIO_ACCESS_KEY:admin}
       secret-key: ${MINIO_SECRET_KEY:password}
       bucket: ${MINIO_BUCKET:instagram-media}
+
+  cors:
+    allowed-origins: http://localhost:5173

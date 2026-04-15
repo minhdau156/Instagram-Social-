@@ -14,8 +14,11 @@ import java.util.UUID;
 /**
  * Application service orchestrating all post-related use cases.
  *
- * <p>Implements every input port for posts. Depends only on the {@link PostRepository}
- * output port — zero JPA or HTTP knowledge here.</p>
+ * <p>
+ * Implements every input port for posts. Depends only on the
+ * {@link PostRepository}
+ * output port — zero JPA or HTTP knowledge here.
+ * </p>
  */
 @Service
 @Transactional(readOnly = true)

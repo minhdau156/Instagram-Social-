@@ -25,7 +25,7 @@ export default function PostListPage() {
   const createPost = useCreatePost();
   const deletePost = useDeletePost();
 
-  const [createOpen,  setCreateOpen]  = useState(false);
+  const [createOpen, setCreateOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<PostResponse | null>(null);
   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({
     open: false, message: '', severity: 'success',
@@ -101,19 +101,19 @@ export default function PostListPage() {
       <Grid container spacing={3}>
         {isLoading
           ? Array.from({ length: 6 }).map((_, i) => (
-              <Grid key={i} item xs={12} sm={6} md={4}>
-                <Skeleton variant="rounded" height={260} sx={{ borderRadius: 3 }} />
-              </Grid>
-            ))
-          : data?.content.map((post) => (
-              <Grid key={post.id} item xs={12} sm={6} md={4}>
-                <PostCard post={post} onDelete={setDeleteTarget} />
-              </Grid>
-            ))}
+            <Grid key={i} item xs={12} sm={6} md={4}>
+              <Skeleton variant="rounded" height={260} sx={{ borderRadius: 3 }} />
+            </Grid>
+          ))
+          : data?.content?.map((post) => (
+            <Grid key={post.id} item xs={12} sm={6} md={4}>
+              <PostCard post={post} onDelete={setDeleteTarget} />
+            </Grid>
+          ))}
       </Grid>
 
       {/* ── Empty state ── */}
-      {!isLoading && data?.content.length === 0 && (
+      {!isLoading && data?.content?.length === 0 && (
         <Box textAlign="center" py={10}>
           <Typography variant="h6" color="text.secondary" mb={2}>
             No posts yet

@@ -4,7 +4,7 @@ import type {
   PostResponse,
   UpdatePostRequest,
 } from '../types/post';
-import api from './axios';
+import { api } from './client';
 
 const BASE = '/api/v1/posts';
 

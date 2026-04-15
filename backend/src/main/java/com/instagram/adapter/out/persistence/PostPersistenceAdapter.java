@@ -15,10 +15,11 @@ import java.util.UUID;
  * Persistence adapter — implements the {@link PostRepository} output port
  * using Spring Data JPA.
  *
- * <p>Responsibilities:
+ * <p>
+ * Responsibilities:
  * <ul>
- *   <li>Map domain {@link Post} ↔ {@link PostJpaEntity}</li>
- *   <li>Delegate persistence operations to {@link PostJpaRepository}</li>
+ * <li>Map domain {@link Post} ↔ {@link PostJpaEntity}</li>
+ * <li>Delegate persistence operations to {@link PostJpaRepository}</li>
  * </ul>
  * </p>
  */
@@ -36,7 +37,7 @@ public class PostPersistenceAdapter implements PostRepository {
     @Override
     public Post save(Post post) {
         PostJpaEntity entity = toEntity(post);
-        PostJpaEntity saved  = jpaRepository.save(entity);
+        PostJpaEntity saved = jpaRepository.save(entity);
         return toDomain(saved);
     }
 
@@ -68,7 +69,7 @@ public class PostPersistenceAdapter implements PostRepository {
 
     private PostJpaEntity toEntity(Post post) {
         PostJpaEntity jpaEntity = PostJpaEntity.builder()
-                .id(post.getId())                       // null → Hibernate generates UUID
+                .id(post.getId()) // null → Hibernate generates UUID
                 .userId(post.getUserId())
                 .caption(post.getCaption())
                 .location(post.getLocation())

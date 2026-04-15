@@ -4,6 +4,8 @@ import com.instagram.domain.model.PostStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -40,6 +42,7 @@ public class PostJpaEntity extends BaseJpaEntity {
     private String location;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "status", length = 50, nullable = false)
     private PostStatus status;
 
@@ -63,7 +66,8 @@ public class PostJpaEntity extends BaseJpaEntity {
 
     @PrePersist
     protected void onPrePersist() {
-        if (status == null) status = PostStatus.PUBLISHED;
+        if (status == null)
+            status = PostStatus.PUBLISHED;
     }
 
 }
