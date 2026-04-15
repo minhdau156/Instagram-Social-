@@ -24,3 +24,5 @@ Not Started
 - TASK-0.8 — BaseEntity Audit Fields
 - TASK-0.9 — CORS Configuration
 - TASK-0.10 — Axios Instance with Interceptors
+- TASK-0.11 — React Query QueryClient Setup
+
