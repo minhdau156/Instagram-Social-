@@ -1,4 +1,4 @@
-# Current Feature
+# Current Feature: TASK-1.5 — In-Ports (Use-Case Interfaces)
 
 ## Status
 
@@ -6,11 +6,26 @@ Not Started
 
 ## Goals
 
-<!-- Add goals here -->
+- Define `RegisterUserUseCase` — registers a new user, returns `User`
+- Define `LoginUseCase` — authenticates via identifier+password, returns `AuthResult`
+- Define `RefreshTokenUseCase` — exchanges refresh token for new `AuthResult`
+- Define `LogoutUseCase` — invalidates a refresh token (void)
+- Define `RequestPasswordResetUseCase` — triggers password reset email (void)
+- Define `ConfirmPasswordResetUseCase` — applies new password via reset token (void)
+- Define `GetUserProfileUseCase` — returns `UserProfile` (User + UserStats + isFollowing)
+- Define `UpdateProfileUseCase` — updates profile fields, returns updated `User`
+- Create `AuthResult` value-object record (`accessToken`, `refreshToken`, `expiresIn`)
+- Create `UserProfile` value-object record (`user`, `stats`, `isFollowing`)
+- All interfaces are pure Java — zero Spring or JPA annotations
 
 ## Notes
 
-<!-- Add notes here -->
+- All files live in `domain/port/in/` — one file per use case.
+- Each interface has **exactly one** method; input is always an inner `record` named `Command` (writes) or `Query` (reads).
+- `LoginUseCase.Command.identifier` accepts either username or email; the service resolves which.
+- `AuthResult` and `UserProfile` are value objects — place them in `domain/model/`.
+- `deleteById` is intentionally absent; soft-delete via `withDeactivated()` on `UserService`.
+- No framework dependencies anywhere in this package.
 
 ## History
 

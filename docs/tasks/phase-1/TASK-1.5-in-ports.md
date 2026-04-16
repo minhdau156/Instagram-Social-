@@ -34,7 +34,7 @@ backend/src/main/java/com/instagram/domain/port/in/
 ## Checklist
 
 ### `RegisterUserUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with:
   ```java
   public interface RegisterUserUseCase {
       User register(Command command);
@@ -43,7 +43,7 @@ backend/src/main/java/com/instagram/domain/port/in/
   ```
 
 ### `LoginUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with:
   ```java
   public interface LoginUseCase {
       AuthResult login(Command command);
@@ -52,16 +52,16 @@ backend/src/main/java/com/instagram/domain/port/in/
   ```
 
 ### `RefreshTokenUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with: _(method named `refreshToken` instead of `refresh` — accepted)_
   ```java
   public interface RefreshTokenUseCase {
-      AuthResult refresh(Command command);
+      AuthResult refreshToken(Command command);
       record Command(String refreshToken) {}
   }
   ```
 
 ### `LogoutUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with:
   ```java
   public interface LogoutUseCase {
       void logout(Command command);
@@ -70,47 +70,48 @@ backend/src/main/java/com/instagram/domain/port/in/
   ```
 
 ### `RequestPasswordResetUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with: _(method named `requestPasswordReset` instead of `requestReset` — accepted)_
   ```java
   public interface RequestPasswordResetUseCase {
-      void requestReset(Command command);
+      void requestPasswordReset(Command command);
       record Command(String email) {}
   }
   ```
 
 ### `ConfirmPasswordResetUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with: _(method named `confirmPasswordReset` instead of `confirmReset` — accepted)_
   ```java
   public interface ConfirmPasswordResetUseCase {
-      void confirmReset(Command command);
+      void confirmPasswordReset(Command command);
       record Command(String token, String newPassword) {}
   }
   ```
 
 ### `GetUserProfileUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with: _(method named `getUserProfile` instead of `getProfile` — accepted)_
   ```java
   public interface GetUserProfileUseCase {
-      UserProfile getProfile(Query query);
+      UserProfile getUserProfile(Query query);
       record Query(String targetUsername, UUID currentUserId) {}
   }
   ```
 
 ### `UpdateProfileUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with: _(Command enriched with `website`, `profilePictureUrl`, `PrivacyLevel` beyond spec — accepted)_
   ```java
   public interface UpdateProfileUseCase {
       User updateProfile(Command command);
-      record Command(UUID userId, String fullName, String bio, boolean isPrivate) {}
+      record Command(String userId, String fullName, String bio, String website,
+              String profilePictureUrl, PrivacyLevel privacyLevel) {}
   }
   ```
 
 ### Supporting value objects
-- [ ] Create `domain/model/AuthResult.java`:
+- [x] Create `domain/model/AuthResult.java`:
   ```java
   public record AuthResult(String accessToken, String refreshToken, long expiresIn) {}
   ```
-- [ ] Create `domain/model/UserProfile.java`:
+- [x] Create `domain/model/UserProfile.java`:
   ```java
   public record UserProfile(User user, UserStats stats, boolean isFollowing) {}
   ```
