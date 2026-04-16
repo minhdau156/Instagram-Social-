@@ -29,45 +29,8 @@ backend/src/main/java/com/instagram/domain/exception/
 
 ## Checklist
 
-- [ ] Create `UserNotFoundException.java`:
-  ```java
-  public class UserNotFoundException extends RuntimeException {
-      public UserNotFoundException(String message) { super(message); }
-      // convenience factory
-      public static UserNotFoundException withUsername(String username) {
-          return new UserNotFoundException("User not found: " + username);
-      }
-      public static UserNotFoundException withId(UUID id) {
-          return new UserNotFoundException("User not found with id: " + id);
-      }
-  }
-  ```
-
-- [ ] Create `UserAlreadyExistsException.java`:
-  ```java
-  public class UserAlreadyExistsException extends RuntimeException {
-      public UserAlreadyExistsException(String field, String value) {
-          super("A user already exists with " + field + ": " + value);
-      }
-  }
-  ```
-
-- [ ] Create `InvalidCredentialsException.java`:
-  ```java
-  public class InvalidCredentialsException extends RuntimeException {
-      public InvalidCredentialsException() {
-          super("Invalid username or password");
-      }
-  }
-  ```
-
-- [ ] Create `PasswordResetTokenExpiredException.java`:
-  ```java
-  public class PasswordResetTokenExpiredException extends RuntimeException {
-      public PasswordResetTokenExpiredException() {
-          super("Password reset token has expired or is invalid");
-      }
-  }
-  ```
-
-- [ ] Verify no `@Component` / `@Service` or any Spring annotations appear in any exception class
+- [x] Create `UserNotFoundException.java`
+- [x] Create `UserAlreadyExistsException.java`
+- [x] Create `InvalidCredentialsException.java`
+- [x] Create `PasswordResetTokenExpiredException.java`
+- [x] Verify no `@Component` / `@Service` or any Spring annotations appear in any exception class
