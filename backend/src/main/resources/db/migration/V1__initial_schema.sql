@@ -15,23 +15,23 @@ CREATE EXTENSION IF NOT EXISTS "citext";     -- case-insensitive text
 -- ENUMS
 -- =============================================================================
 
-CREATE TYPE account_status     AS ENUM ('active', 'suspended', 'deactivated', 'pending_verification');
-CREATE TYPE auth_provider      AS ENUM ('email', 'phone', 'google', 'facebook');
-CREATE TYPE privacy_level      AS ENUM ('public', 'followers_only', 'private');
-CREATE TYPE media_type         AS ENUM ('image', 'video');
-CREATE TYPE post_status        AS ENUM ('draft', 'published', 'archived', 'deleted');
-CREATE TYPE reaction_type      AS ENUM ('like');           -- extensible for future emoji reactions
+CREATE TYPE account_status     AS ENUM ('ACTIVE', 'SUSPENDED', 'DEACTIVATED', 'PENDING_VERIFICATION');
+CREATE TYPE auth_provider      AS ENUM ('EMAIL', 'PHONE', 'GOOGLE', 'FACEBOOK');
+CREATE TYPE privacy_level      AS ENUM ('PUBLIC', 'FOLLOWERS_ONLY', 'PRIVATE');
+CREATE TYPE media_type         AS ENUM ('IMAGE', 'VIDEO');
+CREATE TYPE post_status        AS ENUM ('DRAFT', 'PUBLISHED', 'ARCHIVED', 'DELETED');
+CREATE TYPE reaction_type      AS ENUM ('LIKE');           -- extensible for future emoji reactions
 CREATE TYPE notification_type  AS ENUM (
-    'like_post', 'like_comment',
-    'comment_post', 'reply_comment',
-    'follow', 'follow_request', 'follow_accepted',
-    'mention_post', 'mention_comment',
-    'direct_message', 'group_message',
-    'post_shared'
+    'LIKE_POST', 'LIKE_COMMENT',
+    'COMMENT_POST', 'REPLY_COMMENT',
+    'FOLLOW', 'FOLLOW_REQUEST', 'FOLLOW_ACCEPTED',
+    'MENTION_POST', 'MENTION_COMMENT',
+    'DIRECT_MESSAGE', 'GROUP_MESSAGE',
+    'POST_SHARED'
 );
-CREATE TYPE message_type       AS ENUM ('text', 'image', 'video', 'post_share');
-CREATE TYPE report_entity_type AS ENUM ('user', 'post', 'comment', 'message');
-CREATE TYPE report_status      AS ENUM ('pending', 'reviewed', 'resolved', 'dismissed');
+CREATE TYPE message_type       AS ENUM ('TEXT', 'IMAGE', 'VIDEO', 'POST_SHARE');
+CREATE TYPE report_entity_type AS ENUM ('USER', 'POST', 'COMMENT', 'MESSAGE');
+CREATE TYPE report_status      AS ENUM ('PENDING', 'REVIEWED', 'RESOLVED', 'DISMISSED');
 
 
 -- =============================================================================

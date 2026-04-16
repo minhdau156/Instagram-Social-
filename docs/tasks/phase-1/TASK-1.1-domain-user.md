@@ -30,9 +30,9 @@ backend/src/main/java/com/instagram/domain/model/UserStatus.java
 
 ## Checklist
 
-- [ ] Create `UserStatus.java` enum with values: `ACTIVE`, `DEACTIVATED`, `SUSPENDED`
+- [x] Create `UserStatus.java` enum with values: `ACTIVE`, `DEACTIVATED`, `SUSPENDED`
 
-- [ ] Create `User.java` with fields:
+- [x] Create `User.java` with fields:
   ```java
   private UUID id;
   private String username;
@@ -47,15 +47,15 @@ backend/src/main/java/com/instagram/domain/model/UserStatus.java
   private UserStatus status;
   ```
 
-- [ ] Implement private no-arg constructor (used by Builder only)
+- [x] Implement private no-arg constructor (used by Builder only)
 
-- [ ] Implement static inner `Builder` class with:
-  - [ ] Setter-style methods returning `this` for each field
+- [x] Implement static inner `Builder` class with:
+  - [x] Setter-style methods returning `this` for each field
   - [ ] `build()` method that validates required fields (`id`, `username`, `email`, `status`) and throws `IllegalStateException` if null
 
-- [ ] Implement a private `copy()` helper method that returns a mutable copy via the Builder
+- [x] Implement a private `copy()` helper method that returns a mutable copy via the Builder
 
-- [ ] Implement `withUpdatedProfile(String fullName, String bio, String avatarUrl, boolean isPrivate)`:
+- [x] Implement `withUpdatedProfile(String fullName, String bio, String avatarUrl, boolean isPrivate)`:
   ```java
   public User withUpdatedProfile(String fullName, String bio, String avatarUrl, boolean isPrivate) {
       return this.copy()
@@ -67,19 +67,19 @@ backend/src/main/java/com/instagram/domain/model/UserStatus.java
   }
   ```
 
-- [ ] Implement `withDeactivated()`:
+- [x] Implement `withDeactivated()`:
   ```java
   public User withDeactivated() {
       return this.copy().status(UserStatus.DEACTIVATED).build();
   }
   ```
 
-- [ ] Add `withAvatarUrl(String avatarUrl)` convenience method for avatar-only updates
+- [x] Add `withAvatarUrl(String avatarUrl)` convenience method for avatar-only updates
 
-- [ ] Add `isActive()` convenience predicate: `return this.status == UserStatus.ACTIVE;`
+- [x] Add `isActive()` convenience predicate: `return this.status == UserStatus.ACTIVE;`
 
 - [ ] Write unit test `UserTest.java` in `domain/model/`:
-  - [ ] `builder_createsUser_withRequiredFields()`
+  - [x] `builder_createsUser_withRequiredFields()`
   - [ ] `builder_throwsException_whenIdIsNull()`
-  - [ ] `withDeactivated_setsStatus_toDeactivated()`
-  - [ ] `withUpdatedProfile_returnsNewInstance_doesNotMutateOriginal()`
+  - [x] `withDeactivated_setsStatus_toDeactivated()`
+  - [x] `withUpdatedProfile_returnsNewInstance_doesNotMutateOriginal()`
