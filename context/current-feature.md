@@ -1,4 +1,4 @@
-# Current Feature: TASK-1.3 — Domain Exceptions
+# Current Feature
 
 ## Status
 
@@ -6,19 +6,11 @@ Not Started
 
 ## Goals
 
-- Create `UserNotFoundException` with `withUsername(String)` and `withId(UUID)` static factories
-- Create `UserAlreadyExistsException` with `(String field, String value)` constructor
-- Create `InvalidCredentialsException` with a no-arg constructor and a fixed safe message
-- Create `PasswordResetTokenExpiredException` with a no-arg constructor and a fixed safe message
-- Verify no Spring/framework annotations appear in any exception class
+<!-- Add goals here -->
 
 ## Notes
 
-- Package: `backend/src/main/java/com/instagram/domain/exception/`
-- All extend `RuntimeException` — unchecked, no framework dependencies
-- Messages must be user-safe (no stack traces, no internal IDs)
-- These will be mapped to HTTP status codes in TASK-1.16 (`GlobalExceptionHandler`)
-- No unit tests required — exceptions are trivially simple; testing happens via service layer tests
+<!-- Add notes here -->
 
 ## History
 
@@ -37,3 +29,4 @@ Not Started
 - TASK-0.13 — Loading & Skeleton Components
 - TASK-1.1 — Domain Model: User
 - TASK-1.2 — Domain Model: UserStats
+- TASK-1.3 — Domain Exceptions
