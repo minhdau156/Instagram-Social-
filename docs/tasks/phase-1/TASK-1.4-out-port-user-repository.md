@@ -25,7 +25,7 @@ backend/src/main/java/com/instagram/domain/port/out/UserRepository.java
 
 ## Checklist
 
-- [ ] Create `UserRepository.java` interface in `domain/port/out/`:
+- [x] Create `UserRepository.java` interface in `domain/port/out/`:
   ```java
   public interface UserRepository {
       User save(User user);
@@ -37,9 +37,9 @@ backend/src/main/java/com/instagram/domain/port/out/UserRepository.java
   }
   ```
 
-- [ ] Confirm the interface has:
-  - [ ] No `import org.springframework.*` or `import jakarta.persistence.*`
-  - [ ] All finder methods return `Optional<User>` (not raw `User`)
-  - [ ] `save` returns `User` (the persisted result, potentially with generated ID)
+- [x] Confirm the interface has:
+  - [x] No `import org.springframework.*` or `import jakarta.persistence.*`
+  - [x] All finder methods return `Optional<User>` (not raw `User`)
+  - [x] `save` returns `User` (the persisted result, potentially with generated ID)
 
 - [ ] Verify `UserService` (TASK-1.6) will depend only on this interface, not on `UserJpaRepository`
