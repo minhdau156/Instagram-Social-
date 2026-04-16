@@ -6,7 +6,6 @@ import {
   Snackbar,
   Alert,
   Typography,
-  Skeleton,
   alpha,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -17,6 +16,7 @@ import PostForm from '../../components/posts/PostForm';
 import PostDeleteDialog from '../../components/posts/PostDeleteDialog';
 import { usePosts, useCreatePost, useDeletePost } from '../../hooks/usePosts';
 import type { PostResponse } from '../../types/post';
+import { SkeletonList } from '../../components/common/SkeletonList';
 
 export default function PostListPage() {
   const [page] = useState(0);
@@ -100,11 +100,11 @@ export default function PostListPage() {
       {/* ── Grid ── */}
       <Grid container spacing={3}>
         {isLoading
-          ? Array.from({ length: 6 }).map((_, i) => (
-            <Grid key={i} item xs={12} sm={6} md={4}>
-              <Skeleton variant="rounded" height={260} sx={{ borderRadius: 3 }} />
+          ? (
+            <Grid item xs={12}>
+              <SkeletonList count={3} />
             </Grid>
-          ))
+          )
           : data?.content?.map((post) => (
             <Grid key={post.id} item xs={12} sm={6} md={4}>
               <PostCard post={post} onDelete={setDeleteTarget} />

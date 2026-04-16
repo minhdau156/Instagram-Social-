@@ -1,13 +1,14 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import theme from './theme';
 import AppShell from './AppShell';
-import PostListPage   from './pages/posts/PostListPage';
+import PostListPage from './pages/posts/PostListPage';
 import PostDetailPage from './pages/posts/PostDetailPage';
 import { navigationRef } from './lib/navigationRef';
 
 import { ErrorBoundary } from './components/common/ErrorBoundary';
+import { PageLoader } from './components/common/PageLoader';
 
 function GlobalNavigation() {
   const navigate = useNavigate();
@@ -22,14 +23,16 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <GlobalNavigation />
-        <Routes>
-          <Route element={<AppShell />}>
-            <Route index element={<Navigate to="/posts" replace />} />
-            <Route path="/posts"     element={<ErrorBoundary><PostListPage /></ErrorBoundary>} />
-            <Route path="/posts/:id" element={<ErrorBoundary><PostDetailPage /></ErrorBoundary>} />
-          </Route>
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <GlobalNavigation />
+          <Routes>
+            <Route element={<AppShell />}>
+              <Route index element={<Navigate to="/posts" replace />} />
+              <Route path="/posts" element={<ErrorBoundary><PostListPage /></ErrorBoundary>} />
+              <Route path="/posts/:id" element={<ErrorBoundary><PostDetailPage /></ErrorBoundary>} />
+            </Route>
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </ThemeProvider>
   );
