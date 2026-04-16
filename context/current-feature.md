@@ -30,3 +30,4 @@ Not Started
 - TASK-1.1 — Domain Model: User
 - TASK-1.2 — Domain Model: UserStats
 - TASK-1.3 — Domain Exceptions
+- TASK-1.4 — Out-Port: UserRepository
