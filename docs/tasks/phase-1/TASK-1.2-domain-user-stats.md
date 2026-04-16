@@ -25,7 +25,7 @@ backend/src/main/java/com/instagram/domain/model/UserStats.java
 
 ## Checklist
 
-- [ ] Create `UserStats.java` as a Java record:
+- [x] Create `UserStats.java` as a Java record:
   ```java
   public record UserStats(
       UUID userId,
@@ -35,7 +35,7 @@ backend/src/main/java/com/instagram/domain/model/UserStats.java
   ) {}
   ```
 
-- [ ] Add static factory `zero(UUID userId)`:
+- [x] Add static factory `zero(UUID userId)`:
   ```java
   public static UserStats zero(UUID userId) {
       return new UserStats(userId, 0, 0, 0);
@@ -43,5 +43,5 @@ backend/src/main/java/com/instagram/domain/model/UserStats.java
   ```
 
 - [ ] Write a minimal unit test `UserStatsTest.java`:
-  - [ ] `zero_returnsAllCountsAsZero()`
-  - [ ] Record equality: two `UserStats` with the same values are equal
+  - [x] `zero_returnsAllCountsAsZero()`
+  - [x] Record equality: two `UserStats` with the same values are equal
