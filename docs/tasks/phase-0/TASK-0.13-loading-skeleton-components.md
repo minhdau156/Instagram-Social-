@@ -21,7 +21,7 @@ Create a set of reusable loading-state UI components: a full-page spinner for ro
 
 ## Checklist
 
-- [ ] Create `frontend/src/components/common/PageLoader.tsx`
+- [x] Create `frontend/src/components/common/PageLoader.tsx`
   ```tsx
   export function PageLoader() {
     return (
@@ -33,12 +33,12 @@ Create a set of reusable loading-state UI components: a full-page spinner for ro
     );
   }
   ```
-- [ ] Create `frontend/src/components/common/SkeletonCard.tsx`
-  - [ ] Row: `Skeleton` circle 40px (avatar) + two `Skeleton` text lines (username, timestamp)
-  - [ ] Block: `Skeleton` rectangular, `width: '100%'`, `height: 300` (post image placeholder)
-  - [ ] Two short `Skeleton` text lines below (caption placeholder)
-  - [ ] Wrap in MUI `Card` or `Box` with the same padding as a real `PostCard`
-- [ ] Create `frontend/src/components/common/SkeletonList.tsx`
+- [x] Create `frontend/src/components/common/SkeletonCard.tsx`
+  - [x] Row: `Skeleton` circle 40px (avatar) + two `Skeleton` text lines (username, timestamp)
+  - [x] Block: `Skeleton` rectangular, `width: '100%'`, `height: 300` (post image placeholder)
+  - [x] Two short `Skeleton` text lines below (caption placeholder)
+  - [x] Wrap in MUI `Card` or `Box` with the same padding as a real `PostCard`
+- [x] Create `frontend/src/components/common/SkeletonList.tsx`
   ```tsx
   interface SkeletonListProps {
     count?: number;
@@ -54,6 +54,6 @@ Create a set of reusable loading-state UI components: a full-page spinner for ro
     );
   }
   ```
-- [ ] Use `<PageLoader />` in the `<Suspense fallback={...}>` wrapper in `App.tsx` for lazy routes
-- [ ] Use `<SkeletonList />` as the loading fallback in the feed page (`HomePage`) while React Query is fetching
-- [ ] Visually verify all three components in the browser (e.g., add a temporary `isLoading = true` override)
+- [x] Use `<PageLoader />` in the `<Suspense fallback={...}>` wrapper in `App.tsx` for lazy routes
+- [x] Use `<SkeletonList />` as the loading fallback in the feed page (`PostListPage`) while React Query is fetching
+- [x] Visually verify all three components in the browser (e.g., add a temporary `isLoading = true` override)

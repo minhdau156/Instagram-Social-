@@ -10,5 +10,6 @@
    - Write goals as bullet points under ## Goals
    - Write any additional notes/context under ## Notes
    - Set Status to "Not Started"
+   - Write unit test for this feature
 
 3. Confirm spec loaded and show the feature summary

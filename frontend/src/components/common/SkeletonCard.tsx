@@ -1,4 +1,4 @@
-import { Card, CardContent, CardActions, Skeleton, Stack, Box } from "@mui/material";
+import { Card, CardContent, Skeleton } from "@mui/material";
 
 export function SkeletonCard() {
     return (

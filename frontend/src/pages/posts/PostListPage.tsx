@@ -98,7 +98,7 @@ export default function PostListPage() {
       )}
 
       {/* ── Grid ── */}
-      <Grid container spacing={3}>
+      <Grid spacing={3}>
         {isLoading
           ? (
             <Grid item xs={12}>

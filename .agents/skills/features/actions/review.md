@@ -8,3 +8,6 @@
    - ⚠️ Code quality issues or bugs
    - 🚫 Scope creep (code beyond goals)
 4. Final verdict: Ready to complete or needs changes
+
+##References
+@agents/skills/code-quality/SKILL.md
