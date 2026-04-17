@@ -76,6 +76,14 @@ public class User {
         return updatedAt;
     }
 
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public OffsetDateTime getLastLoginAt() {
+        return lastLoginAt;
+    }
+
     private Builder copy() {
         return User.builder()
                 .id(this.id)

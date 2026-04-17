@@ -25,7 +25,7 @@ backend/src/main/java/com/instagram/adapter/out/persistence/UserPersistenceAdapt
 
 ## Checklist
 
-- [ ] Create `UserPersistenceAdapter.java` implementing `UserRepository`:
+- [x] Create `UserPersistenceAdapter.java` implementing `UserRepository`:
   ```java
   @Component
   @RequiredArgsConstructor
@@ -35,62 +35,38 @@ backend/src/main/java/com/instagram/adapter/out/persistence/UserPersistenceAdapt
   }
   ```
 
-- [ ] Implement `save(User user)`:
-  - [ ] Call `toEntity(user)`
-  - [ ] Call `jpaRepository.save(entity)`
-  - [ ] Return `toDomain(savedEntity)`
+- [x] Implement `save(User user)`:
+  - [x] Call `toEntity(user)`
+  - [x] Call `jpaRepository.save(entity)`
+  - [x] Return `toDomain(savedEntity)`
 
-- [ ] Implement `findById(UUID id)`:
-  - [ ] `jpaRepository.findById(id).map(this::toDomain)`
+- [x] Implement `findById(UUID id)`:
+  - [x] `jpaRepository.findById(id).map(this::toDomain)`
 
-- [ ] Implement `findByUsername(String username)`:
-  - [ ] `jpaRepository.findByUsername(username).map(this::toDomain)`
+- [x] Implement `findByUsername(String username)`:
+  - [x] `jpaRepository.findByUsername(username).map(this::toDomain)`
 
-- [ ] Implement `findByEmail(String email)`:
-  - [ ] `jpaRepository.findByEmail(email).map(this::toDomain)`
+- [x] Implement `findByEmail(String email)`:
+  - [x] `jpaRepository.findByEmail(email).map(this::toDomain)`
 
-- [ ] Implement `existsByUsername(String username)`:
-  - [ ] Delegate to `jpaRepository.existsByUsername(username)`
+- [x] Implement `existsByUsername(String username)`:
+  - [x] Delegate to `jpaRepository.existsByUsername(username)`
 
-- [ ] Implement `existsByEmail(String email)`:
-  - [ ] Delegate to `jpaRepository.existsByEmail(email)`
+- [x] Implement `existsByEmail(String email)`:
+  - [x] Delegate to `jpaRepository.existsByEmail(email)`
 
-- [ ] Implement private `toEntity(User user)` mapping method:
-  ```java
-  private UserJpaEntity toEntity(User user) {
-      return UserJpaEntity.builder()
-          .id(user.id())
-          .username(user.username())
-          .email(user.email())
-          .phoneNumber(user.phoneNumber())
-          .passwordHash(user.passwordHash())
-          .fullName(user.fullName())
-          .bio(user.bio())
-          .avatarUrl(user.avatarUrl())
-          .isPrivate(user.isPrivate())
-          .isVerified(user.isVerified())
-          .status(user.status())
-          .build();
-  }
-  ```
+- [x] Implement private `toEntity(User user)` mapping method:
+  > Fixed: spec used stale field names (`avatarUrl`, `isPrivate`, `user.password()`).
+  > Corrected to: `passwordHash`, `profilePictureUrl`, `websiteUrl`, `privacyLevel`, `phoneNumber`, `isVerified`, `status`, `lastLoginAt`.
+  > Added `getLastLoginAt()` getter to `User` domain model (was missing).
 
-- [ ] Implement private `toDomain(UserJpaEntity entity)` mapping method:
-  ```java
-  private User toDomain(UserJpaEntity entity) {
-      return User.builder()
-          .id(entity.getId())
-          .username(entity.getUsername())
-          .email(entity.getEmail())
-          .phoneNumber(entity.getPhoneNumber())
-          .passwordHash(entity.getPasswordHash())
-          .fullName(entity.getFullName())
-          .bio(entity.getBio())
-          .avatarUrl(entity.getAvatarUrl())
-          .isPrivate(entity.isPrivate())
-          .isVerified(entity.isVerified())
-          .status(entity.getStatus())
-          .build();
-  }
-  ```
+- [x] Implement private `toDomain(UserJpaEntity entity)` mapping method:
+  > Same field corrections as `toEntity`. All 13 fields mapped.
 
-- [ ] Confirm `UserJpaEntity` is never returned from any public method of this class
+- [x] Confirm `UserJpaEntity` is never returned from any public method of this class
+  > All public methods return `User`, `Optional<User>`, `List<User>`, or `boolean`.
+
+> **Additional fixes applied:**
+> - `findAll` return type corrected from `Page<User>` → `List<User>` to match `UserRepository` out-port.
+> - `getPassword()` → `getPasswordHash()` (correct getter on `User` and `UserJpaEntity`).
+> - All missing imports added (`UserRepository`, `User`, `List`, `Optional`, `UUID`, `PageRequest`).
