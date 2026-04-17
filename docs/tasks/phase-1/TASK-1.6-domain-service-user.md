@@ -22,7 +22,7 @@ backend/src/main/java/com/instagram/domain/service/UserService.java
 ## Dependencies (all are out-port interfaces)
 
 | Field | Interface | Purpose |
-|-------|-----------|---------|
+|-------|-----------|---------| 
 | `userRepository` | `UserRepository` | Persist / retrieve users |
 | `passwordHashPort` | `PasswordHashPort` | Hash & verify passwords |
 | `tokenPort` | `TokenPort` | Generate & validate JWT pairs |
@@ -44,7 +44,7 @@ backend/src/main/java/com/instagram/domain/service/UserService.java
 ## Checklist
 
 ### TokenPort out-port
-- [ ] Create `domain/port/out/TokenPort.java`:
+- [x] Create `domain/port/out/TokenPort.java`:
   ```java
   public interface TokenPort {
       String generateAccessToken(UUID userId, String role);
@@ -55,39 +55,39 @@ backend/src/main/java/com/instagram/domain/service/UserService.java
   ```
 
 ### UserService class
-- [ ] Create `UserService.java` annotated with `@Service`
-- [ ] Add constructor accepting `UserRepository`, `PasswordHashPort`, `TokenPort`, `EmailPort`
-- [ ] Declare all fields `private final`
-- [ ] Implement `RegisterUserUseCase`:
-  - [ ] Check `existsByUsername` → throw `UserAlreadyExistsException("username", command.username())`
-  - [ ] Check `existsByEmail` → throw `UserAlreadyExistsException("email", command.email())`
-  - [ ] Hash password: `passwordHashPort.hash(command.password())`
-  - [ ] Build `User` via Builder with `id = UUID.randomUUID()`, `status = ACTIVE`
-  - [ ] Call `userRepository.save(user)` and return result
-- [ ] Implement `LoginUseCase`:
-  - [ ] Try `findByEmail` then `findByUsername` → `orElseThrow(InvalidCredentialsException::new)`
-  - [ ] Check user `isActive()` → throw `InvalidCredentialsException` if not
-  - [ ] Verify password: `passwordHashPort.verify(command.password(), user.passwordHash())` → throw `InvalidCredentialsException` on mismatch
-  - [ ] Generate tokens via `tokenPort` → return `AuthResult`
-- [ ] Implement `RefreshTokenUseCase`:
-  - [ ] Validate refresh token → `orElseThrow(() -> new InvalidCredentialsException())`
-  - [ ] Find user by extracted `userId` → generate new token pair → return `AuthResult`
-- [ ] Implement `LogoutUseCase`:
-  - [ ] Validate refresh token to extract `userId` (log warning if invalid, do not throw)
-  - [ ] (Stub) — no session store in Phase 1; method is a no-op returning cleanly
-- [ ] Implement `RequestPasswordResetUseCase`:
-  - [ ] `findByEmail(command.email())` — if empty, return silently (no user enumeration)
-  - [ ] Generate a random reset token (`UUID.randomUUID().toString()`)
-  - [ ] Persist token in `password_reset_tokens` table (via a new `PasswordResetTokenRepository` out-port; stub as logged message if not implemented yet)
-  - [ ] Call `emailPort.sendPasswordResetEmail(user.email(), token)``
-- [ ] Implement `ConfirmPasswordResetUseCase`:
-  - [ ] Load token record → if not found or expired → throw `PasswordResetTokenExpiredException`
-  - [ ] Hash new password → find user → update `passwordHash` via `withUpdatedProfile` variant → save
-  - [ ] Delete used token from DB
-- [ ] Implement `GetUserProfileUseCase`:
-  - [ ] `findByUsername(query.targetUsername())` → `orElseThrow(UserNotFoundException::withUsername)`
-  - [ ] Load `UserStats` (stub `UserStats.zero(user.id())` until Phase 3)
-  - [ ] Return `new UserProfile(user, stats, false)`
-- [ ] Implement `UpdateProfileUseCase`:
-  - [ ] `findById(command.userId())` → `orElseThrow`
-  - [ ] Call `user.withUpdatedProfile(...)` → save → return updated user
+- [x] Create `UserService.java` annotated with `@Service`
+- [x] Add constructor accepting `UserRepository`, `PasswordHashPort`, `TokenPort`, `EmailPort`
+- [x] Declare all fields `private final`
+- [x] Implement `RegisterUserUseCase`:
+  - [x] Check `existsByUsername` → throw `UserAlreadyExistsException("username", command.username())`
+  - [x] Check `existsByEmail` → throw `UserAlreadyExistsException("email", command.email())`
+  - [x] Hash password: `passwordHashPort.hash(command.password())`
+  - [x] Build `User` via Builder with `id = UUID.randomUUID()`, `status = ACTIVE`
+  - [x] Call `userRepository.save(user)` and return result
+- [x] Implement `LoginUseCase`:
+  - [x] Try `findByEmail` then `findByUsername` → `orElseThrow(InvalidCredentialsException::new)`
+  - [x] Check user `isActive()` → throw `InvalidCredentialsException` if not
+  - [x] Verify password: `passwordHashPort.verify(command.password(), user.passwordHash())` → throw `InvalidCredentialsException` on mismatch
+  - [x] Generate tokens via `tokenPort` → return `AuthResult`
+- [x] Implement `RefreshTokenUseCase`:
+  - [x] Validate refresh token → `orElseThrow(() -> new InvalidCredentialsException())`
+  - [x] Find user by extracted `userId` → generate new token pair → return `AuthResult`
+- [x] Implement `LogoutUseCase`:
+  - [x] Validate refresh token to extract `userId` (log warning if invalid, do not throw)
+  - [x] (Stub) — no session store in Phase 1; method is a no-op returning cleanly
+- [x] Implement `RequestPasswordResetUseCase`:
+  - [x] `findByEmail(command.email())` — if empty, return silently (no user enumeration)
+  - [x] Generate a random reset token (`UUID.randomUUID().toString()`)
+  - [x] Persist token in `password_reset_tokens` table (via a new `PasswordResetTokenRepository` out-port; stub as logged message if not implemented yet)
+  - [x] Call `emailPort.sendPasswordResetEmail(user.email(), token)`
+- [x] Implement `ConfirmPasswordResetUseCase`:
+  - [x] Load token record → if not found or expired → throw `PasswordResetTokenExpiredException`
+  - [x] Hash new password → find user → update `passwordHash` via `withUpdatedProfile` variant → save
+  - [x] Delete used token from DB
+- [x] Implement `GetUserProfileUseCase`:
+  - [x] `findByUsername(query.targetUsername())` → `orElseThrow(UserNotFoundException::withUsername)`
+  - [x] Load `UserStats` (stub `UserStats.zero(user.id())` until Phase 3)
+  - [x] Return `new UserProfile(user, stats, false)`
+- [x] Implement `UpdateProfileUseCase`:
+  - [x] `findById(command.userId())` → `orElseThrow`
+  - [x] Call `user.withUpdatedProfile(...)` → save → return updated user

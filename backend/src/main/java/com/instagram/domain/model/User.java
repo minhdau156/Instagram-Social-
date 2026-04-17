@@ -193,6 +193,22 @@ public class User {
                 .build();
     }
 
+    public User withUpdatedProfile(String fullName, String bio, String websiteUrl,
+            String profilePictureUrl, PrivacyLevel privacyLevel) {
+        return this.copy()
+                .fullName(fullName != null ? fullName : this.fullName)
+                .bio(bio != null ? bio : this.bio)
+                .websiteUrl(websiteUrl != null ? websiteUrl : this.websiteUrl)
+                .profilePictureUrl(profilePictureUrl != null ? profilePictureUrl : this.profilePictureUrl)
+                .privacyLevel(privacyLevel != null ? privacyLevel : this.privacyLevel)
+                .updatedAt(OffsetDateTime.now())
+                .build();
+    }
+
+    public User withUpdatedPasswordHash(String newPasswordHash) {
+        return this.copy().passwordHash(newPasswordHash).updatedAt(OffsetDateTime.now()).build();
+    }
+
     public User withDeactivated() {
         return this.copy().status(UserStatus.INACTIVE).updatedAt(OffsetDateTime.now()).build();
     }
