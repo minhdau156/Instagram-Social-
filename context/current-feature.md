@@ -34,3 +34,5 @@ Not Started
 - TASK-1.5 — In-Ports: Use-Case Interfaces
 - TASK-1.6 — Domain Service: UserService
 - TASK-1.7 — JPA Entity: UserJpaEntity
+- TASK-1.8 — JPA Repository: UserJpaRepository
+- TASK-1.9 — Persistence Adapter: UserPersistenceAdapter
