@@ -1,6 +1,7 @@
 package com.instagram.domain.port.out;
 
 import java.util.UUID;
+import java.util.Optional;
 
 public interface TokenPort {
     String generateAccessToken(UUID userId, String role);
