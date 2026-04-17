@@ -24,7 +24,7 @@ backend/src/main/java/com/instagram/adapter/out/persistence/UserJpaRepository.ja
 
 ## Checklist
 
-- [ ] Create `UserJpaRepository.java`:
+- [x] Create `UserJpaRepository.java`:
   ```java
   public interface UserJpaRepository extends JpaRepository<UserJpaEntity, UUID> {
       Optional<UserJpaEntity> findByUsername(String username);
@@ -34,12 +34,13 @@ backend/src/main/java/com/instagram/adapter/out/persistence/UserJpaRepository.ja
   }
   ```
 
-- [ ] Confirm return types:
-  - [ ] `findByUsername` → `Optional<UserJpaEntity>`
-  - [ ] `findByEmail` → `Optional<UserJpaEntity>`
-  - [ ] `existsByUsername` → `boolean`
-  - [ ] `existsByEmail` → `boolean`
+- [x] Confirm return types:
+  - [x] `findByUsername` → `Optional<UserJpaEntity>`
+  - [x] `findByEmail` → `Optional<UserJpaEntity>`
+  - [x] `existsByUsername` → `boolean`
+  - [x] `existsByEmail` → `boolean`
 
-- [ ] No `@Repository` annotation needed (Spring Data auto-detects it)
+- [x] No `@Repository` annotation needed (Spring Data auto-detects it)
+  > Fixed: removed stray `@Repository` import that was present in the original draft.
 
-- [ ] No custom `@Query` or native SQL required at this stage
+- [x] No custom `@Query` or native SQL required at this stage
