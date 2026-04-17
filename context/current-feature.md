@@ -31,3 +31,5 @@ Not Started
 - TASK-1.2 — Domain Model: UserStats
 - TASK-1.3 — Domain Exceptions
 - TASK-1.4 — Out-Port: UserRepository
+- TASK-1.5 — In-Ports: Use-Case Interfaces
+- TASK-1.6 — Domain Service: UserService
