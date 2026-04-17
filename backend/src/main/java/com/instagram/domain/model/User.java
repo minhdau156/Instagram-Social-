@@ -210,7 +210,7 @@ public class User {
     }
 
     public User withDeactivated() {
-        return this.copy().status(UserStatus.INACTIVE).updatedAt(OffsetDateTime.now()).build();
+        return this.copy().status(UserStatus.DEACTIVATED).updatedAt(OffsetDateTime.now()).build();
     }
 
     public User withProfilePictureUrl(String profilePictureUrl) {

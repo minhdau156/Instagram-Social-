@@ -21,14 +21,14 @@ backend/src/main/java/com/instagram/adapter/out/persistence/UserJpaEntity.java
 ## Notes
 
 - Use `@Enumerated(EnumType.STRING)` for the `status` column.
-- `username` and `email` need `@Column(unique = true, nullable = false)`.
-- `phoneNumber`, `bio`, `avatarUrl`, `passwordHash` are nullable columns.
+- `username` and `email` need `@Column(unique = true, nullable = false)`  / `unique = true`.
+- `phoneNumber`, `bio`, `profilePictureUrl`, `passwordHash` are nullable columns.
 - Do NOT add bidirectional JPA relationships at this stage — keep it simple.
 - The `id` field must be `@GeneratedValue` with `@UuidGenerator` (Hibernate 6 style) since the DB uses `uuid_generate_v4()`.
 
 ## Checklist
 
-- [ ] Create `UserJpaEntity.java` extending `BaseJpaEntity`:
+- [x] Create `UserJpaEntity.java` extending `BaseJpaEntity`:
   ```java
   @Getter
   @Setter
@@ -47,7 +47,7 @@ backend/src/main/java/com/instagram/adapter/out/persistence/UserJpaEntity.java
       @Column(name = "username", unique = true, nullable = false, length = 30)
       private String username;
 
-      @Column(name = "email", unique = true, nullable = false)
+      @Column(name = "email", unique = true)
       private String email;
 
       @Column(name = "phone_number")
@@ -62,27 +62,38 @@ backend/src/main/java/com/instagram/adapter/out/persistence/UserJpaEntity.java
       @Column(name = "bio", length = 150)
       private String bio;
 
-      @Column(name = "avatar_url")
-      private String avatarUrl;
+      @Column(name = "profile_picture_url")
+      private String profilePictureUrl;
 
-      @Column(name = "is_private", nullable = false)
-      private boolean isPrivate;
+      @Column(name = "website_url")
+      private String websiteUrl;
+
+      @Enumerated(EnumType.STRING)
+      @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+      @Column(name = "account_status", nullable = false)
+      private UserStatus status;
+
+      @Enumerated(EnumType.STRING)
+      @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+      @Column(name = "privacy_level", nullable = false)
+      private PrivacyLevel privacyLevel;
 
       @Column(name = "is_verified", nullable = false)
       private boolean isVerified;
 
-      @Enumerated(EnumType.STRING)
-      @Column(name = "status", nullable = false, length = 20)
-      private UserStatus status;
+      @Column(name = "last_login_at")
+      private OffsetDateTime lastLoginAt;
   }
   ```
 
-- [ ] Verify column names exactly match `schema.sql` `users` table:
-  - [ ] `id`, `username`, `email`, `phone_number`, `password_hash`
-  - [ ] `full_name`, `bio`, `avatar_url`, `is_private`, `is_verified`, `status`
-  - [ ] `created_at`, `updated_at` inherited from `BaseJpaEntity`
+- [x] Verify column names exactly match `schema.sql` `users` table:
+  - [x] `id`, `username`, `email`, `phone_number`, `password_hash`
+  - [x] `full_name`, `bio`, `profile_picture_url`, `website_url`, `is_verified`, `account_status`, `privacy_level`, `last_login_at`
+  - [x] `created_at`, `updated_at` inherited from `BaseJpaEntity`
 
-- [ ] Confirm `UserStatus` enum is imported from `domain/model/UserStatus` (shared between domain and JPA)
+- [x] Confirm `UserStatus` enum is imported from `domain/model/UserStatus` (shared between domain and JPA)
   > Note: Sharing the enum with the domain layer is acceptable since it's a pure Java enum with no annotations.
+  > **Fixed:** `UserStatus` values updated to match PostgreSQL `account_status` enum: `ACTIVE`, `SUSPENDED`, `DEACTIVATED`, `PENDING_VERIFICATION`.
 
-- [ ] Write a `@DataJpaTest` `UserJpaRepositoryIT.java` (covered in TASK-1.17, but the entity must compile cleanly first)
+- [x] Write a `@DataJpaTest` `UserJpaEntityIT.java` — **done**.
+  Covers: persist/find, audit fields, nullable fields, all optional fields, all enum values round-trip, unique ID generation.

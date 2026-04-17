@@ -42,12 +42,12 @@ class UserTest {
     }
 
     @Test
-    void withDeactivated_setsStatus_toInactive() {
+    void withDeactivated_setsStatus_toDeactivated() {
         User original = buildActiveUser();
 
         User deactivated = original.withDeactivated();
 
-        assertThat(deactivated.getStatus()).isEqualTo(UserStatus.INACTIVE);
+        assertThat(deactivated.getStatus()).isEqualTo(UserStatus.DEACTIVATED);
         // original must NOT be mutated
         assertThat(original.getStatus()).isEqualTo(UserStatus.ACTIVE);
         assertThat(deactivated).isNotSameAs(original);
