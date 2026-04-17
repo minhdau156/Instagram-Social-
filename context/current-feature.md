@@ -33,3 +33,4 @@ Not Started
 - TASK-1.4 — Out-Port: UserRepository
 - TASK-1.5 — In-Ports: Use-Case Interfaces
 - TASK-1.6 — Domain Service: UserService
+- TASK-1.7 — JPA Entity: UserJpaEntity
