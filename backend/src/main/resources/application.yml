@@ -2,16 +2,14 @@ server:
   port: 8080
 
 spring:
-
   profiles:
     active: local
   application:
     name: instagram
-    
+
   jackson:
     serialization:
       write-dates-as-timestamps: false
-
 
   jpa:
     hibernate:
@@ -23,6 +21,17 @@ spring:
     baseline-on-migrate: false
     validate-on-migrate: true
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope: email, profile
+            # Spring auto-sets redirect-uri to: {baseUrl}/login/oauth2/code/google
+            # Add http://localhost:8080/login/oauth2/code/google in Google Console
+
 springdoc:
   api-docs:
     path: /v3/api-docs
@@ -33,7 +42,8 @@ springdoc:
   default-produces-media-type: application/json
 
 app:
-  jwt: 
-    secret: ${JWT_SECRET}   # set via env var in prod
-    access-token-expiry-ms: 900000             # 15 minutes
-    refresh-token-expiry-ms: 604800000
+  jwt:
+    secret: ${JWT_SECRET}         # set via env var in prod
+    access-token-expiry-ms: 900000        # 15 minutes
+    refresh-token-expiry-ms: 604800000    # 7 days
+  frontend-url: ${FRONTEND_URL}

@@ -20,11 +20,14 @@ public class SecurityConfig {
 
         private final CorsConfigurationSource corsConfigurationSource;
         private final JwtAuthenticationFilter jwtAuthenticatonFilter;
+        private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
         public SecurityConfig(CorsConfigurationSource corsConfigurationSource,
-                        JwtAuthenticationFilter jwtAuthenticatonFilter) {
+                        JwtAuthenticationFilter jwtAuthenticatonFilter,
+                        OAuth2SuccessHandler oAuth2SuccessHandler) {
                 this.corsConfigurationSource = corsConfigurationSource;
                 this.jwtAuthenticatonFilter = jwtAuthenticatonFilter;
+                this.oAuth2SuccessHandler = oAuth2SuccessHandler;
         }
 
         @Bean
@@ -45,6 +48,7 @@ public class SecurityConfig {
                                                 .requestMatchers("/login/oauth2/**").permitAll()
                                                 .anyRequest().authenticated());
                 http.addFilterBefore(jwtAuthenticatonFilter, UsernamePasswordAuthenticationFilter.class);
+                http.oauth2Login(oauth2 -> oauth2.successHandler(oAuth2SuccessHandler));
 
                 return http.build();
         }
