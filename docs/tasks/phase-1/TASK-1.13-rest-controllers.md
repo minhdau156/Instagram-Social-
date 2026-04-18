@@ -29,9 +29,9 @@ backend/src/main/java/com/instagram/adapter/in/web/
 ## Checklist
 
 ### `AuthController.java`
-- [ ] Annotate with `@RestController`, `@RequestMapping("/api/v1/auth")`, `@RequiredArgsConstructor`
-- [ ] Inject (via constructor): `RegisterUserUseCase`, `LoginUseCase`, `RefreshTokenUseCase`, `LogoutUseCase`, `RequestPasswordResetUseCase`, `ConfirmPasswordResetUseCase`
-- [ ] Implement `POST /register`:
+- [x] Annotate with `@RestController`, `@RequestMapping("/api/v1/auth")`, `@RequiredArgsConstructor`
+- [x] Inject (via constructor): `RegisterUserUseCase`, `LoginUseCase`, `RefreshTokenUseCase`, `LogoutUseCase`, `RequestPasswordResetUseCase`, `ConfirmPasswordResetUseCase`
+- [x] Implement `POST /register`:
   ```java
   @PostMapping("/register")
   public ResponseEntity<ApiResponse<UserResponse>> register(@Valid @RequestBody RegisterRequest req) {
@@ -40,39 +40,39 @@ backend/src/main/java/com/instagram/adapter/in/web/
       return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(UserResponse.from(user)));
   }
   ```
-- [ ] Implement `POST /login`:
+- [x] Implement `POST /login`:
   - Return `ApiResponse<AuthResponse>` with `200 OK`
   - Delegate to `loginUseCase.login(...)`
-- [ ] Implement `POST /refresh`:
+- [x] Implement `POST /refresh`:
   - Accept `AuthResponse` body with `refreshToken` field
   - Return new `AuthResponse` with `200 OK`
-- [ ] Implement `POST /logout`:
+- [x] Implement `POST /logout`:
   - Accept `refreshToken` in request body
   - Return `204 No Content`
-- [ ] Implement `POST /password-reset/request`:
+- [x] Implement `POST /password-reset/request`:
   - Accept `email` only
   - Always return `200 OK` (even if email not found — prevent user enumeration)
-- [ ] Implement `POST /password-reset/confirm`:
+- [x] Implement `POST /password-reset/confirm`:
   - Accept `token` + `newPassword`
   - Return `200 OK` on success
 
 ### `UserController.java`
-- [ ] Annotate with `@RestController`, `@RequestMapping("/api/v1/users")`, `@RequiredArgsConstructor`
-- [ ] Inject: `GetUserProfileUseCase`, `UpdateProfileUseCase`
-- [ ] Add private helper:
+- [x] Annotate with `@RestController`, `@RequestMapping("/api/v1/users")`, `@RequiredArgsConstructor`
+- [x] Inject: `GetUserProfileUseCase`, `UpdateProfileUseCase`
+- [x] Add private helper:
   ```java
   private UUID currentUserId() {
       return (UUID) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
   }
   ```
-- [ ] Implement `GET /me`:
+- [x] Implement `GET /me`:
   - Calls `getUserProfileUseCase.getProfile(new Query(null, currentUserId()))` — or use a dedicated `GetCurrentUserUseCase` if preferred
   - Return `ApiResponse<UserResponse>` with `200 OK`
-- [ ] Implement `PUT /me`:
+- [x] Implement `PUT /me`:
   - Accepts `UpdateProfileRequest`
   - Delegates to `updateProfileUseCase.updateProfile(...)`
   - Return `ApiResponse<UserResponse>` with `200 OK`
-- [ ] Implement `GET /{username}`:
+- [x] Implement `GET /{username}`:
   - Public endpoint — `currentUserId()` returns null if unauthenticated
   - Delegates to `getUserProfileUseCase.getProfile(new Query(username, currentUserId()))`
   - Return `ApiResponse<UserProfileResponse>` with `200 OK`

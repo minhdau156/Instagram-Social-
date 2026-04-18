@@ -33,17 +33,17 @@ backend/src/main/java/com/instagram/adapter/out/
 ## Checklist
 
 ### `PasswordHashPort.java`
-- [ ] Create interface in `domain/port/out/`:
+- [x] Create interface in `domain/port/out/`:
   ```java
   public interface PasswordHashPort {
       String hash(String rawPassword);
       boolean verify(String rawPassword, String storedHash);
   }
   ```
-- [ ] Confirm no BCrypt or Spring imports
+- [x] Confirm no BCrypt or Spring imports
 
 ### `BcryptPasswordHashAdapter.java`
-- [ ] Create class in `adapter/out/security/`:
+- [x] Create class in `adapter/out/security/`:
   ```java
   @Component
   @RequiredArgsConstructor
@@ -61,19 +61,19 @@ backend/src/main/java/com/instagram/adapter/out/
       }
   }
   ```
-- [ ] `PasswordEncoder` bean is injected from `SecurityConfig` (BCryptPasswordEncoder)
+- [x] `PasswordEncoder` bean is injected from `SecurityConfig` (BCryptPasswordEncoder)
 
 ### `EmailPort.java`
-- [ ] Create interface in `domain/port/out/`:
+- [x] Create interface in `domain/port/out/`:
   ```java
   public interface EmailPort {
       void sendPasswordResetEmail(String toEmail, String resetToken);
   }
   ```
-- [ ] Confirm no JavaMail or SMTP imports
+- [x] Confirm no JavaMail or SMTP imports
 
 ### `SmtpEmailAdapter.java`
-- [ ] Create stub class in `adapter/out/email/`:
+- [x] Create stub class in `adapter/out/email/`:
   ```java
   @Component
   @Slf4j

@@ -1,4 +1,4 @@
-# Current Feature
+# Current Feature: TASK-1.13 — REST Controllers
 
 ## Status
 
@@ -6,11 +6,9 @@ Not Started
 
 ## Goals
 
-<!-- Add goals here -->
 
 ## Notes
 
-<!-- Add notes here -->
 
 ## History
 
@@ -39,3 +37,4 @@ Not Started
 - TASK-1.10 — Security Infrastructure (JWT)
 - TASK-1.11 — OAuth2 (Google / Facebook)
 - TASK-1.12 — Password Hash & Email Adapters (Out-Ports)
+- TASK-1.13 - REST Controllers: UserController & AuthController
