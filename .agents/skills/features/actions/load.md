@@ -7,6 +7,7 @@
 
 2. Update current-feature.md:
    - Update H1 heading to include feature name (e.g., `# Current Feature: Do task 0-1`)
+   - Check out to feature branch instead of main
    - Write goals as bullet points under ## Goals
    - Write any additional notes/context under ## Notes
    - Set Status to "Not Started"
