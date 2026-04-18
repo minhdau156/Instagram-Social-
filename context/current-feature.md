@@ -1,4 +1,4 @@
-# Current Feature: TASK-1.12 — Password Hash & Email Adapters
+# Current Feature
 
 ## Status
 
@@ -6,18 +6,11 @@ Not Started
 
 ## Goals
 
-- Create `PasswordHashPort` interface in `domain/port/out/` (free of Spring/BCrypt imports)
-- Create `BcryptPasswordHashAdapter` in `adapter/out/security/` implementing `PasswordHashPort`
-- Create `EmailPort` interface in `domain/port/out/` (free of JavaMail imports)
-- Create `SmtpEmailAdapter` in `adapter/out/email/` as a stub to log reset links
-- Write unit tests for this feature
+<!-- Add goals here -->
 
 ## Notes
 
-- `PasswordHashPort.verify(rawPassword, storedHash)` should return `boolean` (no exception on mismatch).
-- `BcryptPasswordHashAdapter` uses the `PasswordEncoder` bean defined in `SecurityConfig` (inject via constructor).
-- `SmtpEmailAdapter`: log the reset URL at `INFO` level using the format: `"[EMAIL STUB] Password reset link for {}: {}"`.
-- Uses frontend URL from property `app.frontend-url` (default: `http://localhost:5173`).
+<!-- Add notes here -->
 
 ## History
 
@@ -45,3 +38,4 @@ Not Started
 - TASK-1.9 — Persistence Adapter: UserPersistenceAdapter
 - TASK-1.10 — Security Infrastructure (JWT)
 - TASK-1.11 — OAuth2 (Google / Facebook)
+- TASK-1.12 — Password Hash & Email Adapters (Out-Ports)
