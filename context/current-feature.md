@@ -37,3 +37,4 @@ Not Started
 - TASK-1.12 — Password Hash & Email Adapters (Out-Ports)
 - TASK-1.13 - REST Controllers: UserController & AuthController
 - TASK-1.14 — Request / Response DTOs
+- TASK-1.15 — Avatar Upload
