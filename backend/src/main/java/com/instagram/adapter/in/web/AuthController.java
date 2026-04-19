@@ -19,6 +19,15 @@ import com.instagram.adapter.in.web.dto.ApiResponse;
 import com.instagram.domain.model.User;
 import com.instagram.domain.port.in.ConfirmPasswordResetUseCase;
 
+import com.instagram.adapter.in.web.dto.RegisterRequest;
+import com.instagram.adapter.in.web.dto.LoginRequest;
+import com.instagram.adapter.in.web.dto.RefreshRequest;
+import com.instagram.adapter.in.web.dto.PasswordResetRequest;
+import com.instagram.adapter.in.web.dto.PasswordResetConfirmRequest;
+import com.instagram.adapter.in.web.dto.UserResponse;
+import com.instagram.adapter.in.web.dto.AuthResponse;
+import com.instagram.domain.model.AuthResult;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -42,15 +51,15 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthResponse>> login(@Valid @RequestBody LoginRequest req) {
-        AuthResponse authResponse = loginUseCase.login(new LoginUseCase.Command(req.email(), req.password()));
-        return ResponseEntity.ok(ApiResponse.ok(authResponse));
+        AuthResult authResult = loginUseCase.login(new LoginUseCase.Command(req.identifier(), req.password()));
+        return ResponseEntity.ok(ApiResponse.ok(AuthResponse.from(authResult)));
     }
 
     @PostMapping("/refresh")
     public ResponseEntity<ApiResponse<AuthResponse>> refresh(@Valid @RequestBody RefreshRequest req) {
-        AuthResponse authResponse = refreshTokenUseCase
+        AuthResult authResult = refreshTokenUseCase
                 .refreshToken(new RefreshTokenUseCase.Command(req.refreshToken()));
-        return ResponseEntity.ok(ApiResponse.ok(authResponse));
+        return ResponseEntity.ok(ApiResponse.ok(AuthResponse.from(authResult)));
     }
 
     @PostMapping("/logout")
