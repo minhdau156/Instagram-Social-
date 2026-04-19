@@ -1,5 +1,9 @@
 package com.instagram.adapter.in.web;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.util.UUID;
 import java.io.IOException;
 
@@ -35,6 +39,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
+@Tag(name = "User Management", description = "Endpoints for user profile and avatar management")
 public class UserController {
 
     private final GetUserProfileUseCase getUserProfileUseCase;
@@ -45,6 +50,12 @@ public class UserController {
         return UUID.fromString(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
     }
 
+    @Operation(summary = "Get Current User Profile", description = "Retrieves the profile of the currently authenticated user")
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved profile"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User not found")
+    })
     @GetMapping("/profile/get")
     public ResponseEntity<ApiResponse<UserResponse>> getMyProfile() {
         UserProfile profile = getUserProfileUseCase
@@ -52,6 +63,12 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.ok(UserResponse.from(profile.user())));
     }
 
+    @Operation(summary = "Update Current User Profile", description = "Updates the bio, full name, or privacy level of the current user")
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully updated profile"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation failed"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     @PutMapping("/profile/update")
     public ResponseEntity<ApiResponse<UserResponse>> updateMyProfile(@Valid @RequestBody UpdateProfileRequest req) {
         PrivacyLevel privacyLevel = req.isPrivate() != null
@@ -62,6 +79,13 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.ok(UserResponse.from(user)));
     }
 
+    @Operation(summary = "Upload Avatar", description = "Uploads a new avatar for the authenticated user")
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully uploaded and updated avatar"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid file format"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error reading/uploading file")
+    })
     @PutMapping(value = "/profile/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<UserResponse>> uploadAvatar(@RequestParam("file") MultipartFile file) {
         String contentType = file.getContentType();
@@ -91,6 +115,12 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Get User Profile", description = "Retrieves the public or authorized profile details of another user by username")
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved profile"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User not found")
+    })
     @GetMapping("/{username}")
     public ResponseEntity<ApiResponse<UserProfileResponse>> getProfile(@PathVariable String username) {
         UserProfile profile = getUserProfileUseCase
