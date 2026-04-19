@@ -51,7 +51,7 @@ app:
 ## Checklist
 
 ### `MediaStoragePort.java`
-- [ ] Create interface in `domain/port/out/`:
+- [x] Create interface in `domain/port/out/`:
   ```java
   public interface MediaStoragePort {
       /**
@@ -66,11 +66,11 @@ app:
   ```
 
 ### `MinioStorageAdapter.java`
-- [ ] Create class in `adapter/out/storage/`:
-  - [ ] Annotate with `@Component`
-  - [ ] Inject `MinioClient` bean (define it as a `@Bean` in a new `MinioConfig.java` in `infrastructure/config/`)
-  - [ ] Inject bucket name from `@Value("${app.minio.bucket}")`
-  - [ ] Implement `uploadFile`:
+- [x] Create class in `adapter/out/storage/`:
+  - [x] Annotate with `@Component`
+  - [x] Inject `MinioClient` bean (define it as a `@Bean` in a new `MinioConfig.java` in `infrastructure/config/`)
+  - [x] Inject bucket name from `@Value("${app.minio.bucket}")`
+  - [x] Implement `uploadFile`:
     ```java
     @Override
     public String uploadFile(String key, byte[] data, String contentType) {
@@ -85,7 +85,7 @@ app:
     ```
 
 ### `MinioConfig.java`
-- [ ] Create in `infrastructure/config/`:
+- [x] Create in `infrastructure/config/`:
   ```java
   @Configuration
   public class MinioConfig {
@@ -103,7 +103,7 @@ app:
   ```
 
 ### `UserController.java` (update)
-- [ ] Add `PUT /me/avatar` endpoint:
+- [x] Add `PUT /me/avatar` endpoint:
   ```java
   @PutMapping(value = "/me/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<ApiResponse<UserResponse>> uploadAvatar(
@@ -115,9 +115,9 @@ app:
       // 5. Return updated UserResponse
   }
   ```
-- [ ] Validate content type: throw `400 Bad Request` if not `image/jpeg`, `image/png`, or `image/webp`
+- [x] Validate content type: throw `400 Bad Request` if not `image/jpeg`, `image/png`, or `image/webp`
 
 ### `application.yml` updates
-- [ ] Add `spring.servlet.multipart.max-file-size=10MB`
-- [ ] Add `spring.servlet.multipart.max-request-size=10MB`
-- [ ] Add MinIO properties block
+- [x] Add `spring.servlet.multipart.max-file-size=10MB`
+- [x] Add `spring.servlet.multipart.max-request-size=10MB`
+- [x] Add MinIO properties block
