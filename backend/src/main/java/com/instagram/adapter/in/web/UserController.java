@@ -42,17 +42,17 @@ public class UserController {
     private final MediaStoragePort mediaStoragePort;
 
     private UUID currentUserId() {
-        return (UUID) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return UUID.fromString(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
     }
 
-    @GetMapping("/me")
+    @GetMapping("/profile/get")
     public ResponseEntity<ApiResponse<UserResponse>> getMyProfile() {
         UserProfile profile = getUserProfileUseCase
                 .getUserProfile(new GetUserProfileUseCase.Query(null, currentUserId()));
         return ResponseEntity.ok(ApiResponse.ok(UserResponse.from(profile.user())));
     }
 
-    @PutMapping("/me")
+    @PutMapping("/profile/update")
     public ResponseEntity<ApiResponse<UserResponse>> updateMyProfile(@Valid @RequestBody UpdateProfileRequest req) {
         PrivacyLevel privacyLevel = req.isPrivate() != null
                 ? (req.isPrivate() ? PrivacyLevel.PRIVATE : PrivacyLevel.PUBLIC)
@@ -62,7 +62,7 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.ok(UserResponse.from(user)));
     }
 
-    @PutMapping(value = "/me/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/profile/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<UserResponse>> uploadAvatar(@RequestParam("file") MultipartFile file) {
         String contentType = file.getContentType();
         if (contentType == null || (!contentType.equals("image/jpeg") && !contentType.equals("image/png")

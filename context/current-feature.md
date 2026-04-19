@@ -1,4 +1,4 @@
-# Current Feature
+# Current Feature: TASK-1.16 — GlobalExceptionHandler: Auth Exception Mappings
 
 ## Status
 
@@ -6,7 +6,19 @@ Not Started
 
 ## Goals
 
+- Extend `GlobalExceptionHandler` with `@ExceptionHandler` methods for Phase 1 domain exceptions.
+- Map `UserNotFoundException` to HTTP 404 (Not Found).
+- Map `UserAlreadyExistsException` to HTTP 409 (Conflict).
+- Map `InvalidCredentialsException` to HTTP 401 (Unauthorized).
+- Map `PasswordResetTokenExpiredException` to HTTP 400 (Bad Request).
+- Use `log.warn(...)` for all 4xx errors.
+- Ensure only `ApiResponse.error(e.getMessage())` is returned.
+- Update `GlobalExceptionHandlerTest` to cover the new mapping handlers.
+
 ## Notes
+
+- Required file: `backend/src/main/java/com/instagram/adapter/in/web/GlobalExceptionHandler.java` (Existing file)
+- Make sure new handlers appear before `@ExceptionHandler(Exception.class)`.
 
 ## History
 

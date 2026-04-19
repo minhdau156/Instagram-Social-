@@ -12,9 +12,11 @@ import com.instagram.domain.exception.PasswordResetTokenExpiredException;
 import com.instagram.domain.exception.UserAlreadyExistsException;
 import com.instagram.domain.exception.UserNotFoundException;
 import com.instagram.domain.model.AuthResult;
+import com.instagram.domain.model.PrivacyLevel;
 import com.instagram.domain.model.User;
 import com.instagram.domain.model.UserProfile;
 import com.instagram.domain.model.UserStats;
+import com.instagram.domain.model.UserStatus;
 import com.instagram.domain.port.in.ConfirmPasswordResetUseCase;
 import com.instagram.domain.port.in.GetUserProfileUseCase;
 import com.instagram.domain.port.in.LoginUseCase;
@@ -72,6 +74,9 @@ public class UserService implements RegisterUserUseCase, LoginUseCase, RefreshTo
                 .email(command.email())
                 .passwordHash(hashedPassword)
                 .fullName(command.fullName())
+                .status(UserStatus.ACTIVE)
+                .privacyLevel(PrivacyLevel.PUBLIC)
+                .isVerified(false)
                 .build();
 
         return userRepository.save(user);
@@ -162,15 +167,15 @@ public class UserService implements RegisterUserUseCase, LoginUseCase, RefreshTo
          * ── Replace the stub above with this block once TASK-1.12 is complete ──
          *
          * PasswordResetToken tokenRecord = passwordResetTokenRepository
-         *         .findByToken(command.token())
-         *         .orElseThrow(PasswordResetTokenExpiredException::new);
+         * .findByToken(command.token())
+         * .orElseThrow(PasswordResetTokenExpiredException::new);
          *
          * if (tokenRecord.isExpired()) {
-         *     throw new PasswordResetTokenExpiredException();
+         * throw new PasswordResetTokenExpiredException();
          * }
          *
          * User user = userRepository.findById(tokenRecord.userId())
-         *         .orElseThrow(() -> UserNotFoundException.withId(tokenRecord.userId()));
+         * .orElseThrow(() -> UserNotFoundException.withId(tokenRecord.userId()));
          *
          * String newHash = passwordHashPort.hash(command.newPassword());
          * User updated = user.withUpdatedPasswordHash(newHash);
@@ -186,6 +191,13 @@ public class UserService implements RegisterUserUseCase, LoginUseCase, RefreshTo
 
     @Override
     public UserProfile getUserProfile(GetUserProfileUseCase.Query query) {
+
+        if (query.targetUsername() == null) {
+            User user = userRepository.findById(query.currentUserId())
+                    .orElseThrow(() -> UserNotFoundException.withId(query.currentUserId()));
+            return new UserProfile(user, UserStats.zero(user.getId()), false);
+        }
+
         User user = userRepository.findByUsername(query.targetUsername())
                 .orElseThrow(() -> UserNotFoundException.withUsername(query.targetUsername()));
 
