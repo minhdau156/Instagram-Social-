@@ -1,4 +1,4 @@
-# Current Feature: TASK-1.18 — TypeScript Types
+# Current Feature
 
 ## Status
 
@@ -6,18 +6,7 @@ Not Started
 
 ## Goals
 
-- Define all TypeScript interfaces and types for the auth and user-management feature.
-- Ensure strict TypeScript usage (no `any`).
-- Use `interface` for extensibility and objects with methods, and `type` for unions/aliases.
-- Create `frontend/src/types/auth.ts` and `frontend/src/types/user.ts` and export them as named exports.
-
 ## Notes
-
-- `AuthTokens` matches `AuthResponse` DTO from backend.
-- `User` matches `UserResponse` from backend.
-- `UserProfile` wraps `User` with stats and follow state — matches `UserProfileResponse`.
-- These types are the **source of truth** on the frontend.
-- `bio` and `avatarUrl` in `User` are `string | null` (matching backend nullable columns).
 
 ## History
 
@@ -52,3 +41,4 @@ Not Started
 - TASK-1.16 — GlobalExceptionHandler: Auth Exception Mappings
 - Integrate Swagger to Auth Feature
 - TASK-1.17 - Test: Unit Test for UserService and Integration Test for AuthController
+- TASK-1.18 — TypeScript Types
