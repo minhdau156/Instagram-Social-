@@ -29,7 +29,7 @@ frontend/src/hooks/useAuth.ts
 ## Checklist
 
 ### `AuthContext.tsx`
-- [ ] Define context shape as an interface:
+- [x] Define context shape as an interface:
   ```ts
   interface AuthContextValue {
     user: User | null;
@@ -42,13 +42,13 @@ frontend/src/hooks/useAuth.ts
   }
   ```
 
-- [ ] Create the context with `createContext<AuthContextValue | null>(null)`
+- [x] Create the context with `createContext<AuthContextValue | null>(null)`
 
-- [ ] Create `AuthProvider` component:
-  - [ ] `useState<User | null>(null)` for `user`
-  - [ ] `useState<AuthTokens | null>(null)` for `tokens`
-  - [ ] `useState(true)` for `isLoading` (starts as loading until hydration completes)
-  - [ ] `useEffect` on mount:
+- [x] Create `AuthProvider` component:
+  - [x] `useState<User | null>(null)` for `user`
+  - [x] `useState<AuthTokens | null>(null)` for `tokens`
+  - [x] `useState(true)` for `isLoading` (starts as loading until hydration completes)
+  - [x] `useEffect` on mount:
     ```ts
     useEffect(() => {
       const accessToken = localStorage.getItem('accessToken');
@@ -62,7 +62,7 @@ frontend/src/hooks/useAuth.ts
         .finally(() => setIsLoading(false));
     }, []);
     ```
-  - [ ] Implement `login(payload)`:
+  - [x] Implement `login(payload)`:
     ```ts
     const login = async (payload: LoginPayload) => {
       const tokens = await authApi.login(payload);
@@ -73,9 +73,9 @@ frontend/src/hooks/useAuth.ts
       setUser(user);
     };
     ```
-  - [ ] Implement `register(payload)`:
+  - [x] Implement `register(payload)`:
     - Call `authApi.register(payload)` → then auto-login (call `login({ identifier: payload.email, password: payload.password })`)
-  - [ ] Implement `logout()`:
+  - [x] Implement `logout()`:
     ```ts
     const logout = async () => {
       const refreshToken = localStorage.getItem('refreshToken');
@@ -86,13 +86,13 @@ frontend/src/hooks/useAuth.ts
       setTokens(null);
     };
     ```
-  - [ ] Return `<AuthContext.Provider value={...}>{children}</AuthContext.Provider>`
+  - [x] Return `<AuthContext.Provider value={...}>{children}</AuthContext.Provider>`
 
-- [ ] Export `AuthProvider` as a named export
-- [ ] Export `AuthContext` as a named export
+- [x] Export `AuthProvider` as a named export
+- [x] Export `AuthContext` as a named export
 
 ### `useAuth.ts`
-- [ ] Create `frontend/src/hooks/useAuth.ts`:
+- [x] Create `frontend/src/hooks/useAuth.ts`:
   ```ts
   import { useContext } from 'react';
   import { AuthContext } from '../context/AuthContext';
@@ -105,7 +105,7 @@ frontend/src/hooks/useAuth.ts
   ```
 
 ### Integration
-- [ ] Wrap the app with `<AuthProvider>` in `main.tsx` (or `App.tsx`), outside `<QueryClientProvider>` but inside it if React Query is needed for the initial user fetch
+- [x] Wrap the app with `<AuthProvider>` in `main.tsx` (or `App.tsx`), outside `<QueryClientProvider>` but inside it if React Query is needed for the initial user fetch
 
-- [ ] Verify: refresh the page while logged in — the user stays logged in (hydration from localStorage)
-- [ ] Verify: open DevTools → clear localStorage → refresh → user is logged out
+- [x] Verify: refresh the page while logged in — the user stays logged in (hydration from localStorage)
+- [x] Verify: open DevTools → clear localStorage → refresh → user is logged out

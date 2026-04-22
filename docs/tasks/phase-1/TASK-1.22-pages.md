@@ -30,11 +30,15 @@ frontend/src/pages/
 
 - Install React Hook Form if not already present: `npm install react-hook-form`.
 - All pages must display an `<Alert severity="error">` when the API call fails.
+- **MUI Layout Tips (No Custom CSS Needed)**:
+  - **Auth Pages Layout:** Use `<Container maxWidth="xs">` to center the page instantly, and wrap your form inputs in a `<Stack spacing={3}>` to handle margins automatically.
+  - **Profile Layouts:** Use `<Stack direction="row" alignItems="center" spacing={4}>` to put the Avatar on the left and user details on the right seamlessly.
+  - **Avatar Styling:** Use the MUI `<Avatar>` component and adjust its size with the `sx` prop: `<Avatar src={url} sx={{ width: 120, height: 120 }} />`.
+  - **Empty States:** Use `<Box sx={{ height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'grey.100' }}>` for empty posts.
 - `RegisterPage` is a multi-step form (MUI `Stepper`).
 - `ProfilePage` shows the current user's own profile with an edit button.
 - `PublicProfilePage` shows any user by `:username` URL param.
-- Avatar display uses MUI `Avatar` component.
-- Stats (posts / followers / following) use a simple horizontal flex row.
+- Stats (posts / followers / following) use a simple horizontal flex row via `<Stack direction="row" spacing={3}>`.
 
 ## Checklist
 

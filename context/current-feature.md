@@ -1,4 +1,4 @@
-# Current Feature
+# Current Feature: TASK-1.20 — AuthContext & useAuth Hook
 
 ## Status
 
@@ -6,7 +6,19 @@ Not Started
 
 ## Goals
 
+- Create `AuthContext` to manage global authentication state (current user + tokens).
+- Expose `login`, `logout`, and `register` functions.
+- Persist `accessToken` and `refreshToken` in `localStorage` for session durability.
+- Fetch current user from API on mount if an access token exists.
+- Expose `isLoading` flag during the initial hydration request.
+- Create a `useAuth` convenience hook that errors if outside the provider.
+
 ## Notes
+
+- Wrap application in `main.tsx` or `App.tsx` with `<AuthProvider>`.
+- `isAuthenticated` is purely derived from `!!state.user`.
+- On `login`, update both context and `localStorage`.
+- On `logout`, clean up backend (call api logout), wipe `localStorage`, and reset context.
 
 ## History
 
