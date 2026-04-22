@@ -1,4 +1,4 @@
-# Current Feature
+# Current Feature: TASK-1.19 — API Services
 
 ## Status
 
@@ -6,7 +6,16 @@ Not Started
 
 ## Goals
 
+- Create `authApi.ts` and `usersApi.ts` for frontend API service layer.
+- Use shared `api` Axios instance for all requests.
+- Return typed data unwrapped from Axios `ApiResponse<T>` envelope.
+- Ensure no React hooks inside these files (pure async functions only).
+
 ## Notes
+
+- API functions return the `.data` property of the Axios response (which evaluates to `ApiResponse<T>.data`).
+- The Axios interceptor handles 401 refresh automatically.
+- `usersApi.uploadAvatar` uses `FormData` and sets `Content-Type: multipart/form-data` header.
 
 ## History
 

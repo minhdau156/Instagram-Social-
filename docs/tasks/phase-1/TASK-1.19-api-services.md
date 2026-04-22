@@ -28,7 +28,7 @@ frontend/src/api/
 ## Checklist
 
 ### `authApi.ts`
-- [ ] Create `frontend/src/api/authApi.ts`:
+- [x] Create `frontend/src/api/authApi.ts`:
   ```ts
   import { api } from './client';
   import type {
@@ -59,7 +59,7 @@ frontend/src/api/
   ```
 
 ### `usersApi.ts`
-- [ ] Create `frontend/src/api/usersApi.ts`:
+- [x] Create `frontend/src/api/usersApi.ts`:
   ```ts
   import { api } from './client';
   import type { User, UserProfile, UpdateProfilePayload } from '../types/user';
@@ -84,6 +84,6 @@ frontend/src/api/
   };
   ```
 
-- [ ] Confirm return types are `Promise<User>`, `Promise<AuthTokens>`, `Promise<UserProfile>` — not `Promise<AxiosResponse<...>>`
-- [ ] Confirm base path matches backend controller mappings (no trailing slash issues)
-- [ ] Manually test `authApi.register` and `authApi.login` against the running backend after completing TASK-1.13
+- [x] Confirm return types are `Promise<User>`, `Promise<AuthTokens>`, `Promise<UserProfile>` — not `Promise<AxiosResponse<...>>`
+- [x] Confirm base path matches backend controller mappings (no trailing slash issues)
+- [x] Manually test `authApi.register` and `authApi.login` against the running backend after completing TASK-1.13
