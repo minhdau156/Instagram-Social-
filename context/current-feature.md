@@ -40,3 +40,4 @@ Not Started
 - TASK-1.15 — Avatar Upload
 - TASK-1.16 — GlobalExceptionHandler: Auth Exception Mappings
 - Integrate Swagger to Auth Feature
+- TASK-1.17 - Test: Unit Test for UserService and Integration Test for AuthController

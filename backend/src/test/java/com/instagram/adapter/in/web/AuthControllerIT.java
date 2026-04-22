@@ -1,0 +1,264 @@
+package com.instagram.adapter.in.web;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.UUID;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.instagram.domain.exception.InvalidCredentialsException;
+import com.instagram.domain.exception.UserAlreadyExistsException;
+import com.instagram.domain.model.AuthResult;
+import com.instagram.domain.model.PrivacyLevel;
+import com.instagram.domain.model.User;
+import com.instagram.domain.model.UserStatus;
+import com.instagram.domain.port.in.ConfirmPasswordResetUseCase;
+import com.instagram.domain.port.in.GetUserProfileUseCase;
+import com.instagram.domain.port.in.LoginUseCase;
+import com.instagram.domain.port.in.LogoutUseCase;
+import com.instagram.domain.port.in.RefreshTokenUseCase;
+import com.instagram.domain.port.in.RegisterUserUseCase;
+import com.instagram.domain.port.in.RequestPasswordResetUseCase;
+import com.instagram.domain.port.in.UpdateProfileUseCase;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureTestDatabase
+@AutoConfigureMockMvc
+@TestPropertySource(properties = { "spring.flyway.enabled=false", "spring.jpa.hibernate.ddl-auto=create-drop" })
+public class AuthControllerIT {
+
+        @MockBean
+        private RegisterUserUseCase registerUserUseCase;
+
+        @MockBean
+        private LoginUseCase loginUseCase;
+
+        @MockBean
+        private RefreshTokenUseCase refreshTokenUseCase;
+
+        @MockBean
+        private LogoutUseCase logoutUseCase;
+
+        @MockBean
+        private RequestPasswordResetUseCase requestPasswordResetUseCase;
+
+        @MockBean
+        private ConfirmPasswordResetUseCase confirmPasswordResetUseCase;
+
+        @MockBean
+        private GetUserProfileUseCase getUserProfileUseCase;
+
+        @MockBean
+        private UpdateProfileUseCase updateProfileUseCase;
+
+        @Autowired
+        private ObjectMapper objectMapper;
+
+        @Autowired
+        private MockMvc mockMvc;
+
+        @Test
+        void register_returns201_onSuccess() throws Exception {
+                // Arrange
+                RegisterUserUseCase.Command command = new RegisterUserUseCase.Command(
+                                "testuser",
+                                "minh@gmail.com",
+                                "password",
+                                "TestUser");
+
+                User user = User.builder()
+                                .id(UUID.randomUUID())
+                                .username("testuser")
+                                .email("minh@gmail.com")
+                                .passwordHash("hashedPassword")
+                                .fullName("TestUser")
+                                .status(UserStatus.ACTIVE)
+                                .privacyLevel(PrivacyLevel.PUBLIC)
+                                .isVerified(false)
+                                .build();
+
+                when(registerUserUseCase.register(any(RegisterUserUseCase.Command.class)))
+                                .thenReturn(user);
+
+                // Act
+                mockMvc.perform(post("/api/v1/auth/register")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(command)))
+                                .andExpect(status().isCreated())
+                                .andExpect(jsonPath("$.data.username").value("testuser"))
+                                .andExpect(jsonPath("$.data.email").value("minh@gmail.com"))
+                                .andExpect(jsonPath("$.data.fullName").value("TestUser"));
+
+                // Assert
+                verify(registerUserUseCase, times(1)).register(any(RegisterUserUseCase.Command.class));
+        }
+
+        @Test
+        void register_returns400_whenUsernameBlank() throws Exception {
+                // Arrange
+                RegisterUserUseCase.Command command = new RegisterUserUseCase.Command(
+                                "",
+                                "minh@gmail.com",
+                                "password",
+                                "TestUser");
+
+                // Act
+                mockMvc.perform(post("/api/v1/auth/register")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(command)))
+                                .andExpect(status().isBadRequest());
+
+        }
+
+        @Test
+        void register_returns400_whenPasswordTooShort() throws Exception {
+                // Arrange
+                RegisterUserUseCase.Command command = new RegisterUserUseCase.Command(
+                                "testuser",
+                                "minh@gmail.com",
+                                "123",
+                                "TestUser");
+
+                // Act
+                mockMvc.perform(post("/api/v1/auth/register")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(command)))
+                                .andExpect(status().isBadRequest());
+
+        }
+
+        @Test
+        void register_returns409_whenUserAlreadyExists() throws Exception {
+                // Arrange
+                RegisterUserUseCase.Command command = new RegisterUserUseCase.Command(
+                                "testuser",
+                                "minh@gmail.com",
+                                "password",
+                                "TestUser");
+
+                when(registerUserUseCase.register(any(RegisterUserUseCase.Command.class)))
+                                .thenThrow(new UserAlreadyExistsException("username", "testuser"));
+
+                // Act
+                mockMvc.perform(post("/api/v1/auth/register")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(command)))
+                                .andExpect(status().isConflict())
+                                .andExpect(jsonPath("$.error").value("A user already exists with username: testuser"));
+
+                // Assert
+                verify(registerUserUseCase, times(1)).register(any(RegisterUserUseCase.Command.class));
+        }
+
+        @Test
+        void login_returns200_onSuccess() throws Exception {
+                // Arrange
+                LoginUseCase.Command command = new LoginUseCase.Command(
+                                "testuser",
+                                "password");
+
+                AuthResult authResult = new AuthResult(
+                                "accessToken",
+                                "refreshToken",
+                                3600L);
+
+                when(loginUseCase.login(any(LoginUseCase.Command.class)))
+                                .thenReturn(authResult);
+
+                // Act
+                mockMvc.perform(post("/api/v1/auth/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(command)))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.data.accessToken").value("accessToken"))
+                                .andExpect(jsonPath("$.data.refreshToken").value("refreshToken"))
+                                .andExpect(jsonPath("$.data.expiresIn").value(3600L));
+
+                // Assert
+                verify(loginUseCase, times(1)).login(any(LoginUseCase.Command.class));
+        }
+
+        @Test
+        void login_returns401_onValidCredential() throws Exception {
+                // Arrange
+                LoginUseCase.Command command = new LoginUseCase.Command(
+                                "testuser",
+                                "wrongpassword");
+
+                when(loginUseCase.login(any(LoginUseCase.Command.class)))
+                                .thenThrow(new InvalidCredentialsException());
+
+                // Act
+                mockMvc.perform(post("/api/v1/auth/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(command)))
+                                .andExpect(status().isUnauthorized())
+                                .andExpect(jsonPath("$.error").value("Invalid username or password"));
+
+                // Assert
+                verify(loginUseCase, times(1)).login(any(LoginUseCase.Command.class));
+        }
+
+        @Test
+        void refreshToken_returns200_onSuccess() throws Exception {
+                // Arrange
+                RefreshTokenUseCase.Command command = new RefreshTokenUseCase.Command(
+                                "refreshToken");
+
+                AuthResult authResult = new AuthResult(
+                                "accessToken",
+                                "refreshToken",
+                                3600L);
+
+                when(refreshTokenUseCase.refreshToken(any(RefreshTokenUseCase.Command.class)))
+                                .thenReturn(authResult);
+
+                // Act
+                mockMvc.perform(post("/api/v1/auth/refresh")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(command)))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.data.accessToken").value("accessToken"))
+                                .andExpect(jsonPath("$.data.refreshToken").value("refreshToken"))
+                                .andExpect(jsonPath("$.data.expiresIn").value(3600L));
+
+                // Assert
+                verify(refreshTokenUseCase, times(1)).refreshToken(any(RefreshTokenUseCase.Command.class));
+        }
+
+        @Test
+        void refreshToken_returns401_onInvalidToken() throws Exception {
+                // Arrange
+                RefreshTokenUseCase.Command command = new RefreshTokenUseCase.Command(
+                                "invalidRefreshToken");
+
+                when(refreshTokenUseCase.refreshToken(any(RefreshTokenUseCase.Command.class)))
+                                .thenThrow(new InvalidCredentialsException());
+
+                // Act
+                mockMvc.perform(post("/api/v1/auth/refresh")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(command)))
+                                .andExpect(status().isUnauthorized())
+                                .andExpect(jsonPath("$.error").value("Invalid username or password"));
+
+                // Assert
+                verify(refreshTokenUseCase, times(1)).refreshToken(any(RefreshTokenUseCase.Command.class));
+        }
+
+}
