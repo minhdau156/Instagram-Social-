@@ -26,7 +26,7 @@ frontend/src/components/common/ProtectedRoute.tsx
 
 ## Checklist
 
-- [ ] Create `frontend/src/components/common/ProtectedRoute.tsx`:
+- [x] Create `frontend/src/components/common/ProtectedRoute.tsx`:
   ```tsx
   import { Navigate, Outlet, useLocation } from 'react-router-dom';
   import { useAuth } from '../../hooks/useAuth';
@@ -46,12 +46,12 @@ frontend/src/components/common/ProtectedRoute.tsx
   }
   ```
 
-- [ ] Export as named export (not default)
+- [x] Export as named export (not default)
 
-- [ ] Verify the component handles three states:
-  - [ ] `isLoading = true` → renders `<PageLoader />`
-  - [ ] `isLoading = false, isAuthenticated = false` → renders `<Navigate to="/login" />`
-  - [ ] `isLoading = false, isAuthenticated = true` → renders `<Outlet />`
+- [x] Verify the component handles three states:
+  - [x] `isLoading = true` → renders `<PageLoader />`
+  - [x] `isLoading = false, isAuthenticated = false` → renders `<Navigate to="/login" />`
+  - [x] `isLoading = false, isAuthenticated = true` → renders `<Outlet />`
 
-- [ ] Manually test: navigate to `/profile` while logged out → should redirect to `/login`
-- [ ] Manually test: log in then navigate to `/profile` → should render the profile page
+- [x] Manually test: navigate to `/profile` while logged out → should redirect to `/login`
+- [x] Manually test: log in then navigate to `/profile` → should render the profile page
