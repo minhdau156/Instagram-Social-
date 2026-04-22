@@ -28,7 +28,7 @@ frontend/src/types/
 ## Checklist
 
 ### `auth.ts`
-- [ ] Create `frontend/src/types/auth.ts`:
+- [x] Create `frontend/src/types/auth.ts`:
   ```ts
   export interface AuthTokens {
     accessToken: string;
@@ -59,7 +59,7 @@ frontend/src/types/
   ```
 
 ### `user.ts`
-- [ ] Create `frontend/src/types/user.ts`:
+- [x] Create `frontend/src/types/user.ts`:
   ```ts
   export interface User {
     id: string;
@@ -87,5 +87,5 @@ frontend/src/types/
   }
   ```
 
-- [ ] Confirm all types are exported as **named exports** (no default exports in type files)
-- [ ] Confirm `bio` and `avatarUrl` on `User` are `string | null` (matching backend nullable columns)
+- [x] Confirm all types are exported as **named exports** (no default exports in type files)
+- [x] Confirm `bio` and `avatarUrl` on `User` are `string | null` (matching backend nullable columns)
