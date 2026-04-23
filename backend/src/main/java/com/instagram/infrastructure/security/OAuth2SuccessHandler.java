@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.instagram.domain.model.PrivacyLevel;
 import com.instagram.domain.model.User;
 import com.instagram.domain.model.UserStatus;
 import com.instagram.domain.port.out.TokenPort;
@@ -42,19 +43,25 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
         String email = oauth2User.getAttribute("email");
 
-        // Find existing user or create a new one; save() returns the persisted entity with its ID
         User resolvedUser = userRepository.findByEmail(email).orElseGet(() -> {
             log.info("New OAuth2 user — provisioning account for email={}", email);
+            String name = oauth2User.getAttribute("name");
+            String picture = oauth2User.getAttribute("picture");
+            String username = email.split("@")[0] + "_" + java.util.UUID.randomUUID().toString().substring(0, 5);
+
             User newUser = User.builder()
                     .email(email)
-                    .username(oauth2User.getAttribute("name"))
-                    .passwordHash(null)          // OAuth2 users have no password (nullable per domain model)
+                    .username(username)
+                    .fullName(name != null ? name : "Google User")
+                    .profilePictureUrl(picture)
+                    .passwordHash(null) // OAuth2 users have no password (nullable per domain model)
                     .status(UserStatus.ACTIVE)
+                    .privacyLevel(PrivacyLevel.PUBLIC)
                     .build();
             return userRepository.save(newUser); // returns persisted User with generated ID
         });
 
-        String accessToken  = tokenPort.generateAccessToken(resolvedUser.getId(), "ROLE_USER");
+        String accessToken = tokenPort.generateAccessToken(resolvedUser.getId(), "ROLE_USER");
         String refreshToken = tokenPort.generateRefreshToken(resolvedUser.getId());
 
         String redirectUrl = frontendUrl

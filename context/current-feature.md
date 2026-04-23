@@ -1,14 +1,25 @@
-# Current Feature
+# Current Feature: Convert Auth Pages to react-hook-form
 
 ## Status
 
-Not Started
+In Progress
 
 ## Goals
 
+- Convert `LoginPage` to use `useForm` from `react-hook-form`.
+- Convert `RegisterPage` to use `useForm` from `react-hook-form`.
+- Ensure all input fields are properly validated and display clear error messages.
+- Maintain existing Auth logic (`login` and `register` functions from `useAuth`) and Google OAuth button.
+- Write unit tests for the components to verify form validation.
+
 ## Notes
 
+- Feature description: "coverting the LoginPage and RegisterPage using react-hook-form".
+- Use MUI's `TextField` alongside `react-hook-form` (consider using the `Controller` wrapper or `register` with `error` and `helperText` props).
+
 ## History
+
+- TASK-1.22 — Auth & Profile Pages
 
 - TASK-0.1 — Initialize Project Setup and Configuration
 - TASK-0.2 — Makefile Automation Hub

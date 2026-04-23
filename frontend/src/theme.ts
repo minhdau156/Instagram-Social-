@@ -1,7 +1,7 @@
 import { createTheme, alpha } from '@mui/material/styles';
 
 const brandPurple = '#8B5CF6';
-const brandPink   = '#EC4899';
+const brandPink = '#EC4899';
 
 const theme = createTheme({
   palette: {
@@ -25,9 +25,9 @@ const theme = createTheme({
       secondary: '#9CA3AF',
     },
     divider: alpha('#ffffff', 0.08),
-    error:   { main: '#F87171' },
+    error: { main: '#F87171' },
     success: { main: '#34D399' },
-    info:    { main: '#60A5FA' },
+    info: { main: '#60A5FA' },
     warning: { main: '#FBBF24' },
   },
   typography: {

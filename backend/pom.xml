@@ -123,6 +123,13 @@
             <artifactId>minio</artifactId>
             <version>8.5.11</version>
         </dependency>
+
+        <!-- dotenv -->
+        <dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>4.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
