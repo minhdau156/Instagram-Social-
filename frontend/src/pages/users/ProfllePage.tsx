@@ -1,10 +1,10 @@
-import { Box, Button, CircularProgress, Container, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Container, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from "@mui/material";
 import { useAuth } from "../../hooks/useAuth";
 import Avatar from "@mui/material/Avatar";
 import { PageLoader } from "../../components/common/PageLoader";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { authApi } from "../../api/authApi";
+
 import { usersApi } from "../../api/usersApi";
 
 export const ProfilePage = () => {
