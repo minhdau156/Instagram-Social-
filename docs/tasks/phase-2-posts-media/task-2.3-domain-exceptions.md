@@ -26,6 +26,6 @@ backend/src/main/java/com/instagram/domain/exception/MediaUploadException.java
 
 ## ✅ Checklist
 
-- [ ] Create `backend/.../domain/exception/PostNotFoundException.java`
-- [ ] Create `backend/.../domain/exception/UnauthorizedPostAccessException.java`
-- [ ] Create `backend/.../domain/exception/MediaUploadException.java`
+- [x] Create `backend/.../domain/exception/PostNotFoundException.java` (HTTP 404)
+- [x] Create `backend/.../domain/exception/UnauthorizedPostAccessException.java` (HTTP 403)
+- [x] Create `backend/.../domain/exception/MediaUploadException.java` (HTTP 400/500)
