@@ -23,11 +23,36 @@ backend/src/main/java/com/instagram/domain/port/out/HashtagRepository.java
 - **Manual Testing:** Run the frontend locally (`npm run dev`) and visually verify the UI.
 - **Console Errors:** Check the browser console to ensure there are no React key warnings or unhandled exceptions.
 
+## 💡 Example
+
+```java
+// PostRepository.java
+public interface PostRepository {
+    Post save(Post post);
+    Optional<Post> findById(UUID id);
+    Page<Post> findByUserId(UUID userId, Pageable pageable);
+    void deleteById(UUID id);
+}
+
+// HashtagRepository.java
+public interface HashtagRepository {
+    Optional<Hashtag> findByName(String name);
+    Hashtag save(Hashtag hashtag);
+    Hashtag findOrCreate(String name); // find existing or create new
+}
+
+// PostMediaRepository.java
+public interface PostMediaRepository {
+    List<PostMedia> saveAll(List<PostMedia> mediaList);
+    List<PostMedia> findByPostId(UUID postId);
+}
+```
+
 ## ✅ Checklist
 
-- [ ] Create `backend/.../domain/port/out/PostRepository.java`
+- [x] Create `backend/.../domain/port/out/PostRepository.java`
   - `save(Post)`, `findById(UUID)`, `findByUserId(UUID, Pageable)`, `deleteById(UUID)`
-- [ ] Create `backend/.../domain/port/out/PostMediaRepository.java`
+- [x] Create `backend/.../domain/port/out/PostMediaRepository.java`
   - `saveAll(List<PostMedia>)`, `findByPostId(UUID)`
-- [ ] Create `backend/.../domain/port/out/HashtagRepository.java`
+- [x] Create `backend/.../domain/port/out/HashtagRepository.java`
   - `findByName(String)`, `save(Hashtag)`, `findOrCreate(String name)`
