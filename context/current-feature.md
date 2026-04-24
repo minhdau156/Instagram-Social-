@@ -50,3 +50,4 @@ Not Started
 - TASK-1.19 — API Services
 - TASK-1.20 — AuthContext & useAuth Hook
 - Convert Auth Pages to react-hook-form (Phase 1 Complete)
+- TASK-2.1 — Domain model: Post aggregate
