@@ -53,3 +53,4 @@ Not Started
 - TASK-2.1 — Domain model: Post aggregate
 - TASK-2.2 — Domain model: Hashtag
 - TASK-2.3 — Domain exceptions
+- TASK-2.4 — Out-ports
