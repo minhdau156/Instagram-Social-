@@ -48,21 +48,13 @@ public class PostPersistenceAdapter implements PostRepository {
     }
 
     @Override
-    public List<Post> findAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return jpaRepository.findByDeletedAtIsNullOrderByCreatedAtDesc(pageable)
-                .stream()
-                .map(this::toDomain)
-                .toList();
+    public org.springframework.data.domain.Page<Post> findByUserId(UUID userId, Pageable pageable) {
+        return org.springframework.data.domain.Page.empty(); // To be implemented in Task 2.9
     }
 
     @Override
-    public List<Post> findByUserId(UUID userId, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return jpaRepository.findByUserIdAndDeletedAtIsNullOrderByCreatedAtDesc(userId, pageable)
-                .stream()
-                .map(this::toDomain)
-                .toList();
+    public void deleteById(UUID id) {
+        // To be implemented in Task 2.9
     }
 
     // ── Mapping ──────────────────────────────────────────────────────────── //

@@ -39,4 +39,9 @@ public class MinioStorageAdapter implements MediaStoragePort {
             throw new RuntimeException("Failed to upload file to MinIO", e);
         }
     }
+
+    @Override
+    public String generatePresignedPutUrl(String key, java.time.Duration expiry) {
+        return null; // To be implemented in Task 2.10
+    }
 }

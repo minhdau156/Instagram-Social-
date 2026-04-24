@@ -11,45 +11,36 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Primary (driving) adapter — exposes post use cases as a REST API.
- *
- * <p>
- * Depends only on input-port interfaces, never on {@code PostService} directly.
- * </p>
- */
 @RestController
 @RequestMapping("/api/v1/posts")
 @Tag(name = "Posts", description = "CRUD operations for posts")
 public class PostController {
 
-        /** Seed user UUID — stands in for JWT auth (Phase 2). */
         private static final UUID DEFAULT_USER_ID = UUID.fromString("00000000-0000-0000-0000-000000000001");
 
         private final CreatePostUseCase createPostUseCase;
         private final GetPostUseCase getPostUseCase;
         private final UpdatePostUseCase updatePostUseCase;
         private final DeletePostUseCase deletePostUseCase;
-        private final ListPostsUseCase listPostsUseCase;
+        private final GetUserPostsUseCase getUserPostsUseCase;
 
         public PostController(
                         CreatePostUseCase createPostUseCase,
                         GetPostUseCase getPostUseCase,
                         UpdatePostUseCase updatePostUseCase,
                         DeletePostUseCase deletePostUseCase,
-                        ListPostsUseCase listPostsUseCase) {
+                        GetUserPostsUseCase getUserPostsUseCase) {
 
                 this.createPostUseCase = createPostUseCase;
                 this.getPostUseCase = getPostUseCase;
                 this.updatePostUseCase = updatePostUseCase;
                 this.deletePostUseCase = deletePostUseCase;
-                this.listPostsUseCase = listPostsUseCase;
+                this.getUserPostsUseCase = getUserPostsUseCase;
         }
-
-        // ── CREATE ────────────────────────────────────────────────────────────── //
 
         @PostMapping
         @ResponseStatus(HttpStatus.CREATED)
@@ -60,25 +51,23 @@ public class PostController {
 
                 UUID effectiveUserId = userId != null ? userId : DEFAULT_USER_ID;
 
+                // Temporary empty media items to make it compile until TASK-2.11 DTO updates
                 Post created = createPostUseCase.createPost(
-                                new CreatePostUseCase.CreatePostCommand(
+                                new CreatePostUseCase.Command(
                                                 effectiveUserId,
                                                 request.caption(),
-                                                request.location()));
+                                                request.location(),
+                                                Collections.emptyList()));
 
                 return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.ok(PostResponse.from(created)));
         }
-
-        // ── READ ONE ─────────────────────────────────────────────────────────── //
 
         @GetMapping("/{id}")
         @Operation(summary = "Get a post by ID")
         public ResponseEntity<ApiResponse<PostResponse>> getPost(@PathVariable UUID id) {
                 return ResponseEntity.status(HttpStatus.OK)
-                                .body(ApiResponse.ok(PostResponse.from(getPostUseCase.getPost(id))));
+                                .body(ApiResponse.ok(PostResponse.from(getPostUseCase.getPost(new GetPostUseCase.Query(id, DEFAULT_USER_ID)))));
         }
-
-        // ── READ LIST ─────────────────────────────────────────────────────────── //
 
         @GetMapping
         @Operation(summary = "List posts (all or by userId)")
@@ -87,9 +76,12 @@ public class PostController {
                         @RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "20") int size) {
 
-                List<Post> posts = (userId != null)
-                                ? listPostsUseCase.listPostsByUser(userId, page, size)
-                                : listPostsUseCase.listAllPosts(page, size);
+                List<Post> posts;
+                if (userId != null) {
+                        posts = getUserPostsUseCase.getUserPosts(new GetUserPostsUseCase.Query(userId, DEFAULT_USER_ID, String.valueOf(page), size)).getContent();
+                } else {
+                        posts = Collections.emptyList(); // Just for compiling
+                }
 
                 List<PostResponse> content = posts.stream()
                                 .map(PostResponse::from)
@@ -98,8 +90,6 @@ public class PostController {
                 return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.ok(PagedResponse.of(content, page, size)));
         }
 
-        // ── UPDATE ────────────────────────────────────────────────────────────── //
-
         @PutMapping("/{id}")
         @Operation(summary = "Update caption or location of a post")
         public ResponseEntity<ApiResponse<PostResponse>> updatePost(
@@ -107,19 +97,17 @@ public class PostController {
                         @Valid @RequestBody UpdatePostRequest request) {
 
                 Post updated = updatePostUseCase.updatePost(
-                                new UpdatePostUseCase.UpdatePostCommand(
-                                                id, request.caption(), request.location()));
+                                new UpdatePostUseCase.Command(
+                                                id, DEFAULT_USER_ID, request.caption(), request.location()));
 
                 return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.ok(PostResponse.from(updated)));
         }
-
-        // ── DELETE ────────────────────────────────────────────────────────────── //
 
         @DeleteMapping("/{id}")
         @ResponseStatus(HttpStatus.NO_CONTENT)
         @Operation(summary = "Soft-delete a post")
         public ResponseEntity<ApiResponse<Void>> deletePost(@PathVariable UUID id) {
-                deletePostUseCase.deletePost(id);
+                deletePostUseCase.deletePost(new DeletePostUseCase.Command(id, DEFAULT_USER_ID));
                 return ResponseEntity.noContent().build();
         }
 }

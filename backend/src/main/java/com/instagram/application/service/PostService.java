@@ -1,46 +1,54 @@
 package com.instagram.application.service;
 
-import com.instagram.domain.exception.PostNotFoundException;
-import com.instagram.domain.model.Post;
-import com.instagram.domain.model.PostStatus;
-import com.instagram.domain.port.in.*;
-import com.instagram.domain.port.out.PostRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import java.time.Duration;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-/**
- * Application service orchestrating all post-related use cases.
- *
- * <p>
- * Implements every input port for posts. Depends only on the
- * {@link PostRepository}
- * output port — zero JPA or HTTP knowledge here.
- * </p>
- */
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import com.instagram.domain.exception.PostNotFoundException;
+import com.instagram.domain.model.Hashtag;
+import com.instagram.domain.model.MediaType;
+import com.instagram.domain.model.Post;
+import com.instagram.domain.model.PostMedia;
+import com.instagram.domain.model.PostStatus;
+import com.instagram.domain.port.in.*;
+import com.instagram.domain.port.out.HashtagRepository;
+import com.instagram.domain.port.out.MediaStoragePort;
+import com.instagram.domain.port.out.PostMediaRepository;
+import com.instagram.domain.port.out.PostRepository;
+
 @Service
-@Transactional(readOnly = true)
 public class PostService implements
         CreatePostUseCase,
         GetPostUseCase,
         UpdatePostUseCase,
         DeletePostUseCase,
-        ListPostsUseCase {
+        GetUserPostsUseCase,
+        GenerateUploadUrlUseCase {
 
     private final PostRepository postRepository;
+    private final PostMediaRepository postMediaRepository;
+    private final HashtagRepository hashtagRepository;
+    private final MediaStoragePort mediaStoragePort;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, PostMediaRepository postMediaRepository,
+            HashtagRepository hashtagRepository, MediaStoragePort mediaStoragePort) {
         this.postRepository = postRepository;
+        this.postMediaRepository = postMediaRepository;
+        this.hashtagRepository = hashtagRepository;
+        this.mediaStoragePort = mediaStoragePort;
     }
 
-    // ── CreatePostUseCase ─────────────────────────────────────────────────── //
-
     @Override
-    @Transactional
-    public Post createPost(CreatePostCommand command) {
-        Post newPost = Post.builder()
+    public Post createPost(CreatePostUseCase.Command command) {
+        Post post = Post.builder()
+                .id(UUID.randomUUID())
                 .userId(command.userId())
                 .caption(command.caption())
                 .location(command.location())
@@ -50,52 +58,92 @@ public class PostService implements
                 .commentCount(0)
                 .saveCount(0)
                 .shareCount(0)
+                .createdAt(OffsetDateTime.now())
+                .updatedAt(OffsetDateTime.now())
                 .build();
 
-        return postRepository.save(newPost);
+        Post saved = postRepository.save(post);
+
+        if (command.mediaItems() != null) {
+            List<PostMedia> mediaList = command.mediaItems().stream().map(m -> PostMedia.builder()
+                    .id(UUID.randomUUID())
+                    .postId(saved.getId())
+                    .mediaUrl(m.mediaKey())
+                    .mediaType(MediaType.valueOf(m.mediaType().toUpperCase()))
+                    .width(m.width())
+                    .height(m.height())
+                    .duration(m.duration() != null ? m.duration().doubleValue() : null)
+                    .sortOrder(m.orderIndex())
+                    .createdAt(OffsetDateTime.now())
+                    .build()).toList();
+            postMediaRepository.saveAll(mediaList);
+        }
+
+        processHashtags(command.caption());
+        processMentions(command.caption());
+
+        return saved;
     }
 
-    // ── GetPostUseCase ────────────────────────────────────────────────────── //
-
     @Override
-    public Post getPost(UUID id) {
-        return postRepository.findById(id)
-                .orElseThrow(() -> new PostNotFoundException(id));
+    public Post getPost(GetPostUseCase.Query query) {
+        return postRepository.findById(query.id())
+                .orElseThrow(() -> new PostNotFoundException(query.id()));
     }
 
-    // ── UpdatePostUseCase ─────────────────────────────────────────────────── //
-
     @Override
-    @Transactional
-    public Post updatePost(UpdatePostCommand command) {
+    public Post updatePost(UpdatePostUseCase.Command command) {
         Post existing = postRepository.findById(command.id())
                 .orElseThrow(() -> new PostNotFoundException(command.id()));
 
         Post updated = existing.withUpdateCaptionAndLocation(command.caption(), command.location());
-        return postRepository.save(updated);
+        Post saved = postRepository.save(updated);
+
+        processHashtags(command.caption());
+        processMentions(command.caption());
+
+        return saved;
     }
 
-    // ── DeletePostUseCase ─────────────────────────────────────────────────── //
-
     @Override
-    @Transactional
-    public void deletePost(UUID id) {
-        Post existing = postRepository.findById(id)
-                .orElseThrow(() -> new PostNotFoundException(id));
+    public void deletePost(DeletePostUseCase.Command command) {
+        Post existing = postRepository.findById(command.id())
+                .orElseThrow(() -> new PostNotFoundException(command.id()));
 
         Post softDeleted = existing.withSoftDelete();
         postRepository.save(softDeleted);
     }
 
-    // ── ListPostsUseCase ──────────────────────────────────────────────────── //
-
     @Override
-    public List<Post> listAllPosts(int page, int size) {
-        return postRepository.findAll(page, size);
+    public Page<Post> getUserPosts(GetUserPostsUseCase.Query query) {
+        return postRepository.findByUserId(query.targetUserId(), PageRequest.of(0, query.limit()));
     }
 
     @Override
-    public List<Post> listPostsByUser(UUID userId, int page, int size) {
-        return postRepository.findByUserId(userId, page, size);
+    public GenerateUploadUrlUseCase.UploadUrl generateUploadUrl(GenerateUploadUrlUseCase.Command command) {
+        String mediaKey = "users/" + command.userId() + "/posts/" + UUID.randomUUID() + "-" + command.filename();
+        String presignedUrl = mediaStoragePort.generatePresignedPutUrl(mediaKey, Duration.ofMinutes(15));
+        return new GenerateUploadUrlUseCase.UploadUrl(presignedUrl, mediaKey);
+    }
+
+    private void processHashtags(String caption) {
+        if (caption == null || caption.isEmpty())
+            return;
+        Pattern.compile("#(\\w+)").matcher(caption).results()
+                .map(r -> r.group(1).toLowerCase())
+                .distinct()
+                .forEach(tag -> {
+                    Hashtag hashtag = hashtagRepository.findOrCreate(tag);
+                    hashtagRepository.save(hashtag.withIncrementedCount());
+                });
+    }
+
+    private void processMentions(String caption) {
+        if (caption == null || caption.isEmpty())
+            return;
+        Pattern.compile("@(\\w+)").matcher(caption).results()
+                .map(r -> r.group(1).toLowerCase())
+                .distinct()
+                .toList(); // For now, we just extract. In future, we would dispatch events or save.
     }
 }
