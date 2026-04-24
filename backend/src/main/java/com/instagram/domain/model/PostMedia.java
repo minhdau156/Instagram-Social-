@@ -65,7 +65,23 @@ public class PostMedia {
         return new Builder();
     }
 
-    public static class Builder {
+    public PostMedia copy() {
+        PostMedia postMedia = new PostMedia();
+        postMedia.id = this.id;
+        postMedia.postId = this.postId;
+        postMedia.mediaUrl = this.mediaUrl;
+        postMedia.mediaType = this.mediaType;
+        postMedia.thumbnailUrl = this.thumbnailUrl;
+        postMedia.width = this.width;
+        postMedia.height = this.height;
+        postMedia.duration = this.duration;
+        postMedia.fileSizeBytes = this.fileSizeBytes;
+        postMedia.sortOrder = this.sortOrder;
+        postMedia.createdAt = this.createdAt;
+        return postMedia;
+    }
+
+    public static final class Builder {
         private final PostMedia postMedia = new PostMedia();
 
         public Builder id(UUID id) {

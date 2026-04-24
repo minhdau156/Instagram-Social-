@@ -25,6 +25,6 @@ backend/src/main/java/com/instagram/domain/model/Hashtag.java
 
 ## ✅ Checklist
 
-- [ ] Create `backend/.../domain/model/Hashtag.java`
+- [x] Create `backend/.../domain/model/Hashtag.java`
   - Fields: `id`, `name`, `postCount`
   - Business method: `withIncrementedCount()`
