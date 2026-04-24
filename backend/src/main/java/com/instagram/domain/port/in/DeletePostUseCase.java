@@ -7,12 +7,8 @@ import java.util.UUID;
  */
 public interface DeletePostUseCase {
 
-    /**
-     * Soft-deletes the post by setting {@code deleted_at} and
-     * changing status to {@code DELETED}. The record is retained in the DB.
-     *
-     * @param id the post UUID to delete
-     * @throws com.instagram.domain.exception.PostNotFoundException if already deleted or not found
-     */
-    void deletePost(UUID id);
+    void deletePost(Command command);
+
+    record Command(UUID id, UUID requesterId) {
+    }
 }

@@ -9,12 +9,8 @@ import java.util.UUID;
  */
 public interface UpdatePostUseCase {
 
-    Post updatePost(UpdatePostCommand command);
+    Post updatePost(Command command);
 
-    /**
-     * @param id       post to update
-     * @param caption  new caption (null = no change)
-     * @param location new location (null = no change)
-     */
-    record UpdatePostCommand(UUID id, String caption, String location) {}
+    record Command(UUID id, UUID requesterId, String caption, String location) {
+    }
 }

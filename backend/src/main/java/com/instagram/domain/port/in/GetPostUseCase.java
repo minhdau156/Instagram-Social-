@@ -9,10 +9,8 @@ import java.util.UUID;
  */
 public interface GetPostUseCase {
 
-    /**
-     * @param id the post UUID
-     * @return the post domain object
-     * @throws com.instagram.domain.exception.PostNotFoundException if not found or deleted
-     */
-    Post getPost(UUID id);
+    Post getPost(Query query);
+
+    record Query(UUID id, UUID currentUserId) {
+    }
 }
