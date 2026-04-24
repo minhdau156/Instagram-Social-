@@ -100,7 +100,7 @@ public class Post {
      * Apply an edit to caption and/or location.
      * Returns a new Post with updated fields and refreshed timestamp.
      */
-    public Post withUpdate(String caption, String location) {
+    public Post withUpdateCaptionAndLocation(String caption, String location) {
         Post updated = this.copy();
         if (caption != null)
             updated.caption = caption;
@@ -117,6 +117,20 @@ public class Post {
         deleted.deletedAt = OffsetDateTime.now();
         deleted.updatedAt = OffsetDateTime.now();
         return deleted;
+    }
+
+    public Post withIncrementLikeCount() {
+        Post updated = this.copy();
+        updated.likeCount++;
+        updated.updatedAt = OffsetDateTime.now();
+        return updated;
+    }
+
+    public Post withDecrementLikeCount() {
+        Post updated = this.copy();
+        updated.likeCount--;
+        updated.updatedAt = OffsetDateTime.now();
+        return updated;
     }
 
     private Post copy() {

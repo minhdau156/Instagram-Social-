@@ -26,9 +26,9 @@ backend/src/main/java/com/instagram/domain/model/PostMedia.java
 
 ## ✅ Checklist
 
-- [ ] Create `backend/.../domain/model/Post.java`
+- [x] Create `backend/.../domain/model/Post.java`
   - Fields (from schema): `id`, `userId`, `caption`, `location`, `likeCount`, `commentCount`, `shareCount`, `viewCount`, `status`, `createdAt`, `updatedAt`
   - Builder pattern (no Lombok)
   - Business methods: `withUpdatedCaption(String caption, String location)`, `withSoftDelete()`, `withIncrementedLike()`, `withDecrementedLike()`
-- [ ] Create `backend/.../domain/model/PostMedia.java`
+- [x] Create `backend/.../domain/model/PostMedia.java`
   - Fields: `id`, `postId`, `mediaType` (`IMAGE`/`VIDEO`/`REEL`), `mediaUrl`, `thumbnailUrl`, `width`, `height`, `duration`, `orderIndex`

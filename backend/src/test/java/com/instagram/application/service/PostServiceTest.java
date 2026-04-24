@@ -95,7 +95,7 @@ class PostServiceTest {
     @Test
     @DisplayName("updatePost() applies caption changes and saves")
     void updatePost_shouldApplyChangesAndSave() {
-        Post updatedPost = samplePost.withUpdate("New caption", null);
+        Post updatedPost = samplePost.withUpdateCaptionAndLocation("New caption", null);
         when(postRepository.findById(postId)).thenReturn(Optional.of(samplePost));
         when(postRepository.save(any(Post.class))).thenReturn(updatedPost);
 
@@ -126,8 +126,7 @@ class PostServiceTest {
 
         postService.deletePost(postId);
 
-        verify(postRepository).save(argThat(p ->
-                p.getDeletedAt() != null && p.getStatus() == PostStatus.DELETED));
+        verify(postRepository).save(argThat(p -> p.getDeletedAt() != null && p.getStatus() == PostStatus.DELETED));
     }
 
     @Test

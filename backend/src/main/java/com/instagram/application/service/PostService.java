@@ -71,7 +71,7 @@ public class PostService implements
         Post existing = postRepository.findById(command.id())
                 .orElseThrow(() -> new PostNotFoundException(command.id()));
 
-        Post updated = existing.withUpdate(command.caption(), command.location());
+        Post updated = existing.withUpdateCaptionAndLocation(command.caption(), command.location());
         return postRepository.save(updated);
     }
 
