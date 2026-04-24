@@ -55,3 +55,4 @@ Not Started
 - TASK-2.3 — Domain exceptions
 - TASK-2.4 — Out-ports
 - TASK-2.5 — In-ports (one file each)
+- TASK-2.6 — Domain service: PostService
