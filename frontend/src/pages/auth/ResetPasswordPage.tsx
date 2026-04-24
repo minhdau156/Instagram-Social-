@@ -2,7 +2,7 @@ import { Container, Typography, Alert, Stack, TextField, Button, CircularProgres
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+
 import { authApi } from "../../api/authApi";
 
 export const ResetPasswordPage = () => {
