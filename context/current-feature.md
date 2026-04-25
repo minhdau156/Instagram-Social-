@@ -1,4 +1,4 @@
-# Current Feature: TASK-2.11 — REST controllers & DTOs
+# Current Feature
 
 ## Status
 
@@ -6,19 +6,11 @@ Not Started
 
 ## Goals
 
-- Create `PostController.java` with `POST`, `GET`, `PUT`, `DELETE`, `GET /users/{userId}/posts`
-- Create `MediaController.java` with `POST /media/upload-url`
-- Create Request DTOs: `CreatePostRequest`, `UpdatePostRequest`, `MediaItemRequest`, `UploadUrlRequest`
-- Create Response DTOs: `PostResponse`, `MediaItemResponse`, `UploadUrlResponse`
-- All endpoints documented with Swagger `@Operation` + `@ApiResponses`
-- Build passes: `mvn clean compile`
+<!-- Add goals here -->
 
 ## Notes
 
-- Controllers live in `adapter/in/web/`, DTOs in `adapter/in/web/dto/request` and `adapter/in/web/dto/response`
-- Extract `userId` from JWT via `@AuthenticationPrincipal UserDetails` → `UUID.fromString(userDetails.getUsername())`
-- Use Java `record` for all DTOs with Bean Validation annotations
-- Wrap all responses in the existing `ApiResponse<T>` wrapper
+<!-- Add notes here -->
 
 ## History
 
@@ -68,3 +60,4 @@ Not Started
 - TASK-2.8 — JPA repositories
 - TASK-2.9 — Persistence adapters
 - TASK-2.10 — MinIO pre-signed URL adapter
+- TASK-2.11 — REST controllers & DTOs
