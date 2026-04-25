@@ -1,5 +1,6 @@
 package com.instagram.adapter.in.web.dto.response;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import com.instagram.domain.model.PostMedia;
@@ -11,7 +12,7 @@ public record MediaItemResponse(
         String thumbnailUrl,
         Integer width,
         Integer height,
-        Double duration,
+        BigDecimal duration,
         Long fileSizeBytes,
         String sortOrder) {
     public static MediaItemResponse from(PostMedia m) {
