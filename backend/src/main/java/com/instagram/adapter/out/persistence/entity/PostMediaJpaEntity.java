@@ -9,6 +9,7 @@ import org.hibernate.type.SqlTypes;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -49,7 +50,7 @@ public class PostMediaJpaEntity {
     private Integer height;
 
     @Column(name = "duration_secs", precision = 8, scale = 2)
-    private Double durationSecs;
+    private BigDecimal durationSecs;
 
     @Column(name = "file_size_bytes")
     private Long fileSizeBytes;

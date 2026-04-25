@@ -1,5 +1,6 @@
 package com.instagram.application.service;
 
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -72,7 +73,7 @@ public class PostService implements
                     .mediaType(MediaType.valueOf(m.mediaType().toUpperCase()))
                     .width(m.width())
                     .height(m.height())
-                    .duration(m.duration() != null ? m.duration().doubleValue() : null)
+                    .duration(m.duration() != null ? BigDecimal.valueOf(m.duration()) : null)
                     .fileSizeBytes(m.fileSizeBytes())
                     .sortOrder(m.sortOrder())
                     .createdAt(OffsetDateTime.now())

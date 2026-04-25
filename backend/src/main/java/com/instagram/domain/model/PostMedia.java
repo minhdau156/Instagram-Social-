@@ -1,5 +1,6 @@
 package com.instagram.domain.model;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -11,7 +12,7 @@ public class PostMedia {
     private String thumbnailUrl;
     private Integer width;
     private Integer height;
-    private Double duration;
+    private BigDecimal duration;
     private Long fileSizeBytes;
     private String sortOrder;
     private OffsetDateTime createdAt;
@@ -45,7 +46,7 @@ public class PostMedia {
         return height;
     }
 
-    public Double getDuration() {
+    public BigDecimal getDuration() {
         return duration;
     }
 
@@ -119,7 +120,7 @@ public class PostMedia {
             return this;
         }
 
-        public Builder duration(Double duration) {
+        public Builder duration(BigDecimal duration) {
             postMedia.duration = duration;
             return this;
         }
