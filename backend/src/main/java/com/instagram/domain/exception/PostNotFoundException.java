@@ -15,7 +15,4 @@ public class PostNotFoundException extends RuntimeException {
         this.postId = postId;
     }
 
-    public UUID getPostId() {
-        return postId;
-    }
 }

@@ -13,7 +13,7 @@ public class PostMedia {
     private Integer height;
     private Double duration;
     private Long fileSizeBytes;
-    private int sortOrder;
+    private String sortOrder;
     private OffsetDateTime createdAt;
 
     // getters
@@ -53,7 +53,7 @@ public class PostMedia {
         return fileSizeBytes;
     }
 
-    public int getSortOrder() {
+    public String getSortOrder() {
         return sortOrder;
     }
 
@@ -129,7 +129,7 @@ public class PostMedia {
             return this;
         }
 
-        public Builder sortOrder(int sortOrder) {
+        public Builder sortOrder(String sortOrder) {
             postMedia.sortOrder = sortOrder;
             return this;
         }

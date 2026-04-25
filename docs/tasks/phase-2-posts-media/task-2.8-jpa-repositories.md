@@ -26,6 +26,33 @@ backend/src/main/java/com/instagram/infrastructure/persistence/repository/Mentio
 - **Manual Testing:** Run the frontend locally (`npm run dev`) and visually verify the UI.
 - **Console Errors:** Check the browser console to ensure there are no React key warnings or unhandled exceptions.
 
+## 💡 Example
+
+```java
+// PostJpaRepository.java
+public interface PostJpaRepository extends JpaRepository<PostJpaEntity, UUID> {
+    // Feed: user's non-deleted published posts, newest first
+    Page<PostJpaEntity> findByUserIdAndStatusNot(
+        UUID userId, PostStatus status, Pageable pageable);
+
+    // Single post lookup that skips soft-deleted
+    Optional<PostJpaEntity> findByIdAndStatusNot(UUID id, PostStatus status);
+}
+
+// HashtagJpaRepository.java
+public interface HashtagJpaRepository extends JpaRepository<HashtagJpaEntity, UUID> {
+    Optional<HashtagJpaEntity> findByName(String name);
+
+    // Top trending hashtags for the Explore page
+    Page<HashtagJpaEntity> findTopByOrderByPostCountDesc(Pageable pageable);
+}
+
+// PostMediaJpaRepository.java
+public interface PostMediaJpaRepository extends JpaRepository<PostMediaJpaEntity, UUID> {
+    List<PostMediaJpaEntity> findByPostIdOrderBySortOrderAsc(UUID postId);
+}
+```
+
 ## ✅ Checklist
 
 - [ ] `PostJpaRepository.java` — `findByUserIdAndStatusNot(UUID, PostStatus, Pageable)`, `findByIdAndStatusNot(UUID, PostStatus)`

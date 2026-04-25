@@ -26,7 +26,8 @@ public interface CreatePostUseCase {
             Integer width,
             Integer height,
             Integer duration,
-            int orderIndex) {
+            Long fileSizeBytes,
+            String sortOrder) {
     }
 
     record Command(

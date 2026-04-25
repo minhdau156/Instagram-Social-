@@ -27,6 +27,51 @@ backend/src/main/java/com/instagram/infrastructure/persistence/entity/MentionJpa
 - **Manual Testing:** Run the frontend locally (`npm run dev`) and visually verify the UI.
 - **Console Errors:** Check the browser console to ensure there are no React key warnings or unhandled exceptions.
 
+## 💡 Example
+
+```java
+// PostJpaEntity.java
+@Entity
+@Table(name = "posts")
+public class PostJpaEntity extends BaseJpaEntity {
+    @Id
+    @Column(nullable = false, updatable = false)
+    private UUID id;
+
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
+
+    @Column(columnDefinition = "TEXT")
+    private String caption;
+
+    @Column(length = 255)
+    private String location;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PostStatus status;
+
+    @Column(name = "like_count", nullable = false)
+    private int likeCount;
+
+    @Column(name = "deleted_at")
+    private OffsetDateTime deletedAt;
+
+    // Getters and setters...
+}
+
+// PostHashtagJpaEntity.java — composite key example
+@Entity
+@Table(name = "post_hashtags")
+public class PostHashtagJpaEntity {
+    @EmbeddedId
+    private PostHashtagId id;
+
+    @Embeddable
+    public record PostHashtagId(UUID postId, UUID hashtagId) implements Serializable {}
+}
+```
+
 ## ✅ Checklist
 
 - [ ] Create `PostJpaEntity.java` — `@Entity @Table(name = "posts")`, extends `BaseJpaEntity`

@@ -62,7 +62,7 @@ public class PostPersistenceAdapter implements PostRepository {
     private PostJpaEntity toEntity(Post post) {
         PostJpaEntity jpaEntity = PostJpaEntity.builder()
                 .id(post.getId()) // null → Hibernate generates UUID
-                .userId(post.getUserId())
+                .user(UserJpaEntity.builder().id(post.getUserId()).build())
                 .caption(post.getCaption())
                 .location(post.getLocation())
                 .status(post.getStatus() != null ? post.getStatus() : PostStatus.PUBLISHED)
@@ -81,7 +81,7 @@ public class PostPersistenceAdapter implements PostRepository {
     private Post toDomain(PostJpaEntity e) {
         return Post.builder()
                 .id(e.getId())
-                .userId(e.getUserId())
+                .userId(e.getUser() != null ? e.getUser().getId() : null)
                 .caption(e.getCaption())
                 .location(e.getLocation())
                 .status(e.getStatus())

@@ -30,6 +30,56 @@ backend/src/main/java/com/instagram/infrastructure/web/dto/UploadUrlResponse.jav
 - **Manual Testing:** Run the frontend locally (`npm run dev`) and visually verify the UI.
 - **Console Errors:** Check the browser console to ensure there are no React key warnings or unhandled exceptions.
 
+## 💡 Example
+
+```java
+// PostController.java
+@RestController
+@RequestMapping("/api/v1/posts")
+@Tag(name = "Posts", description = "Post management endpoints")
+public class PostController {
+
+    private final CreatePostUseCase createPostUseCase;
+    private final GetPostUseCase getPostUseCase;
+
+    @PostMapping
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Create a new post")
+    @ApiResponse(responseCode = "201", description = "Post created")
+    public ResponseEntity<PostResponse> createPost(
+            @RequestBody @Valid CreatePostRequest request,
+            @AuthenticationPrincipal UserDetails user) {
+        UUID userId = UUID.fromString(user.getUsername());
+        Post post = createPostUseCase.createPost(request.toCommand(userId));
+        return ResponseEntity.status(HttpStatus.CREATED).body(PostResponse.from(post));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PostResponse> getPost(@PathVariable UUID id) {
+        Post post = getPostUseCase.getPost(new GetPostQuery(id));
+        return ResponseEntity.ok(PostResponse.from(post));
+    }
+}
+
+// CreatePostRequest.java
+public record CreatePostRequest(
+    String caption,
+    String location,
+    @NotEmpty List<MediaItemRequest> mediaItems
+) {
+    public CreatePostUseCase.CreatePostCommand toCommand(UUID userId) {
+        return new CreatePostUseCase.CreatePostCommand(userId, caption, location, ...);
+    }
+}
+
+// PostResponse.java
+public record PostResponse(UUID id, String caption, String location, int likeCount, ...) {
+    public static PostResponse from(Post post) {
+        return new PostResponse(post.getId(), post.getCaption(), post.getLocation(), post.getLikeCount(), ...);
+    }
+}
+```
+
 ## ✅ Checklist
 
 - [ ] Create `PostController.java`

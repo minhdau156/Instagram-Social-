@@ -13,6 +13,22 @@ Follow established project patterns to complete this task successfully.
 - **Manual Testing:** Run the frontend locally (`npm run dev`) and visually verify the UI.
 - **Console Errors:** Check the browser console to ensure there are no React key warnings or unhandled exceptions.
 
+## 💡 Example
+
+```tsx
+// frontend/src/App.tsx (add inside <Routes>)
+import { PostPage } from './pages/posts/PostPage';
+
+function App() {
+  return (
+    <Routes>
+      {/* ... existing routes ... */}
+      <Route path="/p/:postId" element={<PostPage />} />
+    </Routes>
+  );
+}
+```
+
 ## ✅ Checklist
 
 - [ ] Add route `/p/:postId` → `PostPage`

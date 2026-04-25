@@ -25,6 +25,52 @@ backend/src/main/java/com/instagram/infrastructure/persistence/adapter/HashtagPe
 - **Manual Testing:** Run the frontend locally (`npm run dev`) and visually verify the UI.
 - **Console Errors:** Check the browser console to ensure there are no React key warnings or unhandled exceptions.
 
+## 💡 Example
+
+```java
+// PostPersistenceAdapter.java
+@Component
+public class PostPersistenceAdapter implements PostRepository {
+
+    private final PostJpaRepository jpaRepository;
+
+    public PostPersistenceAdapter(PostJpaRepository jpaRepository) {
+        this.jpaRepository = jpaRepository;
+    }
+
+    @Override
+    public Post save(Post post) {
+        PostJpaEntity entity = toEntity(post);
+        return toDomain(jpaRepository.save(entity));
+    }
+
+    @Override
+    public Optional<Post> findById(UUID id) {
+        return jpaRepository.findByIdAndStatusNot(id, PostStatus.DELETED)
+            .map(this::toDomain);
+    }
+
+    // Private mapping methods — no Lombok, no MapStruct needed
+    private PostJpaEntity toEntity(Post post) {
+        PostJpaEntity e = new PostJpaEntity();
+        e.setId(post.getId());
+        e.setUserId(post.getUserId());
+        e.setCaption(post.getCaption());
+        // ... all fields
+        return e;
+    }
+
+    private Post toDomain(PostJpaEntity e) {
+        return Post.builder()
+            .id(e.getId())
+            .userId(e.getUserId())
+            .caption(e.getCaption())
+            // ... all fields
+            .build();
+    }
+}
+```
+
 ## ✅ Checklist
 
 - [ ] Create `PostPersistenceAdapter.java` — `implements PostRepository` with private `toEntity` / `toDomain`

@@ -73,7 +73,8 @@ public class PostService implements
                     .width(m.width())
                     .height(m.height())
                     .duration(m.duration() != null ? m.duration().doubleValue() : null)
-                    .sortOrder(m.orderIndex())
+                    .fileSizeBytes(m.fileSizeBytes())
+                    .sortOrder(m.sortOrder())
                     .createdAt(OffsetDateTime.now())
                     .build()).toList();
             postMediaRepository.saveAll(mediaList);

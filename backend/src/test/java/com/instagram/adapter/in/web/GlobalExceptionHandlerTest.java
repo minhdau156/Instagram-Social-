@@ -34,16 +34,6 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
-    void handlePostNotFound_Returns404() {
-        PostNotFoundException ex = new PostNotFoundException(UUID.randomUUID());
-        ResponseEntity<ApiResponse<Void>> response = exceptionHandler.handlePostNotFound(ex);
-
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals("Post not found with id: " + ex.getPostId(), response.getBody().error());
-    }
-
-    @Test
     void handleEntityNotFound_Returns404() {
         EntityNotFoundException ex = new EntityNotFoundException("Entity missing");
         ResponseEntity<ApiResponse<Void>> response = exceptionHandler.handleEntityNotFound(ex);

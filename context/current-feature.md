@@ -1,16 +1,22 @@
-# Current Feature
+# Current Feature: TASK-2.7 — JPA entities
 
 ## Status
 
-Not Started
+In Progress
 
 ## Goals
 
-<!-- Add goals here -->
+- Implement `PostJpaEntity` mapping to `posts` table
+- Implement `PostMediaJpaEntity` mapping to `post_media` table
+- Implement `HashtagJpaEntity` mapping to `hashtags` table
+- Implement `PostHashtagJpaEntity` mapping to `post_hashtags` table
+- Implement `MentionJpaEntity` mapping to `mentions` table
 
 ## Notes
 
-<!-- Add notes here -->
+- Extend `BaseJpaEntity` for audit fields
+- Map relationships properly (`@OneToMany`, `@ManyToOne`, etc.) with correct fetch types (prefer `FetchType.LAZY`)
+- Ensure columns match `schema.sql` exactly
 
 ## History
 

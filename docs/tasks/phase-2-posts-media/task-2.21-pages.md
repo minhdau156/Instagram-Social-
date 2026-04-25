@@ -19,6 +19,25 @@ frontend/src/pages/posts/PostPage.tsx
 - **Manual Testing:** Run the frontend locally (`npm run dev`) and visually verify the UI.
 - **Console Errors:** Check the browser console to ensure there are no React key warnings or unhandled exceptions.
 
+## 💡 Example
+
+```tsx
+// frontend/src/pages/posts/PostPage.tsx
+export const PostPage: React.FC = () => {
+  const { postId } = useParams<{ postId: string }>();
+  const { data: post, isLoading, isError } = usePost(postId!);
+
+  if (isLoading) return <CircularProgress />;
+  if (isError || !post) return <Typography>Post not found.</Typography>;
+
+  return (
+    <Container maxWidth="sm" sx={{ py: 4 }}>
+      <PostCard post={post} />
+    </Container>
+  );
+};
+```
+
 ## ✅ Checklist
 
 - [ ] Create `frontend/src/pages/posts/PostPage.tsx` — standalone post page at `/p/:postId`
