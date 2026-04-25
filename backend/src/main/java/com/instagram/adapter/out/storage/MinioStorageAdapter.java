@@ -1,14 +1,17 @@
 package com.instagram.adapter.out.storage;
 
 import java.io.ByteArrayInputStream;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.instagram.domain.port.out.MediaStoragePort;
 
+import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
+import io.minio.http.Method;
 
 @Component
 public class MinioStorageAdapter implements MediaStoragePort {
@@ -17,7 +20,7 @@ public class MinioStorageAdapter implements MediaStoragePort {
     private final String bucket;
     private final String endpoint;
 
-    public MinioStorageAdapter(MinioClient minioClient, 
+    public MinioStorageAdapter(MinioClient minioClient,
             @Value("${app.minio.bucket}") String bucket,
             @Value("${app.minio.endpoint}") String endpoint) {
         this.minioClient = minioClient;
@@ -42,6 +45,16 @@ public class MinioStorageAdapter implements MediaStoragePort {
 
     @Override
     public String generatePresignedPutUrl(String key, java.time.Duration expiry) {
-        return null; // To be implemented in Task 2.10
+        try {
+            return minioClient.getPresignedObjectUrl(
+                    GetPresignedObjectUrlArgs.builder()
+                            .method(Method.PUT)
+                            .bucket(bucket)
+                            .object(key)
+                            .expiry((int) expiry.toSeconds(), TimeUnit.SECONDS)
+                            .build());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to generate presigned put URL for MinIO", e);
+        }
     }
 }

@@ -1,4 +1,4 @@
-# Current Feature
+# Current Feature: TASK-2.10 — MinIO pre-signed URL adapter
 
 ## Status
 
@@ -6,11 +6,12 @@ Not Started
 
 ## Goals
 
-<!-- Add goals here -->
+- Update `MinioStorageAdapter.java` to add: `generatePresignedPutUrl(String key, Duration expiry) → String`
+- Ensure `MediaStoragePort` interface includes `generatePresignedPutUrl`
 
 ## Notes
 
-<!-- Add notes here -->
+- Use `MinioClient.getPresignedObjectUrl` with `Method.PUT` and proper expiry logic.
 
 ## History
 
