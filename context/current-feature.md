@@ -61,3 +61,4 @@ Not Started
 - TASK-2.9 — Persistence adapters
 - TASK-2.10 — MinIO pre-signed URL adapter
 - TASK-2.11 — REST controllers & DTOs
+- TASK-2.12 — Register exception mappings
