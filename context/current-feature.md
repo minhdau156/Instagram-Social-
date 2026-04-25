@@ -1,4 +1,4 @@
-# Current Feature: TASK-2.10 — MinIO pre-signed URL adapter
+# Current Feature
 
 ## Status
 
@@ -6,12 +6,11 @@ Not Started
 
 ## Goals
 
-- Update `MinioStorageAdapter.java` to add: `generatePresignedPutUrl(String key, Duration expiry) → String`
-- Ensure `MediaStoragePort` interface includes `generatePresignedPutUrl`
+<!-- Add goals here -->
 
 ## Notes
 
-- Use `MinioClient.getPresignedObjectUrl` with `Method.PUT` and proper expiry logic.
+<!-- Add notes here -->
 
 ## History
 
@@ -60,3 +59,4 @@ Not Started
 - TASK-2.7 — JPA entities
 - TASK-2.8 — JPA repositories
 - TASK-2.9 — Persistence adapters
+- TASK-2.10 — MinIO pre-signed URL adapter
