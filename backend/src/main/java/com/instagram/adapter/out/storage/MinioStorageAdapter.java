@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.instagram.domain.exception.MediaUploadException;
 import com.instagram.domain.port.out.MediaStoragePort;
 
 import io.minio.GetPresignedObjectUrlArgs;
@@ -40,7 +41,7 @@ public class MinioStorageAdapter implements MediaStoragePort {
                     .build());
             return String.format("%s/%s/%s", endpoint, bucket, key);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to upload file to MinIO", e);
+            throw new MediaUploadException("Failed to upload file to MinIO");
         }
     }
 
@@ -55,7 +56,7 @@ public class MinioStorageAdapter implements MediaStoragePort {
                             .expiry((int) expiry.toSeconds(), TimeUnit.SECONDS)
                             .build());
         } catch (Exception e) {
-            throw new RuntimeException("Failed to generate presigned put URL for MinIO", e);
+            throw new MediaUploadException("Failed to generate presigned put URL for MinIO");
         }
     }
 }

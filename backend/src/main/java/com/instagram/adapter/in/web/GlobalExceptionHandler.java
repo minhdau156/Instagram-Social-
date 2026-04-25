@@ -2,8 +2,10 @@ package com.instagram.adapter.in.web;
 
 import com.instagram.adapter.in.web.dto.response.ApiResponse;
 import com.instagram.domain.exception.InvalidCredentialsException;
+import com.instagram.domain.exception.MediaUploadException;
 import com.instagram.domain.exception.PasswordResetTokenExpiredException;
 import com.instagram.domain.exception.PostNotFoundException;
+import com.instagram.domain.exception.UnauthorizedPostAccessException;
 import com.instagram.domain.exception.UserAlreadyExistsException;
 import com.instagram.domain.exception.UserNotFoundException;
 
@@ -95,6 +97,18 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse<Void>> handlePasswordResetTokenExpired(PasswordResetTokenExpiredException ex) {
         log.warn(ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.error(ex.getMessage()));
+    }
+
+    @ExceptionHandler(UnauthorizedPostAccessException.class)
+    public ResponseEntity<ApiResponse<Void>> handleUnauthorizedPostAccess(UnauthorizedPostAccessException ex) {
+        log.warn(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ApiResponse.error(ex.getMessage()));
+    }
+
+    @ExceptionHandler(MediaUploadException.class)
+    public ResponseEntity<ApiResponse<Void>> handleMediaUpload(MediaUploadException ex) {
+        log.warn(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.error(ex.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)
