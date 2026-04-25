@@ -1,4 +1,4 @@
-# Current Feature: TASK-2.8 — JPA repositories
+# Current Feature
 
 ## Status
 
@@ -6,15 +6,11 @@ Not Started
 
 ## Goals
 
-- Implement `PostJpaRepository.java` queries (`findByUserIdAndStatusNot`, `findByIdAndStatusNot`)
-- Implement `PostMediaJpaRepository.java` queries (`findByPostIdOrderBySortOrderAsc`)
-- Implement `HashtagJpaRepository.java` queries (`findByName`, `findTopByOrderByPostCountDesc`)
-- Implement `MentionJpaRepository.java` queries (`findByPostId`, `findByMentionedUserId`)
+<!-- Add goals here -->
 
 ## Notes
 
-- Extend `JpaRepository<Entity, UUID>`
-- Ensure query method names match the entity field names (e.g. `sortOrder`)
+<!-- Add notes here -->
 
 ## History
 
@@ -61,3 +57,4 @@ Not Started
 - TASK-2.5 — In-ports (one file each)
 - TASK-2.6 — Domain service: PostService
 - TASK-2.7 — JPA entities
+- TASK-2.8 — JPA repositories
