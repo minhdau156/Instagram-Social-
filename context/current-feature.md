@@ -1,4 +1,4 @@
-# Current Feature
+# Current Feature: TASK-2.9 — Persistence adapters
 
 ## Status
 
@@ -6,11 +6,16 @@ Not Started
 
 ## Goals
 
-<!-- Add goals here -->
+- Create/Update `PostPersistenceAdapter.java` — `implements PostRepository`
+- Create `PostMediaPersistenceAdapter.java` — `implements PostMediaRepository`
+- Create `HashtagPersistenceAdapter.java` — `implements HashtagRepository`
 
 ## Notes
 
-<!-- Add notes here -->
+- Implement the Out-Port interface
+- Inject the corresponding Spring Data `JpaRepository`
+- Provide private `toEntity(DomainModel)` and `toDomain(JpaEntity)` mapper methods
+- Add `@Component` or `@Repository` to register it as a Spring Bean
 
 ## History
 

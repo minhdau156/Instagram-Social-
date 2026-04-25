@@ -6,6 +6,7 @@ import com.instagram.adapter.out.persistence.repository.PostJpaRepository;
 import com.instagram.domain.model.Post;
 import com.instagram.domain.model.PostStatus;
 import com.instagram.domain.port.out.PostRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -51,13 +52,18 @@ public class PostPersistenceAdapter implements PostRepository {
     }
 
     @Override
-    public org.springframework.data.domain.Page<Post> findByUserId(UUID userId, Pageable pageable) {
-        return org.springframework.data.domain.Page.empty(); // To be implemented in Task 2.9
+    public Page<Post> findByUserId(UUID userId, Pageable pageable) {
+        return jpaRepository.findByUserIdAndStatusNot(userId, PostStatus.DELETED, pageable)
+                .map(this::toDomain); // To be implemented in Task 2.9
     }
 
     @Override
     public void deleteById(UUID id) {
-        // To be implemented in Task 2.9
+        jpaRepository.findByIdAndStatusNot(id, PostStatus.DELETED)
+                .ifPresent(post -> {
+                    post.setStatus(PostStatus.DELETED);
+                    jpaRepository.save(post);
+                });
     }
 
     // ── Mapping ──────────────────────────────────────────────────────────── //
