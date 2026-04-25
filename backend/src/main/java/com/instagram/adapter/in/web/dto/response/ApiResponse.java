@@ -1,4 +1,4 @@
-package com.instagram.adapter.in.web.dto;
+package com.instagram.adapter.in.web.dto.response;
 
 import java.time.Instant;
 

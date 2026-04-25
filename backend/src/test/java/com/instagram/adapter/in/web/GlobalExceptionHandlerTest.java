@@ -1,6 +1,6 @@
 package com.instagram.adapter.in.web;
 
-import com.instagram.adapter.in.web.dto.ApiResponse;
+import com.instagram.adapter.in.web.dto.response.ApiResponse;
 import com.instagram.domain.exception.InvalidCredentialsException;
 import com.instagram.domain.exception.PasswordResetTokenExpiredException;
 import com.instagram.domain.exception.PostNotFoundException;

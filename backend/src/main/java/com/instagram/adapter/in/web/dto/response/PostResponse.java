@@ -1,13 +1,15 @@
-package com.instagram.adapter.in.web.dto;
+package com.instagram.adapter.in.web.dto.response;
 
 import com.instagram.domain.model.Post;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 
 /**
  * Read-only response DTO for post data.
- * Constructed from a domain {@link Post} via the static factory {@link #from(Post)}.
+ * Constructed from a domain {@link Post} via the static factory
+ * {@link #from(Post)}.
  */
 public record PostResponse(
         UUID id,
@@ -20,24 +22,24 @@ public record PostResponse(
         int commentCount,
         int saveCount,
         int shareCount,
-        OffsetDateTime createdAt,
-        OffsetDateTime updatedAt
-) {
-    /** Map a domain Post to the wire-format response. */
+        String createdAt,
+        String updatedAt,
+        List<MediaItemResponse> mediaItems) {
     public static PostResponse from(Post post) {
         return new PostResponse(
                 post.getId(),
                 post.getUserId(),
                 post.getCaption(),
                 post.getLocation(),
-                post.getStatus() != null ? post.getStatus().name() : null,
+                post.getStatus().name(),
                 post.getViewCount(),
                 post.getLikeCount(),
                 post.getCommentCount(),
                 post.getSaveCount(),
                 post.getShareCount(),
-                post.getCreatedAt(),
-                post.getUpdatedAt()
+                post.getCreatedAt().toString(),
+                post.getUpdatedAt().toString(),
+                List.of() // media items populated separately if needed
         );
     }
 }

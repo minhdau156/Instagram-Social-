@@ -1,4 +1,4 @@
-# Current Feature
+# Current Feature: TASK-2.11 — REST controllers & DTOs
 
 ## Status
 
@@ -6,11 +6,19 @@ Not Started
 
 ## Goals
 
-<!-- Add goals here -->
+- Create `PostController.java` with `POST`, `GET`, `PUT`, `DELETE`, `GET /users/{userId}/posts`
+- Create `MediaController.java` with `POST /media/upload-url`
+- Create Request DTOs: `CreatePostRequest`, `UpdatePostRequest`, `MediaItemRequest`, `UploadUrlRequest`
+- Create Response DTOs: `PostResponse`, `MediaItemResponse`, `UploadUrlResponse`
+- All endpoints documented with Swagger `@Operation` + `@ApiResponses`
+- Build passes: `mvn clean compile`
 
 ## Notes
 
-<!-- Add notes here -->
+- Controllers live in `adapter/in/web/`, DTOs in `adapter/in/web/dto/request` and `adapter/in/web/dto/response`
+- Extract `userId` from JWT via `@AuthenticationPrincipal UserDetails` → `UUID.fromString(userDetails.getUsername())`
+- Use Java `record` for all DTOs with Bean Validation annotations
+- Wrap all responses in the existing `ApiResponse<T>` wrapper
 
 ## History
 

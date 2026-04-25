@@ -1,6 +1,7 @@
 package com.instagram.adapter.out.storage;
 
 import java.io.ByteArrayInputStream;
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -44,7 +45,7 @@ public class MinioStorageAdapter implements MediaStoragePort {
     }
 
     @Override
-    public String generatePresignedPutUrl(String key, java.time.Duration expiry) {
+    public String generatePresignedPutUrl(String key, Duration expiry) {
         try {
             return minioClient.getPresignedObjectUrl(
                     GetPresignedObjectUrlArgs.builder()

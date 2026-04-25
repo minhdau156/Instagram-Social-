@@ -1,4 +1,4 @@
-package com.instagram.adapter.in.web.dto;
+package com.instagram.adapter.in.web.dto.response;
 
 import java.util.List;
 
@@ -11,8 +11,7 @@ public record PagedResponse<T>(
         List<T> content,
         int page,
         int size,
-        int totalInPage
-) {
+        int totalInPage) {
     public static <T> PagedResponse<T> of(List<T> content, int page, int size) {
         return new PagedResponse<>(content, page, size, content.size());
     }

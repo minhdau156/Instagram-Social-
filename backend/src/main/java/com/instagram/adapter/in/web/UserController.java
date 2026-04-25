@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.instagram.adapter.in.web.dto.ApiResponse;
 import com.instagram.domain.model.User;
 import com.instagram.domain.port.in.GetUserProfileUseCase;
 import com.instagram.domain.port.in.UpdateProfileUseCase;
@@ -28,9 +27,11 @@ import com.instagram.domain.port.out.MediaStoragePort;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import jakarta.validation.Valid;
-import com.instagram.adapter.in.web.dto.UserResponse;
-import com.instagram.adapter.in.web.dto.UserProfileResponse;
-import com.instagram.adapter.in.web.dto.UpdateProfileRequest;
+
+import com.instagram.adapter.in.web.dto.request.UpdateProfileRequest;
+import com.instagram.adapter.in.web.dto.response.ApiResponse;
+import com.instagram.adapter.in.web.dto.response.UserProfileResponse;
+import com.instagram.adapter.in.web.dto.response.UserResponse;
 import com.instagram.domain.model.UserProfile;
 import com.instagram.domain.model.PrivacyLevel;
 
@@ -52,9 +53,9 @@ public class UserController {
 
     @Operation(summary = "Get Current User Profile", description = "Retrieves the profile of the currently authenticated user")
     @ApiResponses({
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved profile"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User not found")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved profile"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User not found")
     })
     @GetMapping("/profile/get")
     public ResponseEntity<ApiResponse<UserResponse>> getMyProfile() {
@@ -65,9 +66,9 @@ public class UserController {
 
     @Operation(summary = "Update Current User Profile", description = "Updates the bio, full name, or privacy level of the current user")
     @ApiResponses({
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully updated profile"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation failed"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully updated profile"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation failed"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized")
     })
     @PutMapping("/profile/update")
     public ResponseEntity<ApiResponse<UserResponse>> updateMyProfile(@Valid @RequestBody UpdateProfileRequest req) {
@@ -81,10 +82,10 @@ public class UserController {
 
     @Operation(summary = "Upload Avatar", description = "Uploads a new avatar for the authenticated user")
     @ApiResponses({
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully uploaded and updated avatar"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid file format"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error reading/uploading file")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully uploaded and updated avatar"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid file format"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error reading/uploading file")
     })
     @PutMapping(value = "/profile/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<UserResponse>> uploadAvatar(@RequestParam("file") MultipartFile file) {
@@ -117,9 +118,9 @@ public class UserController {
 
     @Operation(summary = "Get User Profile", description = "Retrieves the public or authorized profile details of another user by username")
     @ApiResponses({
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved profile"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User not found")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved profile"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User not found")
     })
     @GetMapping("/{username}")
     public ResponseEntity<ApiResponse<UserProfileResponse>> getProfile(@PathVariable String username) {

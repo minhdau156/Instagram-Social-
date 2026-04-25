@@ -19,17 +19,16 @@ import com.instagram.domain.port.in.RequestPasswordResetUseCase;
 
 import jakarta.validation.Valid;
 
-import com.instagram.adapter.in.web.dto.ApiResponse;
 import com.instagram.domain.model.User;
 import com.instagram.domain.port.in.ConfirmPasswordResetUseCase;
-
-import com.instagram.adapter.in.web.dto.RegisterRequest;
-import com.instagram.adapter.in.web.dto.LoginRequest;
-import com.instagram.adapter.in.web.dto.RefreshRequest;
-import com.instagram.adapter.in.web.dto.PasswordResetRequest;
-import com.instagram.adapter.in.web.dto.PasswordResetConfirmRequest;
-import com.instagram.adapter.in.web.dto.UserResponse;
-import com.instagram.adapter.in.web.dto.AuthResponse;
+import com.instagram.adapter.in.web.dto.request.LoginRequest;
+import com.instagram.adapter.in.web.dto.request.PasswordResetConfirmRequest;
+import com.instagram.adapter.in.web.dto.request.PasswordResetRequest;
+import com.instagram.adapter.in.web.dto.request.RefreshRequest;
+import com.instagram.adapter.in.web.dto.request.RegisterRequest;
+import com.instagram.adapter.in.web.dto.response.ApiResponse;
+import com.instagram.adapter.in.web.dto.response.AuthResponse;
+import com.instagram.adapter.in.web.dto.response.UserResponse;
 import com.instagram.domain.model.AuthResult;
 
 import lombok.RequiredArgsConstructor;
@@ -49,9 +48,9 @@ public class AuthController {
 
     @Operation(summary = "Register a new user", description = "Registers a new user and returns their profile")
     @ApiResponses({
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "User successfully registered"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation failed"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "409", description = "User already exists")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "User successfully registered"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation failed"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "409", description = "User already exists")
     })
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserResponse>> register(@Valid @RequestBody RegisterRequest req) {
@@ -62,9 +61,9 @@ public class AuthController {
 
     @Operation(summary = "User Login", description = "Authenticates a user and returns access and refresh tokens")
     @ApiResponses({
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully logged in"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation failed"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Invalid credentials")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully logged in"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation failed"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Invalid credentials")
     })
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthResponse>> login(@Valid @RequestBody LoginRequest req) {
@@ -74,9 +73,9 @@ public class AuthController {
 
     @Operation(summary = "Refresh Token", description = "Generates new access token using a valid refresh token")
     @ApiResponses({
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Token successfully refreshed"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid or missing token"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Token expired or revoked")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Token successfully refreshed"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid or missing token"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Token expired or revoked")
     })
     @PostMapping("/refresh")
     public ResponseEntity<ApiResponse<AuthResponse>> refresh(@Valid @RequestBody RefreshRequest req) {
@@ -87,8 +86,8 @@ public class AuthController {
 
     @Operation(summary = "Logout user", description = "Revokes the active refresh token")
     @ApiResponses({
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Successfully logged out"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation failed")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Successfully logged out"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation failed")
     })
     @PostMapping("/logout")
     public ResponseEntity<ApiResponse<Void>> logout(@Valid @RequestBody RefreshRequest req) {
@@ -98,9 +97,9 @@ public class AuthController {
 
     @Operation(summary = "Request Password Reset", description = "Sends a password reset link to the registered email")
     @ApiResponses({
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Password reset email sent"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation failed"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User not found")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Password reset email sent"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation failed"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User not found")
     })
     @PostMapping("/password-reset/request")
     public ResponseEntity<ApiResponse<Void>> requestPasswordReset(@Valid @RequestBody PasswordResetRequest req) {
@@ -110,8 +109,8 @@ public class AuthController {
 
     @Operation(summary = "Confirm Password Reset", description = "Resets the user password using a valid token")
     @ApiResponses({
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Password successfully reset"),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation failed or token expired")
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Password successfully reset"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation failed or token expired")
     })
     @PostMapping("/password-reset/confirm")
     public ResponseEntity<ApiResponse<Void>> confirmPasswordReset(@Valid @RequestBody PasswordResetConfirmRequest req) {
