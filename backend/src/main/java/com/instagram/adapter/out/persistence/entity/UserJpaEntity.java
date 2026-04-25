@@ -1,4 +1,4 @@
-package com.instagram.adapter.out.persistence;
+package com.instagram.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

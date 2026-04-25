@@ -1,5 +1,8 @@
 package com.instagram.adapter.out.persistence;
 
+import com.instagram.adapter.out.persistence.entity.PostJpaEntity;
+import com.instagram.adapter.out.persistence.entity.UserJpaEntity;
+import com.instagram.adapter.out.persistence.repository.PostJpaRepository;
 import com.instagram.domain.model.Post;
 import com.instagram.domain.model.PostStatus;
 import com.instagram.domain.port.out.PostRepository;
@@ -43,7 +46,7 @@ public class PostPersistenceAdapter implements PostRepository {
 
     @Override
     public Optional<Post> findById(UUID id) {
-        return jpaRepository.findByIdAndDeletedAtIsNull(id)
+        return jpaRepository.findByIdAndStatusNot(id, PostStatus.DELETED)
                 .map(this::toDomain);
     }
 

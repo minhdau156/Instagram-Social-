@@ -1,4 +1,4 @@
-package com.instagram.adapter.out.persistence;
+package com.instagram.adapter.out.persistence.entity;
 
 import com.instagram.domain.model.MediaType;
 import jakarta.persistence.*;

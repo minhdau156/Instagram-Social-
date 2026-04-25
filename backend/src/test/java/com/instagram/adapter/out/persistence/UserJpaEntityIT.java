@@ -1,5 +1,6 @@
 package com.instagram.adapter.out.persistence;
 
+import com.instagram.adapter.out.persistence.entity.UserJpaEntity;
 import com.instagram.domain.model.PrivacyLevel;
 import com.instagram.domain.model.UserStatus;
 import org.junit.jupiter.api.Test;
@@ -65,7 +66,8 @@ class UserJpaEntityIT {
     @Test
     void shouldAllowNullableFieldsToBeNull() {
         UserJpaEntity user = minimalUser();
-        // bio, passwordHash, phoneNumber, profilePictureUrl, websiteUrl, lastLoginAt all nullable
+        // bio, passwordHash, phoneNumber, profilePictureUrl, websiteUrl, lastLoginAt
+        // all nullable
         assertThat(user.getBio()).isNull();
         assertThat(user.getPasswordHash()).isNull();
         assertThat(user.getPhoneNumber()).isNull();

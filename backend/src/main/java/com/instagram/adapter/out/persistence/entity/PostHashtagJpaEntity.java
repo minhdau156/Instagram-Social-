@@ -1,4 +1,4 @@
-package com.instagram.adapter.out.persistence;
+package com.instagram.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -37,5 +37,6 @@ public class PostHashtagJpaEntity {
     private OffsetDateTime createdAt;
 
     @Embeddable
-    public record PostHashtagId(UUID postId, UUID hashtagId) implements Serializable {}
+    public record PostHashtagId(UUID postId, UUID hashtagId) implements Serializable {
+    }
 }

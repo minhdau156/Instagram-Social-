@@ -12,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
 
+import com.instagram.adapter.out.persistence.entity.BaseJpaEntity;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
