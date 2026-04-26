@@ -26,12 +26,15 @@ frontend/src/hooks/useDeletePost.ts
 
 ```typescript
 // frontend/src/hooks/usePosts.ts — paginated feed
-export const usePosts = (username: string) => {
+export const usePosts = (userId: string) => {
   return useInfiniteQuery({
-    queryKey: ['posts', username],
-    queryFn: ({ pageParam }) => postsApi.getUserPosts(username, pageParam),
-    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
-    initialPageParam: undefined,
+    queryKey: ['posts', userId],
+    queryFn: ({ pageParam = 0 }) => postApi.getUserPosts(userId, pageParam, 12),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.last) return undefined;
+      return lastPage.pageable.pageNumber + 1;
+    },
+    initialPageParam: 0,
   });
 };
 
@@ -46,7 +49,7 @@ export const useCreatePost = () => {
       // Step 2: Upload directly to MinIO
       await mediaApi.uploadToMinio(presignedUrl, data.file);
       // Step 3: Commit post with media key
-      return postsApi.createPost({ ...data.payload,
+      return postApi.createPost({ ...data.payload,
         mediaItems: [{ mediaKey, mediaType: 'image', orderIndex: 0 }] });
     },
     onSuccess: () => {
@@ -59,7 +62,7 @@ export const useCreatePost = () => {
 export const useDeletePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (postId: string) => postsApi.deletePost(postId),
+    mutationFn: (postId: string) => postApi.deletePost(postId),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['posts'] }),
   });
 };
@@ -67,7 +70,7 @@ export const useDeletePost = () => {
 
 ## ✅ Checklist
 
-- [ ] Create `frontend/src/hooks/usePosts.ts` — `useQuery` for `getUserPosts` with cursor pagination
-- [ ] Create `frontend/src/hooks/usePost.ts` — `useQuery` for single post
-- [ ] Create `frontend/src/hooks/useCreatePost.ts` — `useMutation` wrapping upload + create flow
-- [ ] Create `frontend/src/hooks/useDeletePost.ts` — `useMutation` with cache invalidation
+- [x] Create `frontend/src/hooks/usePosts.ts` — `useInfiniteQuery` for `getUserPosts` with offset pagination (page, size)
+- [x] Create `frontend/src/hooks/usePost.ts` — `useQuery` for single post
+- [x] Create `frontend/src/hooks/useCreatePost.ts` — `useMutation` wrapping upload + create flow
+- [x] Create `frontend/src/hooks/useDeletePost.ts` — `useMutation` with cache invalidation

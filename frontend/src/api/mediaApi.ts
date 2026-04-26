@@ -2,6 +2,7 @@ import { UploadUrlResponse } from '../types/post';
 import { api } from './client';
 
 export const mediaApi = {
+    // Get pre-signed PUT URL for direct MinIO upload (client-side upload pattern)
     getUploadUrl: async (filename: string, contentType: string): Promise<UploadUrlResponse> => {
         const { data } = await api.post('/api/v1/media/upload-url', { filename, contentType });
         return data.data;
