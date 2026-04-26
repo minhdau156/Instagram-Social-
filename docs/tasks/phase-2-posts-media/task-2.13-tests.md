@@ -66,9 +66,9 @@ class PostControllerTest {
 
 ## ✅ Checklist
 
-- [ ] `PostServiceTest.java` — create, update, delete, hashtag extraction (unit, Mockito)
-- [ ] `PostPersistenceAdapterIT.java` — `@DataJpaTest`, test save / find / soft-delete
-- [ ] `PostControllerTest.java` — `@SpringBootTest` + MockMvc, test all CRUD endpoints with auth
+- [x] `PostServiceTest.java` — create, update, delete, hashtag extraction (unit, Mockito)
+- [x] `PostPersistenceAdapterIT.java` — `@DataJpaTest`, test save / find / soft-delete
+- [x] `PostControllerTest.java` — `@SpringBootTest` + MockMvc, test all CRUD endpoints with auth
 
 ---
 

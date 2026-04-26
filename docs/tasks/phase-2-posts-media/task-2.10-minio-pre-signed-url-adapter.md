@@ -60,6 +60,6 @@ public class MinioStorageAdapter implements MediaStoragePort {
 
 ## ✅ Checklist
 
-- [ ] Update `MinioStorageAdapter.java` (from Phase 1 TASK-1.15) to add:
+- [x] Update `MinioStorageAdapter.java` (from Phase 1 TASK-1.15) to add:
   - `generatePresignedPutUrl(String key, Duration expiry) → String`
-- [ ] Ensure `MediaStoragePort` interface includes `generatePresignedPutUrl`
+- [x] Ensure `MediaStoragePort` interface includes `generatePresignedPutUrl`

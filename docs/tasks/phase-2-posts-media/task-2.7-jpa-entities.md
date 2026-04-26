@@ -74,8 +74,8 @@ public class PostHashtagJpaEntity {
 
 ## ✅ Checklist
 
-- [ ] Create `PostJpaEntity.java` — `@Entity @Table(name = "posts")`, extends `BaseJpaEntity`
-- [ ] Create `PostMediaJpaEntity.java` — `@Entity @Table(name = "post_media")`
-- [ ] Create `HashtagJpaEntity.java` — `@Entity @Table(name = "hashtags")`
-- [ ] Create `PostHashtagJpaEntity.java` — `@Entity @Table(name = "post_hashtags")` (join table with composite key)
-- [ ] Create `MentionJpaEntity.java` — `@Entity @Table(name = "mentions")`
+- [x] Create `PostJpaEntity.java` — `@Entity @Table(name = "posts")`, extends `BaseJpaEntity`
+- [x] Create `PostMediaJpaEntity.java` — `@Entity @Table(name = "post_media")`
+- [x] Create `HashtagJpaEntity.java` — `@Entity @Table(name = "hashtags")`
+- [x] Create `PostHashtagJpaEntity.java` — `@Entity @Table(name = "post_hashtags")` (join table with composite key)
+- [x] Create `MentionJpaEntity.java` — `@Entity @Table(name = "mentions")`

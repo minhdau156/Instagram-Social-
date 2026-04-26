@@ -73,6 +73,6 @@ public class PostPersistenceAdapter implements PostRepository {
 
 ## ✅ Checklist
 
-- [ ] Create `PostPersistenceAdapter.java` — `implements PostRepository` with private `toEntity` / `toDomain`
-- [ ] Create `PostMediaPersistenceAdapter.java` — `implements PostMediaRepository`
-- [ ] Create `HashtagPersistenceAdapter.java` — `implements HashtagRepository`
+- [x] Create `PostPersistenceAdapter.java` — `implements PostRepository` with private `toEntity` / `toDomain`
+- [x] Create `PostMediaPersistenceAdapter.java` — `implements PostMediaRepository`
+- [x] Create `HashtagPersistenceAdapter.java` — `implements HashtagRepository`

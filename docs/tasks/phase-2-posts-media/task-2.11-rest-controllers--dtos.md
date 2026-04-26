@@ -384,22 +384,22 @@ public record UploadUrlResponse(
 
 ## ✅ Checklist
 
-- [ ] Create `PostController.java`
-  - [ ] `POST /api/v1/posts` → `CreatePostUseCase`
-  - [ ] `GET /api/v1/posts/{id}` → `GetPostUseCase`
-  - [ ] `PUT /api/v1/posts/{id}` → `UpdatePostUseCase`
-  - [ ] `DELETE /api/v1/posts/{id}` → `DeletePostUseCase`
-  - [ ] `GET /api/v1/users/{userId}/posts` → `GetUserPostsUseCase`
-- [ ] Create `MediaController.java`
-  - [ ] `POST /api/v1/media/upload-url` → `GenerateUploadUrlUseCase`
-- [ ] Create Request DTOs (Java records with Bean Validation):
-  - [ ] `CreatePostRequest.java` — with `toCommand(UUID userId)` method
-  - [ ] `UpdatePostRequest.java`
-  - [ ] `MediaItemRequest.java`
-  - [ ] `UploadUrlRequest.java`
-- [ ] Create Response DTOs (Java records with static factory):
-  - [ ] `PostResponse.java` — with `from(Post)` factory method
-  - [ ] `MediaItemResponse.java` — with `from(PostMedia)` factory method
-  - [ ] `UploadUrlResponse.java` — with `from(GenerateUploadUrlUseCase.UploadUrl)` factory method
-- [ ] All endpoints have Swagger `@Operation` + `@ApiResponses` annotations
-- [ ] Build passes: `mvn clean compile`
+- [x] Create `PostController.java`
+  - [x] `POST /api/v1/posts` → `CreatePostUseCase`
+  - [x] `GET /api/v1/posts/{id}` → `GetPostUseCase`
+  - [x] `PUT /api/v1/posts/{id}` → `UpdatePostUseCase`
+  - [x] `DELETE /api/v1/posts/{id}` → `DeletePostUseCase`
+  - [x] `GET /api/v1/users/{userId}/posts` → `GetUserPostsUseCase`
+- [x] Create `MediaController.java`
+  - [x] `POST /api/v1/media/upload-url` → `GenerateUploadUrlUseCase`
+- [x] Create Request DTOs (Java records with Bean Validation):
+  - [x] `CreatePostRequest.java` — with `toCommand(UUID userId)` method
+  - [x] `UpdatePostRequest.java`
+  - [x] `MediaItemRequest.java`
+  - [x] `UploadUrlRequest.java`
+- [x] Create Response DTOs (Java records with static factory):
+  - [x] `PostResponse.java` — with `from(Post)` factory method
+  - [x] `MediaItemResponse.java` — with `from(PostMedia)` factory method
+  - [x] `UploadUrlResponse.java` — with `from(GenerateUploadUrlUseCase.UploadUrl)` factory method
+- [x] All endpoints have Swagger `@Operation` + `@ApiResponses` annotations
+- [x] Build passes: `mvn clean compile`

@@ -42,6 +42,6 @@ public ResponseEntity<ApiErrorResponse> handleMediaUpload(MediaUploadException e
 
 ## ✅ Checklist
 
-- [ ] Map `PostNotFoundException` → `404`
-- [ ] Map `UnauthorizedPostAccessException` → `403`
-- [ ] Map `MediaUploadException` → `500`
+- [x] Map `PostNotFoundException` → `404`
+- [x] Map `UnauthorizedPostAccessException` → `403`
+- [x] Map `MediaUploadException` → `500`

@@ -72,8 +72,8 @@ export const mediaApi = {
 
 ## ✅ Checklist
 
-- [ ] Create `frontend/src/api/postsApi.ts`
+- [x] Create `frontend/src/api/postsApi.ts`
   - `createPost`, `getPostById`, `updatePost`, `deletePost`, `getUserPosts(username, cursor)`
-- [ ] Create `frontend/src/api/mediaApi.ts`
+- [x] Create `frontend/src/api/mediaApi.ts`
   - `getUploadUrl(filename, contentType)` → presigned URL
   - `uploadToS3(presignedUrl, file)` → direct PUT to MinIO

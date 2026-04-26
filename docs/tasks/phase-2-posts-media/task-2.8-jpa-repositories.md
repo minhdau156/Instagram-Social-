@@ -55,7 +55,7 @@ public interface PostMediaJpaRepository extends JpaRepository<PostMediaJpaEntity
 
 ## ✅ Checklist
 
-- [ ] `PostJpaRepository.java` — `findByUserIdAndStatusNot(UUID, PostStatus, Pageable)`, `findByIdAndStatusNot(UUID, PostStatus)`
-- [ ] `PostMediaJpaRepository.java` — `findByPostIdOrderByOrderIndexAsc(UUID)`
-- [ ] `HashtagJpaRepository.java` — `findByName(String)`, `findTopByOrderByPostCountDesc(Pageable)` (for explore)
-- [ ] `MentionJpaRepository.java` — `findByPostId(UUID)`, `findByMentionedUserId(UUID, Pageable)`
+- [x] `PostJpaRepository.java` — `findByUserIdAndStatusNot(UUID, PostStatus, Pageable)`, `findByIdAndStatusNot(UUID, PostStatus)`
+- [x] `PostMediaJpaRepository.java` — `findByPostIdOrderByOrderIndexAsc(UUID)`
+- [x] `HashtagJpaRepository.java` — `findByName(String)`, `findTopByOrderByPostCountDesc(Pageable)` (for explore)
+- [x] `MentionJpaRepository.java` — `findByPostId(UUID)`, `findByMentionedUserId(UUID, Pageable)`

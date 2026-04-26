@@ -9,6 +9,7 @@
    - ❌ Goals missing or incomplete
    - ⚠️ Code quality issues or bugs
    - 🚫 Scope creep (code beyond goals)
+5. Must check the checklist in current task
 5. Final verdict: Ready to complete or needs changes
 
 ##References

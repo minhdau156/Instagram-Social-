@@ -1,6 +1,7 @@
 # Complete Action
 
-- First check the checklist in the current task having in current feature file
+- First must check the checklist in the current task having in current feature file
+- Must tick the checklist which is completed
 - If all task are completed then go to the next step
 - If not completed then go back to the task and complete it
 

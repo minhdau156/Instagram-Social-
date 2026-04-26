@@ -77,5 +77,5 @@ export interface UploadUrlResponse {
 
 ## ✅ Checklist
 
-- [ ] Create `frontend/src/types/post.ts`
+- [x] Create `frontend/src/types/post.ts`
   - `Post`, `PostMedia`, `PostStatus`, `CreatePostPayload`, `UpdatePostPayload`, `MediaItem`, `UploadUrlResponse`
