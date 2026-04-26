@@ -6,11 +6,7 @@ Not Started
 
 ## Goals
 
-<!-- Add goals here -->
-
 ## Notes
-
-<!-- Add notes here -->
 
 ## History
 
@@ -62,3 +58,4 @@ Not Started
 - TASK-2.10 — MinIO pre-signed URL adapter
 - TASK-2.11 — REST controllers & DTOs
 - TASK-2.12 — Register exception mappings
+- TASK-2.13 — Tests
