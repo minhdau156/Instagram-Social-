@@ -66,10 +66,10 @@ export const MediaPicker: React.FC<MediaPickerProps> = ({
 
 ## ✅ Checklist
 
-- [ ] Create `frontend/src/components/posts/MediaPicker.tsx`
+- [x] Create `frontend/src/components/posts/MediaPicker.tsx`
   - Drag & drop + file input button
   - Preview thumbnails for picked images/videos
   - Max 10 files limit
-- [ ] Create `frontend/src/components/posts/MediaCropEditor.tsx`
+- [x] Create `frontend/src/components/posts/MediaCropEditor.tsx`
   - Integrate `react-easy-crop` for image cropping
   - Output cropped image as `Blob`

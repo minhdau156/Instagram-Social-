@@ -1,4 +1,4 @@
-# Current Feature
+# Current Feature: TASK-2.17 — Media upload component
 
 ## Status
 
@@ -6,7 +6,20 @@ Not Started
 
 ## Goals
 
+- Implement `MediaPicker` component with drag & drop and file input button
+- Support preview thumbnails for picked images/videos (Max 10 files limit)
+- Implement `MediaCropEditor` integrating `react-easy-crop` for image cropping
+- Output cropped image as `Blob`
+
 ## Notes
+
+- **Styling:** Use Material UI (MUI) components (`Stack`, `Box`, `Typography`, `Button`).
+- **State Management:** Use local state (`useState`) or form state (`react-hook-form`).
+- **Responsiveness:** Ensure components work on mobile and desktop by utilizing MUI's `Grid` or responsive props.
+- **Error Handling:** Display clear, user-friendly error messages when API calls fail.
+- Files to create:
+  - `frontend/src/components/posts/MediaPicker.tsx`
+  - `frontend/src/components/posts/MediaCropEditor.tsx`
 
 ## History
 
