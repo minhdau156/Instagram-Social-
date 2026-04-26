@@ -30,7 +30,7 @@ public class PostJpaEntity extends BaseJpaEntity {
 
     @Id
     @UuidGenerator
-    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "uuid")
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -63,7 +63,7 @@ public class PostJpaEntity extends BaseJpaEntity {
     @Column(name = "share_count", nullable = false)
     private int shareCount;
 
-    @Column(name = "deleted_at", columnDefinition = "TIMESTAMPTZ")
+    @Column(name = "deleted_at")
     private OffsetDateTime deletedAt;
 
     @PrePersist

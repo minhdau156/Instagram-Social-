@@ -30,96 +30,93 @@ import java.util.UUID;
 @Tag(name = "Posts", description = "CRUD operations for posts")
 public class PostController {
 
-        private final CreatePostUseCase createPostUseCase;
-        private final GetPostUseCase getPostUseCase;
-        private final UpdatePostUseCase updatePostUseCase;
-        private final DeletePostUseCase deletePostUseCase;
-        private final GetUserPostsUseCase getUserPostsUseCase;
+	private final CreatePostUseCase createPostUseCase;
+	private final GetPostUseCase getPostUseCase;
+	private final UpdatePostUseCase updatePostUseCase;
+	private final DeletePostUseCase deletePostUseCase;
+	private final GetUserPostsUseCase getUserPostsUseCase;
 
-        @PostMapping
-        @PreAuthorize("isAuthenticated()")
-        @Operation(summary = "Create a new post with at least one media item")
-        @ApiResponses({
-                        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Post created successfully"),
-                        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation error"),
-                        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Not authenticated")
-        })
-        public ResponseEntity<ApiResponse<PostResponse>> createPost(
-                        @Valid @RequestBody CreatePostRequest request,
-                        @AuthenticationPrincipal UserDetails userDetails) {
+	@PostMapping
+	@Operation(summary = "Create a new post with at least one media item")
+	@ApiResponses({
+			@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Post created successfully"),
+			@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Validation error"),
+			@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Not authenticated")
+	})
+	public ResponseEntity<ApiResponse<PostResponse>> createPost(
+			@Valid @RequestBody CreatePostRequest request,
+			@AuthenticationPrincipal UserDetails userDetails) {
 
-                UUID effectiveUserId = UUID.fromString(userDetails.getUsername());
+		UUID effectiveUserId = UUID.fromString(userDetails.getUsername());
 
-                Post createdPost = createPostUseCase.createPost(request.toCommand(effectiveUserId));
+		Post createdPost = createPostUseCase.createPost(request.toCommand(effectiveUserId));
 
-                return ResponseEntity.status(HttpStatus.CREATED)
-                                .body(ApiResponse.ok(PostResponse.from(createdPost)));
-        }
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(ApiResponse.ok(PostResponse.from(createdPost)));
+	}
 
-        @GetMapping("/{id}")
-        @Operation(summary = "Get a single post by ID")
-        @ApiResponses({
-                        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Post found"),
-                        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Post not found")
-        })
-        public ResponseEntity<ApiResponse<PostResponse>> getPost(@PathVariable UUID id,
-                        @AuthenticationPrincipal UserDetails userDetails) {
+	@GetMapping("/{id}")
+	@Operation(summary = "Get a single post by ID")
+	@ApiResponses({
+			@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Post found"),
+			@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Post not found")
+	})
+	public ResponseEntity<ApiResponse<PostResponse>> getPost(@PathVariable UUID id,
+			@AuthenticationPrincipal UserDetails userDetails) {
 
-                UUID currentUserId = userDetails != null ? UUID.fromString(userDetails.getUsername()) : null;
-                Post post = getPostUseCase.getPost(new GetPostUseCase.Query(id, currentUserId));
+		UUID currentUserId = userDetails != null ? UUID.fromString(userDetails.getUsername()) : null;
+		Post post = getPostUseCase.getPost(new GetPostUseCase.Query(id, currentUserId));
 
-                return ResponseEntity.status(HttpStatus.OK)
-                                .body(ApiResponse.ok(PostResponse.from(post)));
-        }
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(ApiResponse.ok(PostResponse.from(post)));
+	}
 
-        @PutMapping("/{id}")
-        @PreAuthorize("isAuthenticated()")
-        @Operation(summary = "Update caption and/or location of an existing post")
-        @ApiResponses({
-                        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Post updated"),
-                        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Not the post owner"),
-                        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Post not found")
-        })
-        public ResponseEntity<ApiResponse<PostResponse>> updatePost(
-                        @PathVariable UUID id,
-                        @RequestBody @Valid UpdatePostRequest req,
-                        @AuthenticationPrincipal UserDetails userDetails) {
+	@PutMapping("/{id}")
+	@Operation(summary = "Update caption and/or location of an existing post")
+	@ApiResponses({
+			@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Post updated"),
+			@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Not the post owner"),
+			@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Post not found")
+	})
+	public ResponseEntity<ApiResponse<PostResponse>> updatePost(
+			@PathVariable UUID id,
+			@RequestBody @Valid UpdatePostRequest req,
+			@AuthenticationPrincipal UserDetails userDetails) {
 
-                UUID userId = UUID.fromString(userDetails.getUsername());
-                Post post = updatePostUseCase.updatePost(
-                                new UpdatePostUseCase.Command(id, userId, req.caption(), req.location()));
-                return ResponseEntity.ok(ApiResponse.ok(PostResponse.from(post)));
-        }
+		UUID userId = UUID.fromString(userDetails.getUsername());
+		Post post = updatePostUseCase.updatePost(
+				new UpdatePostUseCase.Command(id, userId, req.caption(), req.location()));
+		return ResponseEntity.ok(ApiResponse.ok(PostResponse.from(post)));
+	}
 
-        @DeleteMapping("/{id}")
-        @PreAuthorize("isAuthenticated()")
-        @Operation(summary = "Soft-delete a post (sets status = DELETED)")
-        @ApiResponses({
-                        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Post deleted"),
-                        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Not the post owner"),
-                        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Post not found")
-        })
-        public ResponseEntity<Void> deletePost(
-                        @PathVariable UUID id,
-                        @AuthenticationPrincipal UserDetails userDetails) {
+	@DeleteMapping("/{id}")
+	@Operation(summary = "Soft-delete a post (sets status = DELETED)")
+	@ApiResponses({
+			@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Post deleted"),
+			@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Not the post owner"),
+			@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Post not found")
+	})
+	public ResponseEntity<Void> deletePost(
+			@PathVariable UUID id,
+			@AuthenticationPrincipal UserDetails userDetails) {
 
-                UUID userId = UUID.fromString(userDetails.getUsername());
-                deletePostUseCase.deletePost(new DeletePostUseCase.Command(id, userId));
-                return ResponseEntity.noContent().build();
-        }
+		UUID userId = UUID.fromString(userDetails.getUsername());
+		deletePostUseCase.deletePost(new DeletePostUseCase.Command(id, userId));
+		return ResponseEntity.noContent().build();
+	}
 
-        @GetMapping("/users/{userId}/posts")
-        @Operation(summary = "List all published posts for a given user (paginated)")
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Page of posts")
-        public ResponseEntity<ApiResponse<Page<PostResponse>>> getUserPosts(
-                        @PathVariable UUID userId,
-                        @RequestParam(defaultValue = "0") int page,
-                        @RequestParam(defaultValue = "12") int size,
-                        @AuthenticationPrincipal UserDetails userDetails) {
+	@GetMapping("/users/{userId}/posts")
+	@Operation(summary = "List all published posts for a given user (paginated)")
+	@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Page of posts")
+	public ResponseEntity<ApiResponse<Page<PostResponse>>> getUserPosts(
+			@PathVariable UUID userId,
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "12") int size,
+			@AuthenticationPrincipal UserDetails userDetails) {
 
-                UUID currentUserId = userDetails != null ? UUID.fromString(userDetails.getUsername()) : null;
-                Page<Post> posts = getUserPostsUseCase.getUserPosts(
-                                new GetUserPostsUseCase.Query(userId, currentUserId, null, size));
-                return ResponseEntity.ok(ApiResponse.ok(posts.map(PostResponse::from)));
-        }
+		UUID currentUserId = userDetails != null ? UUID.fromString(userDetails.getUsername()) : null;
+		Page<Post> posts = getUserPostsUseCase.getUserPosts(
+				new GetUserPostsUseCase.Query(userId, currentUserId, null, size));
+		return ResponseEntity.ok(ApiResponse.ok(posts.map(PostResponse::from)));
+	}
 }
