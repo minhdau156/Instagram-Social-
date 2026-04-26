@@ -10,6 +10,6 @@ public interface GetUserPostsUseCase {
 
     Page<Post> getUserPosts(Query query);
 
-    record Query(UUID targetUserId, UUID currentUserId, String cursor, int limit) {
+    record Query(UUID targetUserId, UUID currentUserId, int page, int size) {
     }
 }

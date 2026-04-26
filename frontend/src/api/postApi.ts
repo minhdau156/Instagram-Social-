@@ -1,54 +1,33 @@
-import type {
-  CreatePostRequest,
-  PagedResponse,
-  PostResponse,
-  UpdatePostRequest,
-} from '../types/post';
+import { Page } from '../types/common';
+import type { CreatePostPayload, Post, UpdatePostPayload } from '../types/post';
 import { api } from './client';
 
 const BASE = '/api/v1/posts';
 
 export const postApi = {
-  /** GET /api/v1/posts?page=&size= */
-  listPosts: async (page = 0, size = 20): Promise<PagedResponse<PostResponse>> => {
-    const { data } = await api.get<PagedResponse<PostResponse>>(
-      `${BASE}?page=${page}&size=${size}`,
-    );
-    return data;
+  createPost: async (payload: CreatePostPayload): Promise<Post> => {
+    const { data } = await api.post(BASE, payload);
+    return data.data;
   },
 
-  /** GET /api/v1/posts?userId=&page=&size= */
-  listPostsByUser: async (
-    userId: string,
-    page = 0,
-    size = 20,
-  ): Promise<PagedResponse<PostResponse>> => {
-    const { data } = await api.get<PagedResponse<PostResponse>>(
-      `${BASE}?userId=${userId}&page=${page}&size=${size}`,
-    );
-    return data;
+  getPostById: async (id: string): Promise<Post> => {
+    const { data } = await api.get(`${BASE}/${id}`);
+    return data.data;
   },
 
-  /** GET /api/v1/posts/:id */
-  getPost: async (id: string): Promise<PostResponse> => {
-    const { data } = await api.get<PostResponse>(`${BASE}/${id}`);
-    return data;
+  updatePost: async (id: string, payload: UpdatePostPayload): Promise<Post> => {
+    const { data } = await api.put(`${BASE}/${id}`, payload);
+    return data.data;
   },
 
-  /** POST /api/v1/posts */
-  createPost: async (body: CreatePostRequest): Promise<PostResponse> => {
-    const { data } = await api.post<PostResponse>(BASE, body);
-    return data;
-  },
-
-  /** PUT /api/v1/posts/:id */
-  updatePost: async (id: string, body: UpdatePostRequest): Promise<PostResponse> => {
-    const { data } = await api.put<PostResponse>(`${BASE}/${id}`, body);
-    return data;
-  },
-
-  /** DELETE /api/v1/posts/:id */
   deletePost: async (id: string): Promise<void> => {
     await api.delete(`${BASE}/${id}`);
+  },
+
+  getUserPosts: async (userId: string, page: number, size: number = 12): Promise<Page<Post>> => {
+    const { data } = await api.get(`${BASE}/users/${userId}/posts`, {
+      params: { page, size }
+    });
+    return data.data;
   },
 };

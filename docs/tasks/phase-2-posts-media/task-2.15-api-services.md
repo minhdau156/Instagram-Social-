@@ -49,10 +49,10 @@ export const postsApi = {
   },
 
   getUserPosts: async (username: string, cursor?: string): Promise<Post[]> => {
-    const { data } = await axiosInstance.get(`/api/v1/users/${username}/posts`, {
+    const { data } = await axiosInstance.get(`/api/v1/posts/users/${username}/posts`, {
       params: { cursor, limit: 12 }
     });
-    return data.data;
+    return data.data.content;
   },
 };
 

@@ -116,7 +116,7 @@ public class PostController {
 
 		UUID currentUserId = userDetails != null ? UUID.fromString(userDetails.getUsername()) : null;
 		Page<Post> posts = getUserPostsUseCase.getUserPosts(
-				new GetUserPostsUseCase.Query(userId, currentUserId, null, size));
+				new GetUserPostsUseCase.Query(userId, currentUserId, page, size));
 		return ResponseEntity.ok(ApiResponse.ok(posts.map(PostResponse::from)));
 	}
 }

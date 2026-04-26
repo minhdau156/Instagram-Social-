@@ -118,7 +118,7 @@ public class PostService implements
 
     @Override
     public Page<Post> getUserPosts(GetUserPostsUseCase.Query query) {
-        return postRepository.findByUserId(query.targetUserId(), PageRequest.of(0, query.limit()));
+        return postRepository.findByUserId(query.targetUserId(), PageRequest.of(query.page(), query.size()));
     }
 
     @Override

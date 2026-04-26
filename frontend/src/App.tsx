@@ -3,8 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-route
 import { Suspense, useEffect } from 'react';
 import theme from './theme';
 import AppShell from './AppShell';
-import PostListPage from './pages/posts/PostListPage';
-import PostDetailPage from './pages/posts/PostDetailPage';
+
 import { navigationRef } from './lib/navigationRef';
 import { LoginPage } from './pages/auth/LoginPage';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
@@ -32,9 +31,7 @@ export default function App() {
           <GlobalNavigation />
           <Routes>
             <Route element={<AppShell />}>
-              <Route index element={<Navigate to="/posts" replace />} />
-              <Route path="/posts" element={<ErrorBoundary><PostListPage /></ErrorBoundary>} />
-              <Route path="/posts/:id" element={<ErrorBoundary><PostDetailPage /></ErrorBoundary>} />
+              <Route index element={<Navigate to="/" replace />} />
               <Route path="/login" element={<ErrorBoundary><LoginPage /></ErrorBoundary>} />
               <Route path="/register" element={<ErrorBoundary><RegisterPage /></ErrorBoundary>} />
               <Route path="/forgot-password" element={<ErrorBoundary><ForgotPasswordPage /></ErrorBoundary>} />

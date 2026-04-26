@@ -199,7 +199,7 @@ public class PostServiceTest {
                 .userId(userId)
                 .caption("Test post")
                 .build();
-        var query = new GetUserPostsUseCase.Query(userId, UUID.randomUUID(), null, 10);
+        var query = new GetUserPostsUseCase.Query(userId, UUID.randomUUID(), 0, 10);
 
         when(postRepository.findByUserId(userId, PageRequest.of(0, 10)))
                 .thenReturn(new PageImpl<>(List.of(post), PageRequest.of(0, 10), 1L));

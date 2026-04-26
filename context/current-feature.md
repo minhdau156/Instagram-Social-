@@ -60,3 +60,4 @@ Not Started
 - TASK-2.12 — Register exception mappings
 - TASK-2.13 — Tests
 - TASK-2.14 — TypeScript types
+- TASK-2.15 — API services
