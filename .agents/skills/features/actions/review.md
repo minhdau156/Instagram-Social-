@@ -1,8 +1,9 @@
 # Review Action
 
 1. Read current-feature.md to understand the goals
+
 2. Review all code changes made for this feature
-3. reference @agents/skills/code-quality/SKILL.md to improve code quality
+3. must reference @agents/skills/code-quality/SKILL.md to check code quality
 4. Check for:
    - ✅ Goals met
    - ❌ Goals missing or incomplete

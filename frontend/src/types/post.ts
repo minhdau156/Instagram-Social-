@@ -1,38 +1,57 @@
 /** Mirror of the backend PostStatus enum */
 export type PostStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' | 'DELETED';
-
+export type MediaType = 'IMAGE' | 'VIDEO';
 /** Response shape returned by GET /api/v1/posts and GET /api/v1/posts/:id */
-export interface PostResponse {
+export interface Post {
   id: string;
   userId: string;
-  caption: string | null;
-  location: string | null;
+  caption?: string;
+  location?: string;
   status: PostStatus;
   viewCount: number;
   likeCount: number;
   commentCount: number;
   saveCount: number;
   shareCount: number;
+  mediaItems: PostMedia[];
   createdAt: string;  // ISO-8601 OffsetDateTime
   updatedAt: string;
 }
 
-/** Request body for POST /api/v1/posts */
-export interface CreatePostRequest {
+export interface PostMedia {
+  id: string;
+  mediaType: MediaType;
+  mediaUrl: string;
+  thumbnailUrl?: string;
+  width?: number;
+  height?: number;
+  duration?: number;    // seconds, video only
+  fileSizeBytes?: number;
+  sortOrder: string;
+}
+
+export interface CreatePostPayload {
+  caption?: string;
+  location?: string;
+  mediaItems: MediaItem[];
+}
+
+export interface UpdatePostPayload {
   caption?: string;
   location?: string;
 }
 
-/** Request body for PUT /api/v1/posts/:id */
-export interface UpdatePostRequest {
-  caption?: string;
-  location?: string;
+export interface MediaItem {
+  mediaKey: string;
+  mediaType: MediaType;
+  width?: number;
+  height?: number;
+  duration?: number;
+  fileSizeBytes?: number;
+  sortOrder: string;
 }
 
-/** Generic paginated response wrapper */
-export interface PagedResponse<T> {
-  content: T[];
-  page: number;
-  size: number;
-  totalInPage: number;
+export interface UploadUrlResponse {
+  presignedUrl: string;
+  mediaKey: string;
 }
