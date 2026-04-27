@@ -69,7 +69,7 @@ export const CaptionEditor: React.FC<CaptionEditorProps> = ({ value, onChange })
 
 ## ✅ Checklist
 
-- [x] Create `frontend/src/components/posts/CaptionEditor.tsx`
+- [ ] Create `frontend/src/components/posts/CaptionEditor.tsx`
   - `<textarea>` with live `#hashtag` highlighting (bold blue) using regex + span injection
   - `@mention` detection with basic user autocomplete dropdown (calls `/api/v1/search?q=&type=users`)
   - Character counter (max 2200)
