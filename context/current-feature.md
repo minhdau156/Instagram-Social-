@@ -1,4 +1,4 @@
-# Current Feature: Post display components
+# Current Feature
 
 ## Status
 
@@ -6,17 +6,12 @@ Not Started
 
 ## Goals
 
-- Implement `PostCard` component displaying author avatar, media carousel, truncated caption, action row, and timestamp.
-- Implement `PostDetailModal` as a full-screen dialog with media on the left and comments on the right.
-- Implement `PostGrid` as a 3-column `ImageList` with hover overlay showing stats, and clicking opens the `PostDetailModal`.
-- Ensure responsive design using MUI components.
-- Write unit tests for the components.
+<!-- List the goals of the current feature here -->
 
 ## Notes
 
-- **Files:** `frontend/src/components/posts/PostCard.tsx`, `frontend/src/components/posts/PostDetailModal.tsx`, `frontend/src/components/posts/PostGrid.tsx`
-- **Dependencies:** Use MUI components like `Card`, `ImageList`, `Dialog`, `Stack`, `Avatar`.
-- **Testing:** Verify truncated caption expansion and modal integrations visually.
+<!-- Add any relevant notes, constraints, or links here -->
+
 ## History
 
 - TASK-1.22 — Auth & Profile Pages
@@ -74,3 +69,4 @@ Not Started
 - TASK-2.17 — Media upload component
 - TASK-2.18 — Caption editor component
 - TASK-2.19 — Post creation page/modal
+- TASK-2.20 — Post display components
