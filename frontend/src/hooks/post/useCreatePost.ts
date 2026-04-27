@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CreatePostPayload, MediaType } from "../../types/post";
+import { MediaType } from "../../types/post";
 import { mediaApi } from "../../api/mediaApi";
 import { postApi } from "../../api/postApi";
 
@@ -7,7 +7,10 @@ import { postApi } from "../../api/postApi";
 export const useCreatePost = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (data: { payload: CreatePostPayload, file: File }) => {
+        mutationFn: async (data: {
+            payload: { location?: string; caption?: string };
+            file: File
+        }) => {
             //get the pre-signed url from the backend
             const { presignedUrl, mediaKey } = await mediaApi.getUploadUrl(data.file.name,
                 data.file.type);

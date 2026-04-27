@@ -1,4 +1,4 @@
-# Current Feature
+# Current Feature: Post creation page/modal
 
 ## Status
 
@@ -6,8 +6,16 @@ Not Started
 
 ## Goals
 
+- Implement `CreatePostModal` component using Material UI `Dialog` and `Stepper`.
+- Create a multi-step form: Step 1 (`MediaPicker`), Step 2 (`MediaCropEditor`), Step 3 (`CaptionEditor` + Location text input).
+- Submit form data to the backend using the `useCreatePost` hook.
+- Implement responsive design and basic error handling.
+- Write a unit test for this feature.
+
 ## Notes
 
+- **File:** `frontend/src/components/posts/CreatePostModal.tsx`
+- **Dependencies:** Uses `CaptionEditor`, `MediaPicker` (Step 1), and `MediaCropEditor` (Step 2) components. Ensure they are correctly imported or stubbed.
 ## History
 
 - TASK-1.22 — Auth & Profile Pages
