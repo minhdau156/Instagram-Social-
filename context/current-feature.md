@@ -1,4 +1,4 @@
-# Current Feature: Caption editor component
+# Current Feature
 
 ## Status
 
@@ -6,16 +6,7 @@ Not Started
 
 ## Goals
 
-- Implement `CaptionEditor` component using Material UI.
-- Highlight hashtags in a read-only overlay positioned over the textarea.
-- Detect `@mentions` and provide basic user autocomplete dropdown calling `/api/v1/search?q=&type=users`.
-- Add a character counter with max 2200 limit (turns error color at < 50 remaining).
-- Write a unit test for this feature.
-
 ## Notes
-
-- **File:** `frontend/src/components/posts/CaptionEditor.tsx`
-- **Constraints:** Material UI components, `react-hook-form` or local state, responsive design, clear error handling.
 
 ## History
 
@@ -72,3 +63,4 @@ Not Started
 - TASK-2.15 — API services
 - TASK-2.16 — Custom hooks
 - TASK-2.17 — Media upload component
+- TASK-2.18 — Caption editor component
