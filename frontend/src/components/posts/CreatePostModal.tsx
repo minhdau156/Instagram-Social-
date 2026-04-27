@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useCreatePost } from "../../hooks/post/useCreatePost";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, Step, StepLabel, Stepper, TextField, Typography } from "@mui/material";
+import { Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, Step, StepLabel, Stepper, TextField, Typography } from "@mui/material";
 import { MediaPicker } from "./MediaPicker";
 import { MediaCropEditor } from "./MediaCropEditor";
 import { CaptionEditor } from "./CaptionEditor";
@@ -26,6 +26,7 @@ export const CreatePostModal: React.FC<{ open: boolean; onClose: () => void }> =
             await createPost.mutateAsync({
                 file: files[0], payload: { caption, location }
             });
+            alert('Post created successfully');
             onClose();
         };
         return (

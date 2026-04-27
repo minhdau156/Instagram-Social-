@@ -73,7 +73,7 @@ export const CreatePostModal: React.FC<{ open: boolean; onClose: () => void }> =
 
 ## ✅ Checklist
 
-- [ ] Create `frontend/src/components/posts/CreatePostModal.tsx`
+- [x] Create `frontend/src/components/posts/CreatePostModal.tsx`
   - Step 1: `MediaPicker` → Step 2: `MediaCropEditor` → Step 3: `CaptionEditor` + location text input
   - Progress indicator (MUI Stepper)
   - Submit calls `useCreatePost` hook

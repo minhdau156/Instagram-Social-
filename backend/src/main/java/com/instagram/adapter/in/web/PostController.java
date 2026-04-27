@@ -6,9 +6,10 @@ import com.instagram.adapter.in.web.dto.response.ApiResponse;
 import com.instagram.adapter.in.web.dto.response.PagedResponse;
 import com.instagram.adapter.in.web.dto.response.PostResponse;
 import com.instagram.domain.model.Post;
+import com.instagram.domain.model.PostMedia;
 import com.instagram.domain.port.in.*;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
+
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -17,11 +18,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -52,7 +54,7 @@ public class PostController {
 		Post createdPost = createPostUseCase.createPost(request.toCommand(effectiveUserId));
 
 		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(ApiResponse.ok(PostResponse.from(createdPost)));
+				.body(ApiResponse.ok(PostResponse.from(createdPost, null)));
 	}
 
 	@GetMapping("/{id}")
@@ -66,9 +68,10 @@ public class PostController {
 
 		UUID currentUserId = userDetails != null ? UUID.fromString(userDetails.getUsername()) : null;
 		Post post = getPostUseCase.getPost(new GetPostUseCase.Query(id, currentUserId));
+		List<PostMedia> postMedias = getPostUseCase.getPostMedia(id);
 
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(ApiResponse.ok(PostResponse.from(post)));
+				.body(ApiResponse.ok(PostResponse.from(post, postMedias)));
 	}
 
 	@PutMapping("/{id}")
@@ -86,7 +89,7 @@ public class PostController {
 		UUID userId = UUID.fromString(userDetails.getUsername());
 		Post post = updatePostUseCase.updatePost(
 				new UpdatePostUseCase.Command(id, userId, req.caption(), req.location()));
-		return ResponseEntity.ok(ApiResponse.ok(PostResponse.from(post)));
+		return ResponseEntity.ok(ApiResponse.ok(PostResponse.from(post, null)));
 	}
 
 	@DeleteMapping("/{id}")
@@ -117,6 +120,6 @@ public class PostController {
 		UUID currentUserId = userDetails != null ? UUID.fromString(userDetails.getUsername()) : null;
 		Page<Post> posts = getUserPostsUseCase.getUserPosts(
 				new GetUserPostsUseCase.Query(userId, currentUserId, page, size));
-		return ResponseEntity.ok(ApiResponse.ok(posts.map(PostResponse::from)));
+		return ResponseEntity.ok(ApiResponse.ok(posts.map(post -> PostResponse.from(post, null))));
 	}
 }

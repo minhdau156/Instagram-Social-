@@ -1,7 +1,9 @@
 package com.instagram.domain.port.in;
 
 import com.instagram.domain.model.Post;
+import com.instagram.domain.model.PostMedia;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -10,6 +12,8 @@ import java.util.UUID;
 public interface GetPostUseCase {
 
     Post getPost(Query query);
+
+    List<PostMedia> getPostMedia(UUID postId);
 
     record Query(UUID id, UUID currentUserId) {
     }

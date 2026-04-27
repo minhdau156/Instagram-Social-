@@ -48,7 +48,14 @@ public class UserController {
     private final MediaStoragePort mediaStoragePort;
 
     private UUID currentUserId() {
-        return UUID.fromString(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        org.springframework.security.core.Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getPrincipal())) {
+            return null;
+        }
+        if (auth.getPrincipal() instanceof org.springframework.security.core.userdetails.UserDetails userDetails) {
+            return UUID.fromString(userDetails.getUsername());
+        }
+        return UUID.fromString(auth.getPrincipal().toString());
     }
 
     @Operation(summary = "Get Current User Profile", description = "Retrieves the profile of the currently authenticated user")

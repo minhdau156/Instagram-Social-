@@ -87,11 +87,11 @@ export const PostGrid: React.FC<{ posts: Post[] }> = ({ posts }) => {
 
 ## ✅ Checklist
 
-- [ ] Create `frontend/src/components/posts/PostCard.tsx`
+- [x] Create `frontend/src/components/posts/PostCard.tsx`
   - Displays: author avatar + username, carousel of post media (MUI Carousel or Swiper), caption, hashtags, like/comment/save/share action row, timestamp
   - Truncated caption with "more" toggle at 3 lines
-- [ ] Create `frontend/src/components/posts/PostDetailModal.tsx`
+- [x] Create `frontend/src/components/posts/PostDetailModal.tsx`
   - Full-screen dialog: left = media, right = comments panel
-- [ ] Create `frontend/src/components/posts/PostGrid.tsx`
+- [x] Create `frontend/src/components/posts/PostGrid.tsx`
   - 3-column `ImageList` with hover overlay (like/comment counts)
   - Clicking a cell opens `PostDetailModal`

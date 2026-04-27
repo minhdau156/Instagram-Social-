@@ -94,6 +94,11 @@ public class PostService implements
     }
 
     @Override
+    public List<PostMedia> getPostMedia(UUID postId) {
+        return postMediaRepository.findByPostId(postId);
+    }
+
+    @Override
     public Post updatePost(UpdatePostUseCase.Command command) {
         Post existing = postRepository.findById(command.id())
                 .orElseThrow(() -> new PostNotFoundException(command.id()));

@@ -13,6 +13,9 @@ import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
 import { ProfilePage } from './pages/users/ProfllePage';
 import { ProtectedRoute } from './components/common/ProtectedRoute';
 import { OAuth2CallbackPage } from './pages/auth/OAuth2CallbackPage';
+import { PostGrid } from './components/posts/PostGrid';
+import { PostPage } from './pages/posts/PostPage';
+import { CreatePostModalPage } from './pages/posts/CreatePostModalPage';
 
 function GlobalNavigation() {
   const navigate = useNavigate();
@@ -37,6 +40,8 @@ export default function App() {
               <Route path="/forgot-password" element={<ErrorBoundary><ForgotPasswordPage /></ErrorBoundary>} />
               {/* <Route path="/reset-password" element={<ErrorBoundary><ResetPasswordPage /></ErrorBoundary>} /> */}
               <Route path="/oauth2/callback" element={<OAuth2CallbackPage />} />
+              <Route path="/posts/:postId" element={<PostPage />} />
+              <Route path="/create-post" element={<CreatePostModalPage />} />
 
 
               <Route element={<ProtectedRoute />}>

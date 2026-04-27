@@ -1,6 +1,7 @@
 package com.instagram.adapter.in.web.dto.response;
 
 import com.instagram.domain.model.Post;
+import com.instagram.domain.model.PostMedia;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -25,7 +26,7 @@ public record PostResponse(
         String createdAt,
         String updatedAt,
         List<MediaItemResponse> mediaItems) {
-    public static PostResponse from(Post post) {
+    public static PostResponse from(Post post, List<PostMedia> postMedias) {
         return new PostResponse(
                 post.getId(),
                 post.getUserId(),
@@ -39,7 +40,7 @@ public record PostResponse(
                 post.getShareCount(),
                 post.getCreatedAt().toString(),
                 post.getUpdatedAt().toString(),
-                List.of() // media items populated separately if needed
+                postMedias == null ? List.of() : postMedias.stream().map(MediaItemResponse::from).toList()
         );
     }
 }
