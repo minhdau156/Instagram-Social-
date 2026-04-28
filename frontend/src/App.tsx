@@ -13,7 +13,7 @@ import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
 import { ProfilePage } from './pages/users/ProfllePage';
 import { ProtectedRoute } from './components/common/ProtectedRoute';
 import { OAuth2CallbackPage } from './pages/auth/OAuth2CallbackPage';
-import { PostGrid } from './components/posts/PostGrid';
+
 import { PostPage } from './pages/posts/PostPage';
 import { CreatePostModalPage } from './pages/posts/CreatePostModalPage';
 
