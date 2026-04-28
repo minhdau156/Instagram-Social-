@@ -1,4 +1,4 @@
-# Current Feature: TASK-3.4 — In-Ports (Use-Case Interfaces)
+# Current Feature
 
 ## Status
 
@@ -6,17 +6,7 @@ Not Started
 
 ## Goals
 
-- Define one use-case interface (in-port) per business operation in `domain/port/in/`.
-- Ensure each interface has one method and an inner `Command` or `Query` record for input data.
-- Ensure these are pure Java interfaces with no Spring annotations.
-- Create the following interfaces: `FollowUserUseCase`, `UnfollowUserUseCase`, `GetFollowersUseCase`, `GetFollowingUseCase`, `ApproveFollowRequestUseCase`, `DeclineFollowRequestUseCase`, `GetFollowRequestsUseCase`.
-- Create the `UserSummary` value object in `domain/model/`.
-
 ## Notes
-
-- One file per use case in `domain/port/in/`.
-- Input is always an inner record (`Command` for writes, `Query` for reads).
-- No framework dependencies in any of these files.
 
 ## History
 
@@ -78,3 +68,4 @@ Not Started
 - TASK-2.20 — Post display components
 - TASK-3.1 — Domain Model: Follow
 - TASK-3.2 — Domain Exceptions
+- TASK-3.4 — In-Ports (Use-Case Interfaces)
