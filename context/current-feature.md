@@ -1,4 +1,4 @@
-# Current Feature
+# Current Feature: TASK-3.2 — Domain Exceptions
 
 ## Status
 
@@ -6,11 +6,16 @@ Not Started
 
 ## Goals
 
-- [ ] Add goals here
+- Create `AlreadyFollowingException`
+- Create `FollowRequestNotFoundException`
+- Create `CannotFollowYourselfException`
+- Ensure all extend `RuntimeException` with descriptive messages and no framework dependencies.
 
 ## Notes
 
-- Add notes here
+- `AlreadyFollowingException` — thrown when a follower attempts to follow a user they already follow or have a pending request for.
+- `FollowRequestNotFoundException` — thrown when an approve/decline call references a follow request ID that does not exist or does not belong to the current user.
+- `CannotFollowYourselfException` — thrown when `followerId == followingId`.
 
 ## History
 

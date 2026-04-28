@@ -28,7 +28,7 @@ backend/src/main/java/com/instagram/domain/exception/
 
 ## Checklist
 
-- [ ] Create `AlreadyFollowingException.java`:
+- [x] Create `AlreadyFollowingException.java`:
   ```java
   public class AlreadyFollowingException extends RuntimeException {
       public AlreadyFollowingException(String targetUsername) {
@@ -37,7 +37,7 @@ backend/src/main/java/com/instagram/domain/exception/
   }
   ```
 
-- [ ] Create `FollowRequestNotFoundException.java`:
+- [x] Create `FollowRequestNotFoundException.java`:
   ```java
   public class FollowRequestNotFoundException extends RuntimeException {
       public FollowRequestNotFoundException(UUID followRequestId) {
@@ -46,7 +46,7 @@ backend/src/main/java/com/instagram/domain/exception/
   }
   ```
 
-- [ ] Create `CannotFollowYourselfException.java`:
+- [x] Create `CannotFollowYourselfException.java`:
   ```java
   public class CannotFollowYourselfException extends RuntimeException {
       public CannotFollowYourselfException() {
