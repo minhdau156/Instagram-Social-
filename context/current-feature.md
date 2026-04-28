@@ -1,4 +1,4 @@
-# Current Feature: TASK-3.1 — Domain Model: Follow
+# Current Feature
 
 ## Status
 
@@ -6,21 +6,12 @@ Not Started
 
 ## Goals
 
-- Create the `FollowStatus` enum (`PENDING`, `ACCEPTED`).
-- Create the core `Follow` domain entity (pure Java, no framework dependencies).
-- Implement hand-written Builder pattern for `Follow`.
-- Implement `withAccepted()` copy-returning method.
-- Add static factory method `of()`.
-- Write unit tests (`FollowTest.java`).
+- [ ] Add goals here
 
 ## Notes
 
-- `Follow` is a pure domain entity representing a directed follow relationship.
-- Fields map directly to the `follows` table in `schema.sql`.
-- Lives in `domain/model/`. No `@Entity`, `@Component`, or Lombok annotations.
-- `id` is a surrogate UUID used for follow-request references.
-- `followerId` and `followingId` are both `UUID` references.
-- `status` defaults to `PENDING` for private and `ACCEPTED` for public accounts.
+- Add notes here
+
 ## History
 
 - TASK-1.22 — Auth & Profile Pages
@@ -79,3 +70,4 @@ Not Started
 - TASK-2.18 — Caption editor component
 - TASK-2.19 — Post creation page/modal
 - TASK-2.20 — Post display components
+- TASK-3.1 — Domain Model: Follow
