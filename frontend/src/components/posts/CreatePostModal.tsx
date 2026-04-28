@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useCreatePost } from "../../hooks/post/useCreatePost";
-import { Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, Step, StepLabel, Stepper, TextField, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, Step, StepLabel, Stepper, TextField, Typography } from "@mui/material";
 import { MediaPicker } from "./MediaPicker";
 import { MediaCropEditor } from "./MediaCropEditor";
 import { CaptionEditor } from "./CaptionEditor";
