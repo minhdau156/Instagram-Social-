@@ -29,12 +29,12 @@ backend/src/main/java/com/instagram/domain/model/FollowStatus.java
 
 ## Checklist
 
-- [ ] Create `FollowStatus.java` enum with values:
+- [x] Create `FollowStatus.java` enum with values:
   ```java
   public enum FollowStatus { PENDING, ACCEPTED }
   ```
 
-- [ ] Create `Follow.java` with fields:
+- [x] Create `Follow.java` with fields:
   ```java
   private UUID id;
   private UUID followerId;
@@ -43,22 +43,22 @@ backend/src/main/java/com/instagram/domain/model/FollowStatus.java
   private java.time.Instant createdAt;
   ```
 
-- [ ] Implement private no-arg constructor (used by Builder only)
+- [x] Implement private no-arg constructor (used by Builder only)
 
-- [ ] Implement static inner `Builder` class with:
-  - [ ] Setter-style methods returning `this` for each field
-  - [ ] `build()` method that validates required fields (`id`, `followerId`, `followingId`, `status`) and throws `IllegalStateException` if null
+- [x] Implement static inner `Builder` class with:
+  - [x] Setter-style methods returning `this` for each field
+  - [x] `build()` method that validates required fields (`id`, `followerId`, `followingId`, `status`) and throws `IllegalStateException` if null
 
-- [ ] Implement a private `copy()` helper that returns a mutable copy via the Builder
+- [x] Implement a private `copy()` helper that returns a mutable copy via the Builder
 
-- [ ] Implement `withAccepted()`:
+- [x] Implement `withAccepted()`:
   ```java
   public Follow withAccepted() {
       return this.copy().status(FollowStatus.ACCEPTED).build();
   }
   ```
 
-- [ ] Add static factory method `of(UUID followerId, UUID followingId, FollowStatus status)`:
+- [x] Add static factory method `of(UUID followerId, UUID followingId, FollowStatus status)`:
   ```java
   public static Follow of(UUID followerId, UUID followingId, FollowStatus status) {
       return new Builder()
@@ -71,8 +71,8 @@ backend/src/main/java/com/instagram/domain/model/FollowStatus.java
   }
   ```
 
-- [ ] Write unit test `FollowTest.java`:
-  - [ ] `builder_createsFollow_withRequiredFields()`
-  - [ ] `builder_throwsException_whenFollowerIdIsNull()`
-  - [ ] `withAccepted_returnsNewInstance_withAcceptedStatus()`
-  - [ ] `withAccepted_doesNotMutateOriginal()`
+- [x] Write unit test `FollowTest.java`:
+  - [x] `builder_createsFollow_withRequiredFields()`
+  - [x] `builder_throwsException_whenFollowerIdIsNull()`
+  - [x] `withAccepted_returnsNewInstance_withAcceptedStatus()`
+  - [x] `withAccepted_doesNotMutateOriginal()`
