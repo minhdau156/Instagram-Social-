@@ -27,7 +27,7 @@ backend/src/main/java/com/instagram/domain/port/in/
 ## Checklist
 
 ### `FollowUserUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with:
   ```java
   public interface FollowUserUseCase {
       Follow follow(Command command);
@@ -36,7 +36,7 @@ backend/src/main/java/com/instagram/domain/port/in/
   ```
 
 ### `UnfollowUserUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with:
   ```java
   public interface UnfollowUserUseCase {
       void unfollow(Command command);
@@ -45,7 +45,7 @@ backend/src/main/java/com/instagram/domain/port/in/
   ```
 
 ### `GetFollowersUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with:
   ```java
   public interface GetFollowersUseCase {
       List<UserSummary> getFollowers(Query query);
@@ -55,7 +55,7 @@ backend/src/main/java/com/instagram/domain/port/in/
   > `UserSummary` is a value object defined in TASK-3.11 (or a domain record in `domain/model/`).
 
 ### `GetFollowingUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with:
   ```java
   public interface GetFollowingUseCase {
       List<UserSummary> getFollowing(Query query);
@@ -64,7 +64,7 @@ backend/src/main/java/com/instagram/domain/port/in/
   ```
 
 ### `ApproveFollowRequestUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with:
   ```java
   public interface ApproveFollowRequestUseCase {
       Follow approve(Command command);
@@ -73,7 +73,7 @@ backend/src/main/java/com/instagram/domain/port/in/
   ```
 
 ### `DeclineFollowRequestUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with:
   ```java
   public interface DeclineFollowRequestUseCase {
       void decline(Command command);
@@ -82,7 +82,7 @@ backend/src/main/java/com/instagram/domain/port/in/
   ```
 
 ### `GetFollowRequestsUseCase.java`
-- [ ] Create interface with:
+- [x] Create interface with:
   ```java
   public interface GetFollowRequestsUseCase {
       List<Follow> getFollowRequests(Query query);
@@ -91,7 +91,7 @@ backend/src/main/java/com/instagram/domain/port/in/
   ```
 
 ### Supporting value object
-- [ ] Create `domain/model/UserSummary.java` (if not already present from Phase 1):
+- [x] Create `domain/model/UserSummary.java` (if not already present from Phase 1):
   ```java
   public record UserSummary(
       UUID id,
