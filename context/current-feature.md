@@ -1,23 +1,15 @@
-# Current Feature: TASK-3.9 — user_stats JPA Entity & Repository
+# Current Feature
 
 ## Status
 Not Started
 
 ## Goals
-- Verify `UserStatsJpaEntity` maps correctly to `user_stats` table with `follower_count`, `following_count`, `post_count` as `long` (not `int`)
-- Verify `UserStatsJpaRepository` has all 4 `@Modifying` JPQL counter queries with `clearAutomatically = true`
-- Verify `UserStatsRepository` out-port exists in `domain/port/out/` with the 4 increment/decrement methods
-- Verify `UserStatsPersistenceAdapter` is annotated `@Component`, implements the port, and delegates each method correctly
 
 ## Notes
-- All four files already exist from Phase 1 — this task is **extend/verify**, not create from scratch.
-- Key gap to check: `@Modifying` queries are missing `clearAutomatically = true` → stale L1 cache risk.
-- `UserStatsJpaEntity` uses `int` for counters, spec requires `long` — needs fixing.
-- `UserStatsPersistenceAdapter` has unused `toDomain()` / `toEntity()` methods not needed by the port.
-- No new branch needed if only extending existing files.
 
 ## History
 
+- TASK-3.9 — user_stats JPA Entity & Repository
 - TASK-3.8 — Persistence Adapter: FollowPersistenceAdapter
 - TASK-3.6 — JPA Entity: FollowJpaEntity
 
