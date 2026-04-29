@@ -9,6 +9,8 @@ Not Started
 
 ## History
 
+- TASK-3.6 — JPA Entity: FollowJpaEntity
+
 - TASK-1.22 — Auth & Profile Pages
 - TASK-0.1 — Initialize Project Setup and Configuration
 - TASK-0.2 — Makefile Automation Hub
