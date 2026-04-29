@@ -1,30 +1,11 @@
 # Current Feature
-TASK-3.5 — Domain Service: FollowService
 
 ## Status
 Not Started
 
 ## Goals
-- Create `FollowService.java` annotated with `@Service`
-- Add constructor accepting `FollowRepository`, `UserRepository`, `UserStatsRepository`
-- Declare all fields `private final`
-- Implement `FollowUserUseCase`
-- Implement `UnfollowUserUseCase`
-- Implement `ApproveFollowRequestUseCase`
-- Implement `DeclineFollowRequestUseCase`
-- Implement `GetFollowRequestsUseCase`
-- Implement `GetFollowersUseCase`
-- Implement `GetFollowingUseCase`
 
 ## Notes
-- **Self-follow guard**: check `command.followerId().equals(target.id())` → throw `CannotFollowYourselfException`.
-- **Duplicate guard**: check `followRepository.findByFollowerIdAndFollowingId(...)` → if present, throw `AlreadyFollowingException`.
-- **Public account**: `follow()` creates `Follow` with `status = ACCEPTED` and immediately increments both counters.
-- **Private account**: `follow()` creates `Follow` with `status = PENDING` — counters are **not** incremented yet.
-- **approve()**: find the `PENDING` request → call `follow.withAccepted()` → save → increment both counters.
-- **decline()**: find the `PENDING` request → call `followRepository.delete(...)` — no counter change.
-- **unfollow()**: find the existing accepted follow → delete it → decrement both counters.
-- `getFollowers()` / `getFollowing()`: delegate to `followRepository`, then map each `Follow` to a `UserSummary` by fetching the user record and checking the `isFollowing` flag for the current user.
 
 ## History
 
@@ -87,3 +68,4 @@ Not Started
 - TASK-3.1 — Domain Model: Follow
 - TASK-3.2 — Domain Exceptions
 - TASK-3.4 — In-Ports (Use-Case Interfaces)
+- TASK-3.5 — Domain Service: FollowService
