@@ -21,7 +21,7 @@ backend/src/main/java/com/instagram/domain/service/FollowService.java
 ## Dependencies (all are out-port interfaces)
 
 | Field | Interface | Purpose |
-|-------|-----------|---------|
+|-------|-----------|---------| 
 | `followRepository` | `FollowRepository` | Persist / query follow relationships |
 | `userRepository` | `UserRepository` | Look up target user to check `isPrivate` |
 | `userStatsRepository` | `UserStatsRepository` | Increment / decrement follower/following counts |
@@ -39,42 +39,42 @@ backend/src/main/java/com/instagram/domain/service/FollowService.java
 
 ## Checklist
 
-- [ ] Create `FollowService.java` annotated with `@Service`
-- [ ] Add constructor accepting `FollowRepository`, `UserRepository`, `UserStatsRepository`
-- [ ] Declare all fields `private final`
+- [x] Create `FollowService.java` annotated with `@Service`
+- [x] Add constructor accepting `FollowRepository`, `UserRepository`, `UserStatsRepository`
+- [x] Declare all fields `private final`
 
-- [ ] Implement `FollowUserUseCase`:
-  - [ ] Resolve target user: `userRepository.findByUsername(command.targetUsername())` → `orElseThrow(UserNotFoundException::withUsername)`
-  - [ ] Guard: `command.followerId().equals(target.id())` → throw `CannotFollowYourselfException`
-  - [ ] Guard: existing relationship → throw `AlreadyFollowingException(target.username())`
-  - [ ] Choose status: `target.isPrivate() ? FollowStatus.PENDING : FollowStatus.ACCEPTED`
-  - [ ] Build and save `Follow.of(followerId, targetId, status)`
-  - [ ] If status is `ACCEPTED`: call `userStatsRepository.incrementFollowerCount(targetId)` and `userStatsRepository.incrementFollowingCount(followerId)`
-  - [ ] Return saved `Follow`
+- [x] Implement `FollowUserUseCase`:
+  - [x] Resolve target user: `userRepository.findByUsername(command.targetUsername())` → `orElseThrow(UserNotFoundException::withUsername)`
+  - [x] Guard: `command.followerId().equals(target.id())` → throw `CannotFollowYourselfException`
+  - [x] Guard: existing relationship → throw `AlreadyFollowingException(target.username())`
+  - [x] Choose status: `target.isPrivate() ? FollowStatus.PENDING : FollowStatus.ACCEPTED`
+  - [x] Build and save `Follow.of(followerId, targetId, status)`
+  - [x] If status is `ACCEPTED`: call `userStatsRepository.incrementFollowerCount(targetId)` and `userStatsRepository.incrementFollowingCount(followerId)`
+  - [x] Return saved `Follow`
 
-- [ ] Implement `UnfollowUserUseCase`:
-  - [ ] Resolve target user by username
-  - [ ] Find existing relationship → `orElseThrow(FollowRequestNotFoundException::new)` if absent
-  - [ ] Call `followRepository.delete(followerId, targetId)`
-  - [ ] Decrement counters only if the deleted follow had `status = ACCEPTED`
+- [x] Implement `UnfollowUserUseCase`:
+  - [x] Resolve target user by username
+  - [x] Find existing relationship → `orElseThrow(FollowRequestNotFoundException::new)` if absent
+  - [x] Call `followRepository.delete(followerId, targetId)`
+  - [x] Decrement counters only if the deleted follow had `status = ACCEPTED`
 
-- [ ] Implement `ApproveFollowRequestUseCase`:
-  - [ ] Load follow by `command.followRequestId()` via `followRepository.findByFollowerIdAndFollowingId` or a dedicated `findById`
-  - [ ] Verify `follow.followingId().equals(command.followingId())` → throw `FollowRequestNotFoundException` if mismatch
-  - [ ] Call `follow.withAccepted()` → save
-  - [ ] Increment follower/following counters
+- [x] Implement `ApproveFollowRequestUseCase`:
+  - [x] Load follow by `command.followRequestId()` via `followRepository.findByFollowerIdAndFollowingId` or a dedicated `findById`
+  - [x] Verify `follow.followingId().equals(command.followingId())` → throw `FollowRequestNotFoundException` if mismatch
+  - [x] Call `follow.withAccepted()` → save
+  - [x] Increment follower/following counters
 
-- [ ] Implement `DeclineFollowRequestUseCase`:
-  - [ ] Same lookup and ownership check as approve
-  - [ ] Call `followRepository.delete(follow.followerId(), follow.followingId())`
+- [x] Implement `DeclineFollowRequestUseCase`:
+  - [x] Same lookup and ownership check as approve
+  - [x] Call `followRepository.delete(follow.followerId(), follow.followingId())`
 
-- [ ] Implement `GetFollowRequestsUseCase`:
-  - [ ] Return `followRepository.findPendingRequestsByFollowingId(query.userId())`
+- [x] Implement `GetFollowRequestsUseCase`:
+  - [x] Return `followRepository.findPendingRequestsByFollowingId(query.userId())`
 
-- [ ] Implement `GetFollowersUseCase`:
-  - [ ] Resolve target user by username
-  - [ ] Build `Pageable` from `query.page()` / `query.size()`
-  - [ ] Fetch follows, map each `follow.followerId()` to a `UserSummary`
+- [x] Implement `GetFollowersUseCase`:
+  - [x] Resolve target user by username
+  - [x] Build `Pageable` from `query.page()` / `query.size()`
+  - [x] Fetch follows, map each `follow.followerId()` to a `UserSummary`
 
-- [ ] Implement `GetFollowingUseCase`:
-  - [ ] Same pattern as `GetFollowersUseCase` using `follow.followingId()`
+- [x] Implement `GetFollowingUseCase`:
+  - [x] Same pattern as `GetFollowersUseCase` using `follow.followingId()`
