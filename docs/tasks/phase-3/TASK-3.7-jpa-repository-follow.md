@@ -19,7 +19,7 @@ backend/src/main/java/com/instagram/adapter/out/persistence/FollowJpaRepository.
 
 ## Checklist
 
-- [ ] Create `FollowJpaRepository.java` extending `JpaRepository<FollowJpaEntity, FollowId>`:
+- [x] Create `FollowJpaRepository.java` extending `JpaRepository<FollowJpaEntity, FollowId>`:
 
   ```java
   public interface FollowJpaRepository extends JpaRepository<FollowJpaEntity, FollowId> {
@@ -50,6 +50,6 @@ backend/src/main/java/com/instagram/adapter/out/persistence/FollowJpaRepository.
   }
   ```
 
-- [ ] Import `org.springframework.data.jpa.repository.Modifying` and `org.springframework.data.jpa.repository.Query`
-- [ ] Import `org.springframework.data.repository.query.Param`
-- [ ] Import `org.springframework.data.domain.Pageable`
+- [x] Import `org.springframework.data.jpa.repository.Modifying` and `org.springframework.data.jpa.repository.Query`
+- [x] Import `org.springframework.data.repository.query.Param`
+- [x] Import `org.springframework.data.domain.Pageable`
