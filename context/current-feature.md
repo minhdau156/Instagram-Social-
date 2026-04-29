@@ -7,6 +7,7 @@ Not Started
 
 ## Notes
 
+
 ## History
 
 - TASK-3.6 — JPA Entity: FollowJpaEntity
@@ -71,3 +72,4 @@ Not Started
 - TASK-3.2 — Domain Exceptions
 - TASK-3.4 — In-Ports (Use-Case Interfaces)
 - TASK-3.5 — Domain Service: FollowService
+- TASK-3.7 — JPA Repository: FollowJpaRepository
