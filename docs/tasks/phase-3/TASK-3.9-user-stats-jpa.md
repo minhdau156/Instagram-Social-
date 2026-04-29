@@ -31,7 +31,7 @@ backend/src/main/java/com/instagram/domain/port/out/
 ## Checklist
 
 ### `UserStatsJpaEntity.java` (create or extend)
-- [ ] Create `UserStatsJpaEntity.java`:
+- [x] Create `UserStatsJpaEntity.java`:
   ```java
   @Entity
   @Table(name = "user_stats")
@@ -55,7 +55,7 @@ backend/src/main/java/com/instagram/domain/port/out/
   ```
 
 ### `UserStatsJpaRepository.java`
-- [ ] Create `UserStatsJpaRepository.java` extending `JpaRepository<UserStatsJpaEntity, UUID>`:
+- [x] Create `UserStatsJpaRepository.java` extending `JpaRepository<UserStatsJpaEntity, UUID>`:
   ```java
   public interface UserStatsJpaRepository extends JpaRepository<UserStatsJpaEntity, UUID> {
 
@@ -78,7 +78,7 @@ backend/src/main/java/com/instagram/domain/port/out/
   ```
 
 ### `UserStatsRepository.java` (out-port)
-- [ ] Create `domain/port/out/UserStatsRepository.java`:
+- [x] Create `domain/port/out/UserStatsRepository.java`:
   ```java
   public interface UserStatsRepository {
       void incrementFollowerCount(UUID userId);
@@ -89,7 +89,7 @@ backend/src/main/java/com/instagram/domain/port/out/
   ```
 
 ### `UserStatsPersistenceAdapter.java` (adapter implementation)
-- [ ] Create `adapter/out/persistence/UserStatsPersistenceAdapter.java`:
+- [x] Create `adapter/out/persistence/UserStatsPersistenceAdapter.java`:
   - Annotate with `@Component`
   - Implement `UserStatsRepository`
   - Inject `UserStatsJpaRepository` via constructor

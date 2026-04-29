@@ -12,8 +12,8 @@ import com.instagram.adapter.out.persistence.entity.UserStatsJpaEntity;
 
 public interface UserStatsJpaRepository extends JpaRepository<UserStatsJpaEntity, UUID> {
 
-    // Cập nhật tăng follower của target user (người được follow)
-    @Modifying
+    // Increment follower count of the target user
+    @Modifying(clearAutomatically = true)
     @Query("""
             UPDATE UserStatsJpaEntity us
             SET us.followerCount = us.followerCount + 1
@@ -21,8 +21,8 @@ public interface UserStatsJpaRepository extends JpaRepository<UserStatsJpaEntity
             """)
     void incrementFollowerCount(@Param("userId") UUID userId);
 
-    // Cập nhật giảm follower của target user (người bị unfollow)
-    @Modifying
+    // Decrement follower count of the target user
+    @Modifying(clearAutomatically = true)
     @Query("""
             UPDATE UserStatsJpaEntity us
             SET us.followerCount = us.followerCount - 1
@@ -30,8 +30,8 @@ public interface UserStatsJpaRepository extends JpaRepository<UserStatsJpaEntity
             """)
     void decrementFollowerCount(@Param("userId") UUID userId);
 
-    // Cập nhật tăng following của follower (người đi follow)
-    @Modifying
+    // Increment following count of the user who followed
+    @Modifying(clearAutomatically = true)
     @Query("""
             UPDATE UserStatsJpaEntity us
             SET us.followingCount = us.followingCount + 1
@@ -39,8 +39,8 @@ public interface UserStatsJpaRepository extends JpaRepository<UserStatsJpaEntity
             """)
     void incrementFollowingCount(@Param("userId") UUID userId);
 
-    // Cập nhật giảm following của follower (người đi unfollow)
-    @Modifying
+    // Decrement following count of the user who unfollowed
+    @Modifying(clearAutomatically = true)
     @Query("""
             UPDATE UserStatsJpaEntity us
             SET us.followingCount = us.followingCount - 1
@@ -48,8 +48,8 @@ public interface UserStatsJpaRepository extends JpaRepository<UserStatsJpaEntity
             """)
     void decrementFollowingCount(@Param("userId") UUID userId);
 
-    // Cập nhật tăng post count khi tạo post
-    @Modifying
+    // Increment post count when creating a post
+    @Modifying(clearAutomatically = true)
     @Query("""
             UPDATE UserStatsJpaEntity us
             SET us.postCount = us.postCount + 1
@@ -57,8 +57,8 @@ public interface UserStatsJpaRepository extends JpaRepository<UserStatsJpaEntity
             """)
     void incrementPostCount(@Param("userId") UUID userId);
 
-    // Cập nhật giảm post count khi xóa post
-    @Modifying
+    // Decrement post count when deleting a post
+    @Modifying(clearAutomatically = true)
     @Query("""
             UPDATE UserStatsJpaEntity us
             SET us.postCount = us.postCount - 1

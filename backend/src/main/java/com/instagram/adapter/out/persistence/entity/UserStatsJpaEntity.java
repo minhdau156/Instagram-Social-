@@ -18,13 +18,13 @@ public class UserStatsJpaEntity {
     @Column(name = "user_id")
     private UUID userId;
 
-    @Column(name = "follower_count")
-    private int followerCount;
+    @Column(name = "follower_count", nullable = false)
+    private long followerCount;
 
-    @Column(name = "following_count")
-    private int followingCount;
+    @Column(name = "following_count", nullable = false)
+    private long followingCount;
 
-    @Column(name = "post_count")
-    private int postCount;
+    @Column(name = "post_count", nullable = false)
+    private long postCount;
 
 }

@@ -17,22 +17,6 @@ public class UserStatsPersistenceAdapter implements UserStatsRepository {
 
     private final UserStatsJpaRepository jpaRepository;
 
-    private UserStats toDomain(UserStatsJpaEntity entity) {
-        return new UserStats(
-                entity.getUserId(),
-                entity.getFollowerCount(),
-                entity.getFollowingCount(),
-                entity.getPostCount());
-    }
-
-    private UserStatsJpaEntity toEntity(UserStats userStats) {
-        return UserStatsJpaEntity.builder()
-                .userId(userStats.userId())
-                .followerCount(userStats.followerCount())
-                .followingCount(userStats.followingCount())
-                .postCount(userStats.postCount())
-                .build();
-    }
 
     @Override
     public void incrementFollowerCount(UUID userId) {
