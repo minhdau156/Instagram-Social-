@@ -4,12 +4,14 @@
 Not Started
 
 ## Goals
+<!-- Define goals when loading the next feature -->
 
 ## Notes
-
+<!-- Add context, constraints, or details when loading the next feature -->
 
 ## History
 
+- TASK-3.8 — Persistence Adapter: FollowPersistenceAdapter
 - TASK-3.6 — JPA Entity: FollowJpaEntity
 
 - TASK-1.22 — Auth & Profile Pages
