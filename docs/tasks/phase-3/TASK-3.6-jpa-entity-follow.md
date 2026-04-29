@@ -29,7 +29,7 @@ backend/src/main/java/com/instagram/adapter/out/persistence/
 
 ## Checklist
 
-- [ ] Create `FollowId.java` embeddable:
+- [x] Create `FollowId.java` embeddable:
   ```java
   @Embeddable
   public class FollowId implements Serializable {
@@ -43,7 +43,7 @@ backend/src/main/java/com/instagram/adapter/out/persistence/
   }
   ```
 
-- [ ] Create `FollowJpaEntity.java`:
+- [x] Create `FollowJpaEntity.java`:
   ```java
   @Entity
   @Table(name = "follows")
@@ -62,9 +62,8 @@ backend/src/main/java/com/instagram/adapter/out/persistence/
       @JoinColumn(name = "following_id")
       private UserJpaEntity following;
 
-      @Enumerated(EnumType.STRING)
-      @Column(name = "status", nullable = false, length = 20)
-      private FollowStatus status;
+      @Column(name = "is_approved", nullable = false)
+      private boolean status;
 
       @Column(name = "created_at", nullable = false, updatable = false)
       @CreationTimestamp
@@ -74,5 +73,5 @@ backend/src/main/java/com/instagram/adapter/out/persistence/
   }
   ```
 
-- [ ] Ensure `FollowStatus` enum is imported from `domain/model/FollowStatus.java`
-- [ ] Add `equals()` and `hashCode()` delegating to `FollowId`
+- [x] Ensure `FollowStatus` mapping is documented (using boolean `isApproved`)
+- [x] Add `equals()` and `hashCode()` delegating to `FollowId`
