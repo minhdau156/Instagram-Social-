@@ -28,9 +28,9 @@ backend/src/main/java/com/instagram/adapter/out/persistence/FollowPersistenceAda
 
 ## Checklist
 
-- [ ] Create `FollowPersistenceAdapter.java` annotated with `@Component`
-- [ ] Inject `FollowJpaRepository` via constructor
-- [ ] Implement `save(Follow follow)`:
+- [x] Create `FollowPersistenceAdapter.java` annotated with `@Component`
+- [x] Inject `FollowJpaRepository` via constructor
+- [x] Implement `save(Follow follow)`:
   ```java
   @Override
   @Transactional
@@ -40,7 +40,7 @@ backend/src/main/java/com/instagram/adapter/out/persistence/FollowPersistenceAda
   }
   ```
 
-- [ ] Implement `delete(UUID followerId, UUID followingId)`:
+- [x] Implement `delete(UUID followerId, UUID followingId)`:
   ```java
   @Override
   @Transactional
@@ -49,27 +49,27 @@ backend/src/main/java/com/instagram/adapter/out/persistence/FollowPersistenceAda
   }
   ```
 
-- [ ] Implement `findByFollowerIdAndFollowingId(UUID, UUID)`:
+- [x] Implement `findByFollowerIdAndFollowingId(UUID, UUID)`:
   - Delegates to `followJpaRepository.findByIdFollowerIdAndIdFollowingId(...)`
   - Maps result with `toDomain()`
 
-- [ ] Implement `findFollowersByUserId(UUID userId, Pageable pageable)`:
+- [x] Implement `findFollowersByUserId(UUID userId, Pageable pageable)`:
   - Calls `findByIdFollowingIdAndStatus(userId, FollowStatus.ACCEPTED, pageable)`
   - Maps result list to domain
 
-- [ ] Implement `findFollowingByUserId(UUID userId, Pageable pageable)`:
+- [x] Implement `findFollowingByUserId(UUID userId, Pageable pageable)`:
   - Calls `findByIdFollowerIdAndStatus(userId, FollowStatus.ACCEPTED, pageable)`
 
-- [ ] Implement `findPendingRequestsByFollowingId(UUID followingId)`:
+- [x] Implement `findPendingRequestsByFollowingId(UUID followingId)`:
   - Calls `findByIdFollowingIdAndStatusOrderByCreatedAtDesc(followingId, FollowStatus.PENDING)`
 
-- [ ] Implement `countFollowersByUserId(UUID userId)`:
+- [x] Implement `countFollowersByUserId(UUID userId)`:
   - Calls `countByIdFollowingIdAndStatus(userId, FollowStatus.ACCEPTED)`
 
-- [ ] Implement `countFollowingByUserId(UUID userId)`:
+- [x] Implement `countFollowingByUserId(UUID userId)`:
   - Calls `countByIdFollowerIdAndStatus(userId, FollowStatus.ACCEPTED)`
 
-- [ ] Implement private `toEntity(Follow follow)`:
+- [x] Implement private `toEntity(Follow follow)`:
   ```java
   private FollowJpaEntity toEntity(Follow follow) {
       FollowId followId = new FollowId(follow.followerId(), follow.followingId());
@@ -77,7 +77,7 @@ backend/src/main/java/com/instagram/adapter/out/persistence/FollowPersistenceAda
   }
   ```
 
-- [ ] Implement private `toDomain(FollowJpaEntity entity)`:
+- [x] Implement private `toDomain(FollowJpaEntity entity)`:
   ```java
   private Follow toDomain(FollowJpaEntity entity) {
       return new Follow.Builder()
