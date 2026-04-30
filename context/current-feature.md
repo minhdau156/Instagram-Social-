@@ -1,20 +1,17 @@
-# Current Feature: TASK-3.15 — API Services
+# Current Feature
 
 ## Status
 Not Started
 
 ## Goals
-- Create `followApi.ts` in `frontend/src/api/` as the Axios-based API service layer for all follow-related HTTP calls.
-- Implement async functions: `followUser`, `unfollowUser`, `getFollowers`, `getFollowing`, `getFollowRequests`, `approveRequest`, `declineRequest`.
-- Extract `data.data` properly to match the backend `ApiResponse<T>` wrapper.
-- Return typed promises and use the shared `axiosInstance`.
+<!-- Add goals for the current feature here -->
 
 ## Notes
-- No error handling or state management should happen here. React Query will handle errors and state.
-- Confirm the `axiosInstance` import path matches conventions.
+<!-- Add any notes or context here -->
 
 ## History
 
+- TASK-3.15 — API Services
 - TASK-3.14 — TypeScript Types
 - TASK-3.13 — Unit & Integration Tests
 - TASK-3.10 — REST Controller: FollowController
