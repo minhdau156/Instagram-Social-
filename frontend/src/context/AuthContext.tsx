@@ -5,7 +5,7 @@ import { authApi } from "../api/authApi";
 import { usersApi } from "../api/usersApi";
 
 interface AuthContextValue {
-    user: UserProfile | null;
+    profile: UserProfile | null;
     tokens: AuthTokens | null;
     isLoading: boolean;
     isAuthenticated: boolean;
@@ -17,7 +17,7 @@ interface AuthContextValue {
 export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const [user, setUser] = useState<UserProfile | null>(null);
+    const [profile, setProfile] = useState<UserProfile | null>(null);
     const [tokens, setTokens] = useState<AuthTokens | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -29,8 +29,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             return;
         }
         usersApi.getMe()
-            .then(user => {
-                setUser(user);
+            .then(profile => {
+                setProfile(profile);
                 setIsAuthenticated(true);
             })
             .catch(() => {
@@ -45,8 +45,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         localStorage.setItem('accessToken', tokens.accessToken);
         localStorage.setItem('refreshToken', tokens.refreshToken);
         setTokens(tokens);
-        const user = await usersApi.getMe();
-        setUser(user);
+        const profile = await usersApi.getMe();
+        setProfile(profile);
         setIsAuthenticated(true);
     };
 
@@ -62,13 +62,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        setUser(null);
+        setProfile(null);
         setTokens(null);
         setIsAuthenticated(false);
     };
 
     return (
-        <AuthContext.Provider value={{ user, tokens, isLoading, isAuthenticated, login, register, logout }}>
+        <AuthContext.Provider value={{ profile, tokens, isLoading, isAuthenticated, login, register, logout }}>
             {children}
         </AuthContext.Provider>
     );

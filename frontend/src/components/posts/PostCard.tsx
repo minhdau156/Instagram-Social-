@@ -9,7 +9,7 @@ export const PostCard: React.FC<{ post: Post }> = ({ post }) => {
     const [expanded, setExpanded] = useState(false);
     const [mediaIndex, setMediaIndex] = useState(0);
 
-    const { user } = useAuth()
+    const { profile } = useAuth()
 
     console.log({ media: `http://localhost:9000/${post.mediaItems?.[mediaIndex]?.mediaUrl}` })
 
@@ -30,8 +30,8 @@ export const PostCard: React.FC<{ post: Post }> = ({ post }) => {
     return (
         <Card sx={{ maxWidth: 600, mb: 2 }}>
             <CardHeader
-                avatar={<Avatar src={user?.avatarUrl ? user.avatarUrl : undefined} />}
-                title={<Typography fontWeight="bold">{user?.username}</Typography>}
+                avatar={<Avatar src={profile?.user?.avatarUrl ? profile.user?.avatarUrl : undefined} />}
+                title={<Typography fontWeight="bold">{profile?.user?.username}</Typography>}
                 subheader={post.location}
                 action={<IconButton><MoreVert /></IconButton>}
             />
