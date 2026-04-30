@@ -11,6 +11,7 @@ Not Started
 
 ## History
 
+- TASK-3.14 — TypeScript Types
 - TASK-3.13 — Unit & Integration Tests
 - TASK-3.10 — REST Controller: FollowController
 - TASK-3.9 — user_stats JPA Entity & Repository
