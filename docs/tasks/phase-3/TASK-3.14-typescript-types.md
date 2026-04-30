@@ -19,7 +19,7 @@ frontend/src/types/follow.ts
 
 ## Checklist
 
-- [ ] Create `follow.ts` with the following types:
+- [x] Create `follow.ts` with the following types:
 
   ```typescript
   // ─── Enums ────────────────────────────────────────────────────────────────
@@ -68,5 +68,5 @@ frontend/src/types/follow.ts
   }
   ```
 
-- [ ] Verify field names match the backend records (camelCase on frontend, camelCase in Spring `@JsonProperty` defaults)
+- [x] Verify field names match the backend records (camelCase on frontend, camelCase in Spring `@JsonProperty` defaults)
 - [ ] Import and re-use `UserSummary` in `useFollow.ts` hooks (TASK-3.16) without re-declaring it
