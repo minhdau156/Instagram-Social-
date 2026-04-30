@@ -114,13 +114,15 @@ public class FollowService implements FollowUserUseCase,
         List<Follow> follows = followRepository.findFollowersByUserId(query.currentUserId(), pageable);
         return follows.stream().map(follow -> {
             User user = userRepository.findById(follow.getFollowerId()).orElseThrow();
+            boolean isFollowing = followRepository.findByFollowerIdAndFollowingId(query.currentUserId(), user.getId())
+                    .isPresent();
             return new UserSummary(
                     user.getId(),
                     user.getUsername(),
                     user.getFullName(),
                     user.getProfilePictureUrl(),
                     user.isVerified(),
-                    false);
+                    isFollowing);
         }).toList();
     }
 
@@ -136,7 +138,7 @@ public class FollowService implements FollowUserUseCase,
                     user.getFullName(),
                     user.getProfilePictureUrl(),
                     user.isVerified(),
-                    false);
+                    true);
         }).toList();
     }
 

@@ -32,16 +32,16 @@ backend/src/main/java/com/instagram/adapter/in/web/FollowController.java
 
 ## Checklist
 
-- [ ] Annotate with `@RestController`, `@RequiredArgsConstructor`, `@Tag(name = "Follow")`
-- [ ] Inject via constructor: `FollowUserUseCase`, `UnfollowUserUseCase`, `GetFollowersUseCase`, `GetFollowingUseCase`, `GetFollowRequestsUseCase`, `ApproveFollowRequestUseCase`, `DeclineFollowRequestUseCase`
-- [ ] Add private helper:
+- [x] Annotate with `@RestController`, `@RequiredArgsConstructor`, `@Tag(name = "Follow")`
+- [x] Inject via constructor: `FollowUserUseCase`, `UnfollowUserUseCase`, `GetFollowersUseCase`, `GetFollowingUseCase`, `GetFollowRequestsUseCase`, `ApproveFollowRequestUseCase`, `DeclineFollowRequestUseCase`
+- [x] Add private helper:
   ```java
   private UUID currentUserId() {
       return (UUID) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
   }
   ```
 
-- [ ] Implement `POST /api/v1/users/{username}/follow`:
+- [x] Implement `POST /api/v1/users/{username}/follow`:
   ```java
   @PostMapping("/api/v1/users/{username}/follow")
   @PreAuthorize("isAuthenticated()")
@@ -51,31 +51,31 @@ backend/src/main/java/com/instagram/adapter/in/web/FollowController.java
   }
   ```
 
-- [ ] Implement `DELETE /api/v1/users/{username}/follow`:
+- [x] Implement `DELETE /api/v1/users/{username}/follow`:
   - Calls `unfollowUserUseCase.unfollow(new Command(currentUserId(), username))`
   - Returns `204 No Content`
 
-- [ ] Implement `GET /api/v1/users/{username}/followers`:
+- [x] Implement `GET /api/v1/users/{username}/followers`:
   - Query params: `page` (default 0), `size` (default 20)
   - Calls `getFollowersUseCase.getFollowers(new Query(username, currentUserIdOrNull(), page, size))`
   - Returns `200 OK` with `ApiResponse<List<UserSummaryResponse>>`
 
-- [ ] Implement `GET /api/v1/users/{username}/following`:
+- [x] Implement `GET /api/v1/users/{username}/following`:
   - Same pattern as followers endpoint
 
-- [ ] Implement `GET /api/v1/follow-requests`:
+- [x] Implement `GET /api/v1/follow-requests`:
   - `@PreAuthorize("isAuthenticated()")`
   - Calls `getFollowRequestsUseCase.getFollowRequests(new Query(currentUserId()))`
   - Returns `200 OK` with `ApiResponse<List<FollowResponse>>`
 
-- [ ] Implement `POST /api/v1/follow-requests/{id}/approve`:
+- [x] Implement `POST /api/v1/follow-requests/{id}/approve`:
   - `@PreAuthorize("isAuthenticated()")`
   - Calls `approveFollowRequestUseCase.approve(new Command(currentUserId(), id))`
   - Returns `200 OK` with updated `FollowResponse`
 
-- [ ] Implement `DELETE /api/v1/follow-requests/{id}`:
+- [x] Implement `DELETE /api/v1/follow-requests/{id}`:
   - `@PreAuthorize("isAuthenticated()")`
   - Calls `declineFollowRequestUseCase.decline(new Command(currentUserId(), id))`
   - Returns `204 No Content`
 
-- [ ] Add a `@Nullable`-safe helper `currentUserIdOrNull()` that returns `null` when not authenticated (for public follower/following lists)
+- [x] Add a `@Nullable`-safe helper `currentUserIdOrNull()` that returns `null` when not authenticated (for public follower/following lists)

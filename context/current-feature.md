@@ -1,11 +1,26 @@
-# Current Feature
+# Current Feature: TASK-3.10 — REST Controller: FollowController
 
 ## Status
 Not Started
 
 ## Goals
+- Implement `FollowController` as the HTTP entry point for follow operations.
+- Delegate all logic to in-port use-case interfaces (no business logic in controller).
+- Extract current user ID from `SecurityContextHolder` using a helper method `currentUserId()`.
+- Add `@PreAuthorize("isAuthenticated()")` where required.
+- Return explicit HTTP status codes via `ResponseEntity<T>` wrapped in `ApiResponse<T>`.
+- Add a `@Nullable`-safe helper `currentUserIdOrNull()` for optional auth endpoints.
+- Annotate with `@RestController`, `@RequiredArgsConstructor`, `@Tag(name = "Follow")`.
 
 ## Notes
+- `POST /api/v1/users/{username}/follow` - Follow user
+- `DELETE /api/v1/users/{username}/follow` - Unfollow user
+- `GET /api/v1/users/{username}/followers` - List followers (paginated, optional auth)
+- `GET /api/v1/users/{username}/following` - List following (paginated, optional auth)
+- `GET /api/v1/follow-requests` - Pending follow requests
+- `POST /api/v1/follow-requests/{id}/approve` - Approve follow request
+- `DELETE /api/v1/follow-requests/{id}` - Decline follow request
+- File Location: `backend/src/main/java/com/instagram/adapter/in/web/FollowController.java`
 
 ## History
 
