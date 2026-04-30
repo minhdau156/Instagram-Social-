@@ -77,3 +77,4 @@ Not Started
 - TASK-3.4 — In-Ports (Use-Case Interfaces)
 - TASK-3.5 — Domain Service: FollowService
 - TASK-3.7 — JPA Repository: FollowJpaRepository
+- TASK-3.12 — GlobalExceptionHandler — Follow Mappings
