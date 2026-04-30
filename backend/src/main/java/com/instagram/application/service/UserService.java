@@ -29,6 +29,7 @@ import com.instagram.domain.port.out.EmailPort;
 import com.instagram.domain.port.out.PasswordHashPort;
 import com.instagram.domain.port.out.TokenPort;
 import com.instagram.domain.port.out.UserRepository;
+import com.instagram.domain.port.out.UserStatsRepository;
 
 @Service
 public class UserService implements RegisterUserUseCase, LoginUseCase, RefreshTokenUseCase, LogoutUseCase,
@@ -46,13 +47,15 @@ public class UserService implements RegisterUserUseCase, LoginUseCase, RefreshTo
     private final PasswordHashPort passwordHashPort;
     private final TokenPort tokenPort;
     private final EmailPort emailPort;
+    private final UserStatsRepository userStatsRepository;
 
     public UserService(UserRepository userRepository, PasswordHashPort passwordHashPort,
-            TokenPort tokenPort, EmailPort emailPort) {
+            TokenPort tokenPort, EmailPort emailPort, UserStatsRepository userStatsRepository) {
         this.userRepository = userRepository;
         this.passwordHashPort = passwordHashPort;
         this.tokenPort = tokenPort;
         this.emailPort = emailPort;
+        this.userStatsRepository = userStatsRepository;
     }
 
     // ── RegisterUserUseCase ──────────────────────────────────────────────────
@@ -202,7 +205,8 @@ public class UserService implements RegisterUserUseCase, LoginUseCase, RefreshTo
                 .orElseThrow(() -> UserNotFoundException.withUsername(query.targetUsername()));
 
         // Phase 1 stub: real counts and follow-state computed in Phase 3.
-        UserStats stats = UserStats.zero(user.getId());
+        UserStats stats = userStatsRepository.findByUserId(user.getId())
+                .orElse(UserStats.zero(user.getId()));
         return new UserProfile(user, stats, false);
     }
 

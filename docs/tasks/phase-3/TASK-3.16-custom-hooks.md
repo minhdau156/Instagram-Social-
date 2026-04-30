@@ -27,7 +27,7 @@ frontend/src/hooks/
 ## Checklist
 
 ### `useFollow.ts`
-- [ ] Export `useFollow(username: string)` hook:
+- [x] Export `useFollow(username: string)` hook:
   - Contains `followMutation` (`useMutation` calling `followApi.followUser`)
   - Contains `unfollowMutation` (`useMutation` calling `followApi.unfollowUser`)
   - **Optimistic update**: on `onMutate`, update the cached `UserProfile` or profile query to flip `isFollowing` and adjust follower count
@@ -68,7 +68,7 @@ frontend/src/hooks/
 ---
 
 ### `useFollowers.ts`
-- [ ] Export `useFollowers(username: string)` hook using `useInfiniteQuery`:
+- [x] Export `useFollowers(username: string)` hook using `useInfiniteQuery`:
   ```typescript
   export function useFollowers(username: string) {
     return useInfiniteQuery({
@@ -84,12 +84,12 @@ frontend/src/hooks/
 ---
 
 ### `useFollowing.ts`
-- [ ] Export `useFollowing(username: string)` hook — same pattern as `useFollowers`, calling `followApi.getFollowing`
+- [x] Export `useFollowing(username: string)` hook — same pattern as `useFollowers`, calling `followApi.getFollowing`
 
 ---
 
 ### `useFollowRequests.ts`
-- [ ] Export `useFollowRequests()` hook:
+- [x] Export `useFollowRequests()` hook:
   ```typescript
   export function useFollowRequests() {
     const queryClient = useQueryClient();

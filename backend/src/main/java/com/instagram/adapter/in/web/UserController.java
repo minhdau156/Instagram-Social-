@@ -65,10 +65,10 @@ public class UserController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User not found")
     })
     @GetMapping("/profile/get")
-    public ResponseEntity<ApiResponse<UserResponse>> getMyProfile() {
+    public ResponseEntity<ApiResponse<UserProfileResponse>> getMyProfile() {
         UserProfile profile = getUserProfileUseCase
                 .getUserProfile(new GetUserProfileUseCase.Query(null, currentUserId()));
-        return ResponseEntity.ok(ApiResponse.ok(UserResponse.from(profile.user())));
+        return ResponseEntity.ok(ApiResponse.ok(UserProfileResponse.from(profile)));
     }
 
     @Operation(summary = "Update Current User Profile", description = "Updates the bio, full name, or privacy level of the current user")

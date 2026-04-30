@@ -1,5 +1,6 @@
 package com.instagram.adapter.out.persistence;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Component;
@@ -17,6 +18,10 @@ public class UserStatsPersistenceAdapter implements UserStatsRepository {
 
     private final UserStatsJpaRepository jpaRepository;
 
+    @Override
+    public Optional<UserStats> findByUserId(UUID userId) {
+        return jpaRepository.findByUserId(userId).map(this::toDomain);
+    }
 
     @Override
     public void incrementFollowerCount(UUID userId) {
@@ -36,6 +41,23 @@ public class UserStatsPersistenceAdapter implements UserStatsRepository {
     @Override
     public void decrementFollowingCount(UUID userId) {
         jpaRepository.decrementFollowingCount(userId);
+    }
+
+    private UserStatsJpaEntity toEntity(UserStats userStats) {
+        return UserStatsJpaEntity.builder()
+                .userId(userStats.userId())
+                .followerCount(userStats.followerCount())
+                .followingCount(userStats.followingCount())
+                .postCount(userStats.postCount())
+                .build();
+    }
+
+    private UserStats toDomain(UserStatsJpaEntity userStatsJpaEntity) {
+        return new UserStats(
+                userStatsJpaEntity.getUserId(),
+                userStatsJpaEntity.getPostCount(),
+                userStatsJpaEntity.getFollowerCount(),
+                userStatsJpaEntity.getFollowingCount());
     }
 
 }

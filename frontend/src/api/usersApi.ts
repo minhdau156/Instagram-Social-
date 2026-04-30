@@ -3,7 +3,7 @@ import type { User, UserProfile, UpdateProfilePayload } from "../types/user";
 
 export const usersApi = {
     getMe: () =>
-        api.get<{ data: User }>('/api/v1/users/profile/get').then(r => r.data.data),
+        api.get<{ data: UserProfile }>('/api/v1/users/profile/get').then(r => r.data.data),
 
     updateMe: (payload: UpdateProfilePayload) =>
         api.put<{ data: User }>('/api/v1/users/profile/update', payload).then(r => r.data.data),

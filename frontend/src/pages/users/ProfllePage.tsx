@@ -14,9 +14,9 @@ export const ProfilePage = () => {
     const [open, setOpen] = useState(false);
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-            fullName: user?.fullName || "",
-            bio: user?.bio || "",
-            isPrivate: user?.isPrivate || false,
+            fullName: user?.user.fullName || "",
+            bio: user?.user.bio || "",
+            isPrivate: user?.user.isPrivate || false,
         }
     });
 
@@ -42,15 +42,15 @@ export const ProfilePage = () => {
             <Container maxWidth={"md"}>
                 <Container maxWidth={"sm"} style={{ marginTop: "2rem" }}>
                     <Stack direction="row" style={{ marginTop: "2rem" }} spacing={4}>
-                        <Avatar src={user?.avatarUrl ?? undefined} sx={{ width: 150, height: 150 }} />
+                        <Avatar src={user?.user?.avatarUrl ?? undefined} sx={{ width: 150, height: 150 }} />
 
                         <Stack spacing={1}>
-                            <Typography variant="h6" >{user?.username}</Typography>
-                            <Typography variant="body1" >{user?.fullName}</Typography>
+                            <Typography variant="h6" >{user?.user?.username}</Typography>
+                            <Typography variant="body1" >{user?.user?.fullName}</Typography>
                             <Stack direction="row" spacing={2}>
-                                <Typography variant="body2" >0 posts</Typography>
-                                <Typography variant="body2">0 followers</Typography>
-                                <Typography variant="body2">0 following</Typography>
+                                <Typography variant="body2" >{user?.postCount || 0} posts</Typography>
+                                <Typography variant="body2">{user?.followerCount || 0} followers</Typography>
+                                <Typography variant="body2">{user?.followingCount || 0} following</Typography>
                             </Stack>
 
                             <Button size="small" variant="outlined" onClick={() => setOpen(true)}>

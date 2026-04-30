@@ -1,11 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { AuthTokens, LoginPayload, RegisterPayload } from "../types/auth";
-import { User } from "../types/user";
+import { UserProfile } from "../types/user";
 import { authApi } from "../api/authApi";
 import { usersApi } from "../api/usersApi";
 
 interface AuthContextValue {
-    user: User | null;
+    user: UserProfile | null;
     tokens: AuthTokens | null;
     isLoading: boolean;
     isAuthenticated: boolean;
@@ -17,7 +17,7 @@ interface AuthContextValue {
 export const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<UserProfile | null>(null);
     const [tokens, setTokens] = useState<AuthTokens | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);

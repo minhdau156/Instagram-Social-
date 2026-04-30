@@ -3,11 +3,13 @@ import { useParams } from "react-router-dom";
 import { usersApi } from "../../api/usersApi";
 import { Container, Alert, Avatar, Box, Button, Stack, Typography } from "@mui/material";
 import { PageLoader } from "../../components/common/PageLoader";
+import { followKeys } from "../../hooks/follow/queryKeys";
 
 export const PublicProfilePage = () => {
     const { username } = useParams();
+    const profileKey = followKeys.profile(username!);
     const { data, isLoading, error } = useQuery({
-        queryKey: ["users", username],
+        queryKey: profileKey,
         queryFn: () => usersApi.getUserByUsername(username!),
     });
     return (
