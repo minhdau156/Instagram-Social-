@@ -1,8 +1,12 @@
 package com.instagram.application.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -52,7 +56,7 @@ public class FollowService implements FollowUserUseCase,
         }
 
         if (followRepository.findByFollowerIdAndFollowingId(command.followerId(), targetUser.getId()).isPresent()) {
-            throw new AlreadyFollowingException(targetUser.getUsername());
+            throw new AlreadyFollowingException();
         }
 
         FollowStatus status = targetUser.getPrivacyLevel() == PrivacyLevel.PRIVATE ? FollowStatus.PENDING
@@ -111,34 +115,61 @@ public class FollowService implements FollowUserUseCase,
     @Override
     public List<UserSummary> getFollowers(GetFollowersUseCase.Query query) {
         Pageable pageable = PageRequest.of(query.page(), query.size());
+
+        // 1 query: all accepted followers of the target user
         List<Follow> follows = followRepository.findFollowersByUserId(query.currentUserId(), pageable);
+        if (follows.isEmpty()) return List.of();
+
+        // 1 query: batch-load all follower User objects — no N+1
+        Set<UUID> followerIds = follows.stream()
+                .map(Follow::getFollowerId)
+                .collect(Collectors.toSet());
+        Map<UUID, User> userById = userRepository.findAllByIds(followerIds).stream()
+                .collect(Collectors.toMap(User::getId, Function.identity()));
+
+        // 1 query: all people the current user already follows — for isFollowing flag
+        List<Follow> currentUserFollowing = followRepository.findFollowingByUserId(
+                query.currentUserId(), Pageable.unpaged());
+        Set<UUID> followingIds = currentUserFollowing.stream()
+                .map(Follow::getFollowingId)
+                .collect(Collectors.toSet());
+
         return follows.stream().map(follow -> {
-            User user = userRepository.findById(follow.getFollowerId()).orElseThrow();
-            boolean isFollowing = followRepository.findByFollowerIdAndFollowingId(query.currentUserId(), user.getId())
-                    .isPresent();
+            User user = userById.get(follow.getFollowerId());
             return new UserSummary(
                     user.getId(),
                     user.getUsername(),
                     user.getFullName(),
                     user.getProfilePictureUrl(),
                     user.isVerified(),
-                    isFollowing);
+                    followingIds.contains(user.getId()));
         }).toList();
     }
 
     @Override
     public List<UserSummary> getFollowing(GetFollowingUseCase.Query query) {
         Pageable pageable = PageRequest.of(query.page(), query.size());
+
+        // 1 query: all accepted follows made by the target user
         List<Follow> follows = followRepository.findFollowingByUserId(query.currentUserId(), pageable);
+        if (follows.isEmpty()) return List.of();
+
+        // 1 query: batch-load all followed User objects — no N+1
+        Set<UUID> followingIds = follows.stream()
+                .map(Follow::getFollowingId)
+                .collect(Collectors.toSet());
+        Map<UUID, User> userById = userRepository.findAllByIds(followingIds).stream()
+                .collect(Collectors.toMap(User::getId, Function.identity()));
+
         return follows.stream().map(follow -> {
-            User user = userRepository.findById(follow.getFollowingId()).orElseThrow();
+            User user = userById.get(follow.getFollowingId());
             return new UserSummary(
                     user.getId(),
                     user.getUsername(),
                     user.getFullName(),
                     user.getProfilePictureUrl(),
                     user.isVerified(),
-                    true);
+                    true); // the current user is always following this person
         }).toList();
     }
 

@@ -67,8 +67,6 @@ public class Follow {
         }
 
         public Follow build() {
-            if (follow.id == null)
-                throw new IllegalStateException("id is required");
             if (follow.followerId == null)
                 throw new IllegalStateException("followerId is required");
             if (follow.followingId == null)

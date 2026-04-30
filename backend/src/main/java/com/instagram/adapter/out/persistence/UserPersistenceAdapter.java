@@ -1,5 +1,6 @@
 package com.instagram.adapter.out.persistence;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,6 +33,13 @@ public class UserPersistenceAdapter implements UserRepository {
     @Override
     public Optional<User> findById(UUID id) {
         return jpaRepository.findById(id).map(this::toDomain);
+    }
+
+    @Override
+    public List<User> findAllByIds(Collection<UUID> ids) {
+        return jpaRepository.findAllById(ids).stream()
+                .map(this::toDomain)
+                .toList();
     }
 
     @Override

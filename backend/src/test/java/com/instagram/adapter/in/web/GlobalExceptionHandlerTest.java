@@ -6,7 +6,7 @@ import com.instagram.domain.exception.CannotFollowYourselfException;
 import com.instagram.domain.exception.FollowRequestNotFoundException;
 import com.instagram.domain.exception.InvalidCredentialsException;
 import com.instagram.domain.exception.PasswordResetTokenExpiredException;
-import com.instagram.domain.exception.PostNotFoundException;
+
 import com.instagram.domain.exception.UserAlreadyExistsException;
 import com.instagram.domain.exception.UserNotFoundException;
 
@@ -18,6 +18,7 @@ import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.mock.http.MockHttpInputMessage;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -51,7 +52,9 @@ class GlobalExceptionHandlerTest {
         BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "target");
         bindingResult.addError(new FieldError("target", "field", "must not be blank"));
 
-        MethodArgumentNotValidException ex = new MethodArgumentNotValidException((MethodParameter) null, bindingResult);
+        MethodParameter param = new MethodParameter(
+                GlobalExceptionHandlerTest.class.getDeclaredMethod("setUp"), -1);
+        MethodArgumentNotValidException ex = new MethodArgumentNotValidException(param, bindingResult);
         ResponseEntity<ApiResponse<Void>> response = exceptionHandler.handleValidation(ex);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -71,8 +74,8 @@ class GlobalExceptionHandlerTest {
 
     @Test
     void handleHttpMessageNotReadable_Returns400() {
-        @SuppressWarnings("deprecation")
-        HttpMessageNotReadableException ex = new HttpMessageNotReadableException("Malformed JSON");
+        HttpMessageNotReadableException ex = new HttpMessageNotReadableException(
+                "Malformed JSON", new MockHttpInputMessage(new byte[0]));
 
         ResponseEntity<ApiResponse<Void>> response = exceptionHandler.handleHttpMessageNotReadable(ex);
 
@@ -133,13 +136,12 @@ class GlobalExceptionHandlerTest {
 
     @Test
     void handleAlreadyFollowing_Returns409() {
-        AlreadyFollowingException ex = new AlreadyFollowingException(
-                "Already following");
+        AlreadyFollowingException ex = new AlreadyFollowingException();
         ResponseEntity<ApiResponse<Void>> response = exceptionHandler.handleAlreadyFollowing(ex);
 
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals("Already following", response.getBody().error());
+        assertEquals("Already following or requested to follow user", response.getBody().error());
     }
 
     @Test

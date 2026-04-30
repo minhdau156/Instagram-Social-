@@ -106,7 +106,7 @@ public class FollowController {
         return ResponseEntity.ok(ApiResponse.ok(FollowResponse.from(follow)));
     }
 
-    @DeleteMapping("/api/v1/follow-requests/{id}")
+    @DeleteMapping("/api/v1/follow-requests/{id}/decline")
     public ResponseEntity<ApiResponse<Void>> declineFollowRequest(@PathVariable UUID id) {
         declineFollowRequestUseCase.decline(new DeclineFollowRequestUseCase.Command(currentUserId(), id));
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
