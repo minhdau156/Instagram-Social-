@@ -1,6 +1,9 @@
 package com.instagram.adapter.in.web;
 
 import com.instagram.adapter.in.web.dto.response.ApiResponse;
+import com.instagram.domain.exception.AlreadyFollowingException;
+import com.instagram.domain.exception.CannotFollowYourselfException;
+import com.instagram.domain.exception.FollowRequestNotFoundException;
 import com.instagram.domain.exception.InvalidCredentialsException;
 import com.instagram.domain.exception.PasswordResetTokenExpiredException;
 import com.instagram.domain.exception.PostNotFoundException;
@@ -126,5 +129,37 @@ class GlobalExceptionHandlerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals("Password reset token has expired or is invalid", response.getBody().error());
+    }
+
+    @Test
+    void handleAlreadyFollowing_Returns409() {
+        AlreadyFollowingException ex = new AlreadyFollowingException(
+                "Already following");
+        ResponseEntity<ApiResponse<Void>> response = exceptionHandler.handleAlreadyFollowing(ex);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Already following", response.getBody().error());
+    }
+
+    @Test
+    void handleFollowRequestNotFound_Returns404() {
+        FollowRequestNotFoundException ex = new FollowRequestNotFoundException(
+                UUID.fromString("123e4567-e89b-12d3-a456-426614174000"));
+        ResponseEntity<ApiResponse<Void>> response = exceptionHandler.handleFollowRequestNotFound(ex);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Follow request not found: 123e4567-e89b-12d3-a456-426614174000", response.getBody().error());
+    }
+
+    @Test
+    void handleCannotFollowYourself_Returns400() {
+        CannotFollowYourselfException ex = new CannotFollowYourselfException();
+        ResponseEntity<ApiResponse<Void>> response = exceptionHandler.handleCannotFollowYourself(ex);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("You cannot follow yourself.", response.getBody().error());
     }
 }

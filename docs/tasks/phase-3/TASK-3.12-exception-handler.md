@@ -27,8 +27,8 @@ backend/src/main/java/com/instagram/adapter/in/web/GlobalExceptionHandler.java
 
 ## Checklist
 
-- [ ] Open the existing `GlobalExceptionHandler.java`
-- [ ] Add handler for `AlreadyFollowingException`:
+- [x] Open the existing `GlobalExceptionHandler.java`
+- [x] Add handler for `AlreadyFollowingException`:
   ```java
   @ExceptionHandler(AlreadyFollowingException.class)
   @ResponseStatus(HttpStatus.CONFLICT)
@@ -37,7 +37,7 @@ backend/src/main/java/com/instagram/adapter/in/web/GlobalExceptionHandler.java
   }
   ```
 
-- [ ] Add handler for `FollowRequestNotFoundException`:
+- [x] Add handler for `FollowRequestNotFoundException`:
   ```java
   @ExceptionHandler(FollowRequestNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -46,7 +46,7 @@ backend/src/main/java/com/instagram/adapter/in/web/GlobalExceptionHandler.java
   }
   ```
 
-- [ ] Add handler for `CannotFollowYourselfException`:
+- [x] Add handler for `CannotFollowYourselfException`:
   ```java
   @ExceptionHandler(CannotFollowYourselfException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -55,5 +55,5 @@ backend/src/main/java/com/instagram/adapter/in/web/GlobalExceptionHandler.java
   }
   ```
 
-- [ ] Verify that each new handler follows the same response format as the existing handlers in the file
-- [ ] Run existing exception handler tests to confirm no regressions
+- [x] Verify that each new handler follows the same response format as the existing handlers in the file
+- [x] Run existing exception handler tests to confirm no regressions

@@ -1,6 +1,9 @@
 package com.instagram.adapter.in.web;
 
 import com.instagram.adapter.in.web.dto.response.ApiResponse;
+import com.instagram.domain.exception.AlreadyFollowingException;
+import com.instagram.domain.exception.CannotFollowYourselfException;
+import com.instagram.domain.exception.FollowRequestNotFoundException;
 import com.instagram.domain.exception.InvalidCredentialsException;
 import com.instagram.domain.exception.MediaUploadException;
 import com.instagram.domain.exception.PasswordResetTokenExpiredException;
@@ -22,6 +25,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.security.access.AccessDeniedException;
 
@@ -109,6 +113,24 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse<Void>> handleMediaUpload(MediaUploadException ex) {
         log.warn(ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.error(ex.getMessage()));
+    }
+
+    @ExceptionHandler(AlreadyFollowingException.class)
+    public ResponseEntity<ApiResponse<Void>> handleAlreadyFollowing(AlreadyFollowingException ex) {
+        log.warn(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ApiResponse.error(ex.getMessage()));
+    }
+
+    @ExceptionHandler(FollowRequestNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleFollowRequestNotFound(FollowRequestNotFoundException ex) {
+        log.warn(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.error(ex.getMessage()));
+    }
+
+    @ExceptionHandler(CannotFollowYourselfException.class)
+    public ResponseEntity<ApiResponse<Void>> handleCannotFollowYourself(CannotFollowYourselfException ex) {
+        log.warn(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.error(ex.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)
