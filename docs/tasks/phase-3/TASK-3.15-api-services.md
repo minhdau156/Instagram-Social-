@@ -20,7 +20,7 @@ frontend/src/api/followApi.ts
 
 ## Checklist
 
-- [ ] Create `followApi.ts` with the following functions:
+- [x] Create `followApi.ts` with the following functions:
 
   ```typescript
   import axiosInstance from './axiosInstance';
@@ -89,5 +89,5 @@ frontend/src/api/followApi.ts
   }
   ```
 
-- [ ] Verify the response envelope shape matches the backend `ApiResponse<T>` wrapper (i.e., `response.data.data`)
-- [ ] Confirm the `axiosInstance` import path matches the existing project convention (check `postsApi.ts` or `mediaApi.ts` for reference)
+- [x] Verify the response envelope shape matches the backend `ApiResponse<T>` wrapper (i.e., `response.data.data`)
+- [x] Confirm the `axiosInstance` import path matches the existing project convention (check `postsApi.ts` or `mediaApi.ts` for reference)
