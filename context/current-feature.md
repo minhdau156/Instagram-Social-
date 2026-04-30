@@ -4,10 +4,8 @@
 Not Started
 
 ## Goals
-<!-- Add goals for the current feature here -->
 
 ## Notes
-<!-- Add any notes or context here -->
 
 ## History
 
@@ -81,3 +79,5 @@ Not Started
 - TASK-3.5 — Domain Service: FollowService
 - TASK-3.7 — JPA Repository: FollowJpaRepository
 - TASK-3.12 — GlobalExceptionHandler — Follow Mappings
+
+- TASK-3.16 - Custom Hooks
