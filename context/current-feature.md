@@ -4,13 +4,14 @@
 Not Started
 
 ## Goals
-<!-- List goals here -->
+<!-- Add goals for the current feature here -->
 
 ## Notes
-<!-- Add notes here -->
+<!-- Add any notes or context here -->
 
 ## History
 
+- TASK-3.13 — Unit & Integration Tests
 - TASK-3.10 — REST Controller: FollowController
 - TASK-3.9 — user_stats JPA Entity & Repository
 - TASK-3.8 — Persistence Adapter: FollowPersistenceAdapter
