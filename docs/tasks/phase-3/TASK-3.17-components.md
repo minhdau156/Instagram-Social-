@@ -27,12 +27,12 @@ frontend/src/components/follow/
 ## Checklist
 
 ### `FollowButton.tsx`
-- [ ] Props: `username: string`, `initialStatus: FollowStatus | null`
+- [x] Props: `username: string`, `initialStatus: FollowStatus | null`
   - `null` means "not following"
   - `PENDING` means a follow request was sent (private account)
   - `ACCEPTED` means currently following
-- [ ] Uses `useFollow(username)` hook
-- [ ] Renders MUI `Button` with the following states:
+- [x] Uses `useFollow(username)` hook
+- [x] Renders MUI `Button` with the following states:
 
   | Condition | Button label | Variant | Color |
   |-----------|-------------|---------|-------|
@@ -42,9 +42,9 @@ frontend/src/components/follow/
   | Following (hovered) | `Unfollow` | `outlined` | `error` |
   | Loading | spinner | disabled | — |
 
-- [ ] Clicking `Follow` → calls `followMutation.mutate()`
-- [ ] Clicking `Requested` / `Following` / `Unfollow` → calls `unfollowMutation.mutate()`
-- [ ] Show `CircularProgress` (size 20) inside the button while mutating
+- [x] Clicking `Follow` → calls `followMutation.mutate()`
+- [x] Clicking `Requested` / `Following` / `Unfollow` → calls `unfollowMutation.mutate()`
+- [x] Show `CircularProgress` (size 20) inside the button while mutating
 
   ```tsx
   export function FollowButton({ username, initialStatus }: FollowButtonProps) {
@@ -57,21 +57,21 @@ frontend/src/components/follow/
 ---
 
 ### `UserListItem.tsx`
-- [ ] Props: `user: UserSummary`, `currentUsername?: string`
-- [ ] Renders MUI `ListItem` with:
+- [x] Props: `user: UserSummary`, `currentUsername?: string`
+- [x] Renders MUI `ListItem` with:
   - `Avatar` (user avatar, fallback to first letter of username)
   - Primary text: `username` (bold)
   - Secondary text: `fullName`
   - Verified badge (MUI `Tooltip` + small checkmark icon) if `user.isVerified`
   - `FollowButton` on the right (only if `user.username !== currentUsername`)
-- [ ] Clicking the username/avatar navigates to `/:username` using React Router `useNavigate`
+- [x] Clicking the username/avatar navigates to `/:username` using React Router `useNavigate`
 
 ---
 
 ### `FollowersDialog.tsx`
-- [ ] Props: `username: string`, `open: boolean`, `onClose: () => void`
-- [ ] Uses `useFollowers(username)` hook with infinite scroll
-- [ ] Renders MUI `Dialog` with:
+- [x] Props: `username: string`, `open: boolean`, `onClose: () => void`
+- [x] Uses `useFollowers(username)` hook with infinite scroll
+- [x] Renders MUI `Dialog` with:
   - Title: `"Followers"`
   - `DialogContent` with a `List` of `UserListItem` components
   - Infinite scroll: use `IntersectionObserver` (or a sentinel `div` at the bottom) to call `fetchNextPage()` when visible
@@ -81,6 +81,7 @@ frontend/src/components/follow/
 ---
 
 ### `FollowingDialog.tsx`
-- [ ] Props: `username: string`, `open: boolean`, `onClose: () => void`
-- [ ] Same structure as `FollowersDialog` but uses `useFollowing(username)`
-- [ ] Title: `"Following"`
+- [x] Props: `username: string`, `open: boolean`, `onClose: () => void`
+- [x] Same structure as `FollowersDialog` but uses `useFollowing(username)`
+- [x] Title: `"Following"`
+

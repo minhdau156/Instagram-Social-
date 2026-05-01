@@ -1,11 +1,19 @@
-# Current Feature
+# Current Feature: TASK-3.17 — Follow Components
 
 ## Status
 Not Started
 
 ## Goals
+- Create reusable UI components for social-graph feature (FollowButton, UserListItem, FollowersDialog, FollowingDialog).
+- Implement MUI components with loading and error states.
+- FollowButton handles follow/unfollow and states (Not following, Pending, Following, Loading).
+- UserListItem displays user info with FollowButton.
+- FollowersDialog and FollowingDialog implement infinite scrolling using hooks.
 
 ## Notes
+- Location: `frontend/src/components/follow/`
+- Uses MUI v5 components and `CircularProgress` for loading.
+- No page-level logic inside these components.
 
 ## History
 
