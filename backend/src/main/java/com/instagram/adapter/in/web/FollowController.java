@@ -91,11 +91,11 @@ public class FollowController {
     }
 
     @GetMapping("/api/v1/follow-requests")
-    public ResponseEntity<ApiResponse<List<FollowResponse>>> getFollowRequests() {
-        List<Follow> requests = getFollowRequestsUseCase.getFollowRequests(new GetFollowRequestsUseCase.Query(
+    public ResponseEntity<ApiResponse<List<UserSummaryResponse>>> getFollowRequests() {
+        List<UserSummary> requests = getFollowRequestsUseCase.getFollowRequests(new GetFollowRequestsUseCase.Query(
                 currentUserId()));
         return ResponseEntity.ok(ApiResponse.ok(requests.stream()
-                .map(FollowResponse::from)
+                .map(UserSummaryResponse::from)
                 .toList()));
     }
 

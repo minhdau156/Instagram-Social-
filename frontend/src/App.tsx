@@ -17,6 +17,7 @@ import { OAuth2CallbackPage } from './pages/auth/OAuth2CallbackPage';
 import { PostPage } from './pages/posts/PostPage';
 import { CreatePostModalPage } from './pages/posts/CreatePostModalPage';
 import { PublicProfilePage } from './pages/users/PublicProfilePage';
+import FollowRequestsPage from './pages/follow/FollowRequestsPage';
 
 function GlobalNavigation() {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ export default function App() {
 
               <Route element={<ProtectedRoute />}>
                 <Route path="/profile" element={<ErrorBoundary><ProfilePage /></ErrorBoundary>} />
+                <Route path="/follow-requests" element={<ErrorBoundary><FollowRequestsPage /></ErrorBoundary>} />
                 <Route path="/:username" element={<ErrorBoundary><PublicProfilePage /></ErrorBoundary>} />
               </Route>
             </Route>

@@ -19,7 +19,7 @@ frontend/src/pages/follow/FollowRequestsPage.tsx
 
 ## Checklist
 
-- [ ] Create `FollowRequestsPage.tsx`:
+- [x] Create `FollowRequestsPage.tsx`:
   ```tsx
   export default function FollowRequestsPage() {
     const { data: requests, isLoading, approveMutation, declineMutation } = useFollowRequests();
@@ -27,11 +27,11 @@ frontend/src/pages/follow/FollowRequestsPage.tsx
   }
   ```
 
-- [ ] **Loading state**: show MUI `CircularProgress` centered on the page while `isLoading`
+- [x] **Loading state**: show MUI `CircularProgress` centered on the page while `isLoading`
 
-- [ ] **Empty state**: show a centered message `"No pending follow requests"` with a relevant MUI icon (e.g., `PersonAddDisabledOutlined`)
+- [x] **Empty state**: show a centered message `"No pending follow requests"` with a relevant MUI icon (e.g., `PersonAddDisabledOutlined`)
 
-- [ ] **Request list**: render each pending request as a `Card` or `ListItem` containing:
+- [x] **Request list**: render each pending request as a `Card` or `ListItem` containing:
   - `Avatar` with the requester's profile picture (fallback to initials)
   - Requester's `username` (bold, clickable — navigates to `/:username`)
   - Requester's `fullName` (subtitle)
@@ -42,8 +42,8 @@ frontend/src/pages/follow/FollowRequestsPage.tsx
     - On click: calls `declineMutation.mutate(requestId)`
     - Disabled + spinner while `declineMutation.isPending` for this specific ID
 
-- [ ] **Page title**: set `document.title = "Follow Requests | Instagram"` via `useEffect`
+- [x] **Page title**: set `document.title = "Follow Requests | Instagram"` via `useEffect`
 
-- [ ] **Responsive layout**: use MUI `Container maxWidth="sm"` so the list is centred on wide screens
+- [x] **Responsive layout**: use MUI `Container maxWidth="sm"` so the list is centred on wide screens
 
-- [ ] **Error state**: show MUI `Alert severity="error"` if the query fails
+- [x] **Error state**: show MUI `Alert severity="error"` if the query fails

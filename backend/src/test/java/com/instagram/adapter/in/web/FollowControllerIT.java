@@ -185,20 +185,21 @@ public class FollowControllerIT {
         @Test
         @WithMockUser(username = FOLLOWING_ID)
         void getFollowRequests_whenUserHasRequests_returns200OkWithFollowRequestSummaries() throws Exception {
-                Follow follow = Follow.builder()
-                                .id(UUID.randomUUID())
-                                .followerId(UUID.fromString(FOLLOWER_ID))
-                                .followingId(UUID.fromString(FOLLOWING_ID))
-                                .status(FollowStatus.PENDING)
-                                .build();
+                UserSummary userSummary = new UserSummary(
+                                UUID.fromString(FOLLOWER_ID),
+                                "minh",
+                                "Minh",
+                                "profile.jpg",
+                                false,
+                                false);
                 when(getFollowRequestsUseCase.getFollowRequests(any(GetFollowRequestsUseCase.Query.class)))
-                                .thenReturn(java.util.List.of(follow));
+                                .thenReturn(java.util.List.of(userSummary));
 
                 mockMvc.perform(get("/api/v1/follow-requests")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andDo(print())
                                 .andExpect(status().isOk())
-                                .andExpect(jsonPath("$.data[0].followerId").value(FOLLOWER_ID));
+                                .andExpect(jsonPath("$.data[0].username").value("minh"));
         }
 
         @Test
