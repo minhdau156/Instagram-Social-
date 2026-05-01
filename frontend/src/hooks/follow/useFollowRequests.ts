@@ -12,7 +12,6 @@ export function useFollowRequests() {
 
     const approveMutation = useMutation({
         mutationFn: approveRequest,
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: followKeys.requests }),
     });
 
     const declineMutation = useMutation({

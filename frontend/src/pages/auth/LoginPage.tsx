@@ -13,7 +13,7 @@ export const LoginPage = () => {
     });
     const [apiError, setApiError] = useState("");
     const navigate = useNavigate();
-    const { isLoading, login } = useAuth();
+    const { isLoading, login, isAuthenticated } = useAuth();
 
     const onSubmit = async (data: any) => {
         try {
@@ -26,6 +26,11 @@ export const LoginPage = () => {
             console.log(error);
         }
     };
+
+    if (isAuthenticated) {
+        console.log("User is already logged in");
+        navigate("/");
+    }
 
     return (
         <Container maxWidth={"xs"}>

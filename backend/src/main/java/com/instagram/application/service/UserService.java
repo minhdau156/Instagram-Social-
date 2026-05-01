@@ -12,6 +12,8 @@ import com.instagram.domain.exception.PasswordResetTokenExpiredException;
 import com.instagram.domain.exception.UserAlreadyExistsException;
 import com.instagram.domain.exception.UserNotFoundException;
 import com.instagram.domain.model.AuthResult;
+import com.instagram.domain.model.Follow;
+import com.instagram.domain.model.FollowStatus;
 import com.instagram.domain.model.PrivacyLevel;
 import com.instagram.domain.model.User;
 import com.instagram.domain.model.UserProfile;
@@ -26,6 +28,7 @@ import com.instagram.domain.port.in.RegisterUserUseCase;
 import com.instagram.domain.port.in.RequestPasswordResetUseCase;
 import com.instagram.domain.port.in.UpdateProfileUseCase;
 import com.instagram.domain.port.out.EmailPort;
+import com.instagram.domain.port.out.FollowRepository;
 import com.instagram.domain.port.out.PasswordHashPort;
 import com.instagram.domain.port.out.TokenPort;
 import com.instagram.domain.port.out.UserRepository;
@@ -48,14 +51,17 @@ public class UserService implements RegisterUserUseCase, LoginUseCase, RefreshTo
     private final TokenPort tokenPort;
     private final EmailPort emailPort;
     private final UserStatsRepository userStatsRepository;
+    private final FollowRepository followRepository;
 
     public UserService(UserRepository userRepository, PasswordHashPort passwordHashPort,
-            TokenPort tokenPort, EmailPort emailPort, UserStatsRepository userStatsRepository) {
+            TokenPort tokenPort, EmailPort emailPort, UserStatsRepository userStatsRepository,
+            FollowRepository followRepository) {
         this.userRepository = userRepository;
         this.passwordHashPort = passwordHashPort;
         this.tokenPort = tokenPort;
         this.emailPort = emailPort;
         this.userStatsRepository = userStatsRepository;
+        this.followRepository = followRepository;
     }
 
     // ── RegisterUserUseCase ──────────────────────────────────────────────────
@@ -198,7 +204,7 @@ public class UserService implements RegisterUserUseCase, LoginUseCase, RefreshTo
         if (query.targetUsername() == null) {
             User user = userRepository.findById(query.currentUserId())
                     .orElseThrow(() -> UserNotFoundException.withId(query.currentUserId()));
-            return new UserProfile(user, UserStats.zero(user.getId()), false);
+            return new UserProfile(user, UserStats.zero(user.getId()), false, null);
         }
 
         User user = userRepository.findByUsername(query.targetUsername())
@@ -207,7 +213,13 @@ public class UserService implements RegisterUserUseCase, LoginUseCase, RefreshTo
         // Phase 1 stub: real counts and follow-state computed in Phase 3.
         UserStats stats = userStatsRepository.findByUserId(user.getId())
                 .orElse(UserStats.zero(user.getId()));
-        return new UserProfile(user, stats, false);
+        Optional<Follow> follow = followRepository.findByFollowerIdAndFollowingId(
+                query.currentUserId(),
+                user.getId());
+        if (!follow.isPresent() || follow.get().getStatus() == FollowStatus.PENDING) {
+            return new UserProfile(user, stats, false, follow.isPresent() ? follow.get().getStatus() : null);
+        }
+        return new UserProfile(user, stats, true, FollowStatus.ACCEPTED);
     }
 
     // ── UpdateProfileUseCase ─────────────────────────────────────────────────

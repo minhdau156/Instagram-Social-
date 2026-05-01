@@ -1,7 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
 import { followUser, unfollowUser } from "../../api/followApi";
 import type { UserProfile } from "../../types/user";
 import { followKeys } from "./queryKeys";
+import { FollowStatus, UserSummary } from "../../types/follow";
 
 export const useFollow = (username: string) => {
     const queryClient = useQueryClient();
@@ -15,12 +16,36 @@ export const useFollow = (username: string) => {
 
             // Apply optimistic update to profile data
             if (snapshot) {
+                const newStatus = snapshot.user.isPrivate ? FollowStatus.PENDING : FollowStatus.ACCEPTED;
                 queryClient.setQueryData<UserProfile>(profileKey, {
                     ...snapshot,
-                    isFollowing: true,
-                    followerCount: snapshot.followerCount + 1,
+                    isFollowing: newStatus === FollowStatus.ACCEPTED,
+                    followStatus: newStatus,
+                    followerCount: newStatus === FollowStatus.ACCEPTED ? snapshot.followerCount + 1 : snapshot.followerCount,
                 });
+
             }
+
+            // Optimistically update the user's status in ALL follower and following lists
+            const updateList = (oldData: InfiniteData<UserSummary[]> | undefined) => {
+                if (!oldData) return oldData;
+                return {
+                    ...oldData,
+                    pages: oldData.pages.map((page) =>
+                        page.map((user) => {
+                            if (user.username === username) {
+                                return {
+                                    ...user,
+                                    followStatus: user.isPrivate ? FollowStatus.PENDING : FollowStatus.ACCEPTED,
+                                };
+                            }
+                            return user;
+                        })
+                    ),
+                };
+            };
+            queryClient.setQueriesData<InfiniteData<UserSummary[]>>({ queryKey: ['followers'] }, updateList);
+            queryClient.setQueriesData<InfiniteData<UserSummary[]>>({ queryKey: ['following'] }, updateList);
 
             return { snapshot };
         },
@@ -29,7 +54,10 @@ export const useFollow = (username: string) => {
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: profileKey });
+            queryClient.invalidateQueries({ queryKey: followKeys.followers(username) });
+            queryClient.invalidateQueries({ queryKey: followKeys.following(username) });
         },
+
     });
 
     const unfollowMutation = useMutation({
@@ -43,9 +71,31 @@ export const useFollow = (username: string) => {
                 queryClient.setQueryData<UserProfile>(profileKey, {
                     ...snapshot,
                     isFollowing: false,
-                    followerCount: Math.max(0, snapshot.followerCount - 1),
+                    followStatus: null,
+                    followerCount: snapshot.followStatus === FollowStatus.ACCEPTED ? Math.max(0, snapshot.followerCount - 1) : snapshot.followerCount,
                 });
             }
+
+            // Optimistically update the user's status in ALL follower and following lists
+            const updateList = (oldData: InfiniteData<UserSummary[]> | undefined) => {
+                if (!oldData) return oldData;
+                return {
+                    ...oldData,
+                    pages: oldData.pages.map((page) =>
+                        page.map((user) => {
+                            if (user.username === username) {
+                                return {
+                                    ...user,
+                                    followStatus: null,
+                                };
+                            }
+                            return user;
+                        })
+                    ),
+                };
+            };
+            queryClient.setQueriesData<InfiniteData<UserSummary[]>>({ queryKey: ['followers'] }, updateList);
+            queryClient.setQueriesData<InfiniteData<UserSummary[]>>({ queryKey: ['following'] }, updateList);
 
             return { snapshot };
         },
@@ -54,6 +104,8 @@ export const useFollow = (username: string) => {
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: profileKey });
+            queryClient.invalidateQueries({ queryKey: followKeys.followers(username) });
+            queryClient.invalidateQueries({ queryKey: followKeys.following(username) });
         },
     });
 

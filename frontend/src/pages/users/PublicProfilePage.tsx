@@ -4,14 +4,29 @@ import { usersApi } from "../../api/usersApi";
 import { Container, Alert, Avatar, Box, Button, Stack, Typography } from "@mui/material";
 import { PageLoader } from "../../components/common/PageLoader";
 import { followKeys } from "../../hooks/follow/queryKeys";
+import { useAuth } from "../../hooks/useAuth";
+import { FollowButton } from "../../components/follow/FollowButton";
+import { FollowStatus } from "../../types/follow";
+import { useState } from "react";
+import { FollowingDialog } from "../../components/follow/FollowingDialog";
+import { FollowerDialog } from "../../components/follow/FollowerDialog";
 
 export const PublicProfilePage = () => {
     const { username } = useParams();
+
     const profileKey = followKeys.profile(username!);
     const { data, isLoading, error } = useQuery({
         queryKey: profileKey,
         queryFn: () => usersApi.getUserByUsername(username!),
     });
+
+
+
+    const { profile } = useAuth();
+    const isOwnProfile = profile?.user?.username === data?.user?.username;
+
+    const [followersOpen, setFollowersOpen] = useState(false);
+    const [followingOpen, setFollowingOpen] = useState(false);
     return (
         <Container maxWidth={"md"}>
             {isLoading ? (
@@ -29,13 +44,17 @@ export const PublicProfilePage = () => {
                                 <Typography variant="body1" >{data?.user?.fullName}</Typography>
                                 <Stack direction="row" spacing={2}>
                                     <Typography variant="body2" >{data?.postCount ?? 0} posts</Typography>
-                                    <Typography variant="body2">{data?.followerCount ?? 0} followers</Typography>
-                                    <Typography variant="body2">{data?.followingCount ?? 0} following</Typography>
+                                    <Typography variant="body2" onClick={() => { setFollowersOpen(true) }} style={{ cursor: "pointer" }}>{data?.followerCount ?? 0} followers</Typography>
+                                    <Typography variant="body2" onClick={() => { setFollowingOpen(true) }} style={{ cursor: "pointer" }}>{data?.followingCount ?? 0} following</Typography>
                                 </Stack>
 
-                                <Button disabled>
-                                    Follow
-                                </Button>
+                                {!isOwnProfile &&
+                                    <FollowButton
+                                        username={username!}
+                                        status={data?.followStatus ?? null}
+
+                                    />
+                                }
                             </Stack>
 
                         </Stack>
@@ -44,6 +63,17 @@ export const PublicProfilePage = () => {
                     <Box style={{ marginTop: "5rem", borderTop: "1px solid #e5e5e5" }}>
                         No post yet.
                     </Box>
+                    <FollowerDialog
+                        username={username!}
+                        open={followersOpen}
+                        setOpen={setFollowersOpen}
+                    />
+                    <FollowingDialog
+                        username={username!}
+                        open={followingOpen}
+                        setOpen={setFollowingOpen}
+                    />
+
                 </>
             )}
         </Container>

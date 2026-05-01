@@ -2,6 +2,7 @@ package com.instagram.adapter.in.web.dto.response;
 
 import java.util.UUID;
 
+import com.instagram.domain.model.FollowStatus;
 import com.instagram.domain.model.UserSummary;
 
 public record UserSummaryResponse(
@@ -10,7 +11,7 @@ public record UserSummaryResponse(
         String fullName,
         String profilePictureUrl,
         boolean isVerified,
-        boolean isFollowing) {
+        FollowStatus followStatus) {
 
     public static UserSummaryResponse from(UserSummary summary) {
         return new UserSummaryResponse(
@@ -19,6 +20,6 @@ public record UserSummaryResponse(
                 summary.fullName(),
                 summary.profilePictureUrl(),
                 summary.isVerified(),
-                summary.isFollowing());
+                summary.followStatus());
     }
 }

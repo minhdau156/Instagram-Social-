@@ -8,5 +8,6 @@ public record UserSummary(
                 String fullName,
                 String profilePictureUrl,
                 boolean isVerified,
-                boolean isFollowing) {
+                boolean isPrivate,
+                FollowStatus followStatus) {
 }

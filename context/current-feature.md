@@ -1,13 +1,16 @@
-# Current Feature
+# Current Feature: TASK-3.19 — Integrate FollowButton into ProfilePage
 
 ## Status
 Not Started
 
 ## Goals
-<!-- List bullet points of what success looks like -->
+- Modify `PublicProfilePage.tsx` to include `FollowButton` only for other users' profiles.
+- Make follower and following counts clickable to open `FollowersDialog` and `FollowingDialog`.
+- Ensure backend `isFollowing` field is available in profile response.
 
 ## Notes
-<!-- Additional context, constraints, or details from spec -->
+- Use `useAuth` to get the current user and check `isOwnProfile`.
+- Track dialog open states.
 
 ## History
 

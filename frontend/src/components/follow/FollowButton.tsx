@@ -6,59 +6,68 @@ import { Button, CircularProgress } from "@mui/material";
 
 interface FollowButtonProps {
     username: string;
-    initialStatus: FollowStatus | null;
+    status: FollowStatus | null;
+
 }
 
-export function FollowButton({ username, initialStatus }: FollowButtonProps) {
+export function FollowButton({ username, status }: FollowButtonProps) {
 
     const { followMutation, unfollowMutation } = useFollow(username);
+
     const [hovered, setHovered] = useState(false);
+
+
 
 
 
     return (
         <>
-            {initialStatus === null ?
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => followMutation.mutate()}
-                    disabled={followMutation.isPending}
-                >
-                    {followMutation.isPending ? (
-                        <CircularProgress size={20} />
-                    ) : (
-                        "Follow"
-                    )}
-                </Button> :
-                initialStatus === "PENDING" ?
+            {
+
+                status === null ?
                     <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => unfollowMutation.mutate()}
-                        disabled={unfollowMutation.isPending}
+                        variant="contained"
+                        color="primary"
+                        onClick={() => followMutation.mutate()}
+                        disabled={followMutation.isPending}
                     >
-                        {unfollowMutation.isPending ? (
+                        {followMutation.isPending ? (
                             <CircularProgress size={20} />
                         ) : (
-                            "Requested"
+                            "Follow"
                         )}
                     </Button> :
-                    initialStatus === "ACCEPTED" ?
+                    status === FollowStatus.PENDING ?
                         <Button
                             variant="outlined"
-                            color="primary"
+                            color="secondary"
                             onClick={() => unfollowMutation.mutate()}
                             disabled={unfollowMutation.isPending}
-                            onMouseEnter={() => setHovered(true)}
-                            onMouseLeave={() => setHovered(false)}
                         >
                             {unfollowMutation.isPending ? (
                                 <CircularProgress size={20} />
                             ) : (
-                                hovered === true ? "Unfollow" : "Following"
+                                "Requested"
                             )}
-                        </Button> : null
+                        </Button>
+                        :
+
+
+                        status === FollowStatus.ACCEPTED ?
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                onClick={() => unfollowMutation.mutate()}
+                                disabled={unfollowMutation.isPending}
+                                onMouseEnter={() => setHovered(true)}
+                                onMouseLeave={() => setHovered(false)}
+                            >
+                                {unfollowMutation.isPending ? (
+                                    <CircularProgress size={20} />
+                                ) : (
+                                    hovered === true ? "Unfollow" : "Following"
+                                )}
+                            </Button> : null
             }
         </>
     )

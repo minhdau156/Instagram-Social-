@@ -151,7 +151,8 @@ public class FollowControllerIT {
                                 "Minh",
                                 "profile.jpg",
                                 false,
-                                false);
+                                false,
+                                FollowStatus.ACCEPTED);
                 when(getFollowersUseCase.getFollowers(any(GetFollowersUseCase.Query.class)))
                                 .thenReturn(java.util.List.of(follower));
 
@@ -171,7 +172,8 @@ public class FollowControllerIT {
                                 "Minh",
                                 "profile.jpg",
                                 false,
-                                false);
+                                false,
+                                FollowStatus.ACCEPTED);
                 when(getFollowingUseCase.getFollowing(any(GetFollowingUseCase.Query.class)))
                                 .thenReturn(java.util.List.of(following));
 
@@ -191,7 +193,8 @@ public class FollowControllerIT {
                                 "Minh",
                                 "profile.jpg",
                                 false,
-                                false);
+                                false,
+                                FollowStatus.PENDING);
                 when(getFollowRequestsUseCase.getFollowRequests(any(GetFollowRequestsUseCase.Query.class)))
                                 .thenReturn(java.util.List.of(userSummary));
 

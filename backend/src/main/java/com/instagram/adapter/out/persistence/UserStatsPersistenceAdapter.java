@@ -24,23 +24,41 @@ public class UserStatsPersistenceAdapter implements UserStatsRepository {
     }
 
     @Override
+    public void create(UserStats userStats) {
+        UserStatsJpaEntity userStatsJpaEntity = toEntity(userStats);
+        jpaRepository.save(userStatsJpaEntity);
+    }
+
+    @Override
     public void incrementFollowerCount(UUID userId) {
-        jpaRepository.incrementFollowerCount(userId);
+        if (!this.findByUserId(userId).isPresent()) {
+            this.create(new UserStats(userId, 0, 0, 0));
+        }
+        this.jpaRepository.incrementFollowerCount(userId);
     }
 
     @Override
     public void decrementFollowerCount(UUID userId) {
-        jpaRepository.decrementFollowerCount(userId);
+        if (!this.findByUserId(userId).isPresent()) {
+            this.create(new UserStats(userId, 0, 0, 0));
+        }
+        this.jpaRepository.decrementFollowerCount(userId);
     }
 
     @Override
     public void incrementFollowingCount(UUID userId) {
-        jpaRepository.incrementFollowingCount(userId);
+        if (!this.findByUserId(userId).isPresent()) {
+            this.create(new UserStats(userId, 0, 0, 0));
+        }
+        this.jpaRepository.incrementFollowingCount(userId);
     }
 
     @Override
     public void decrementFollowingCount(UUID userId) {
-        jpaRepository.decrementFollowingCount(userId);
+        if (!this.findByUserId(userId).isPresent()) {
+            this.create(new UserStats(userId, 0, 0, 0));
+        }
+        this.jpaRepository.decrementFollowingCount(userId);
     }
 
     private UserStatsJpaEntity toEntity(UserStats userStats) {

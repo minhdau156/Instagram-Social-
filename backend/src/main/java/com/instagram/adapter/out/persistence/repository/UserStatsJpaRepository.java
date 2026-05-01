@@ -10,11 +10,14 @@ import org.springframework.data.repository.query.Param;
 
 import com.instagram.adapter.out.persistence.entity.UserStatsJpaEntity;
 
+import jakarta.transaction.Transactional;
+
 public interface UserStatsJpaRepository extends JpaRepository<UserStatsJpaEntity, UUID> {
         Optional<UserStatsJpaEntity> findByUserId(UUID userId);
 
         // Increment follower count of the target user
         @Modifying(clearAutomatically = true)
+        @Transactional
         @Query("""
                         UPDATE UserStatsJpaEntity us
                         SET us.followerCount = us.followerCount + 1
@@ -24,6 +27,7 @@ public interface UserStatsJpaRepository extends JpaRepository<UserStatsJpaEntity
 
         // Decrement follower count of the target user
         @Modifying(clearAutomatically = true)
+        @Transactional
         @Query("""
                         UPDATE UserStatsJpaEntity us
                         SET us.followerCount = us.followerCount - 1
@@ -33,6 +37,7 @@ public interface UserStatsJpaRepository extends JpaRepository<UserStatsJpaEntity
 
         // Increment following count of the user who followed
         @Modifying(clearAutomatically = true)
+        @Transactional
         @Query("""
                         UPDATE UserStatsJpaEntity us
                         SET us.followingCount = us.followingCount + 1
@@ -42,6 +47,7 @@ public interface UserStatsJpaRepository extends JpaRepository<UserStatsJpaEntity
 
         // Decrement following count of the user who unfollowed
         @Modifying(clearAutomatically = true)
+        @Transactional
         @Query("""
                         UPDATE UserStatsJpaEntity us
                         SET us.followingCount = us.followingCount - 1
@@ -51,6 +57,7 @@ public interface UserStatsJpaRepository extends JpaRepository<UserStatsJpaEntity
 
         // Increment post count when creating a post
         @Modifying(clearAutomatically = true)
+        @Transactional
         @Query("""
                         UPDATE UserStatsJpaEntity us
                         SET us.postCount = us.postCount + 1
@@ -60,6 +67,7 @@ public interface UserStatsJpaRepository extends JpaRepository<UserStatsJpaEntity
 
         // Decrement post count when deleting a post
         @Modifying(clearAutomatically = true)
+        @Transactional
         @Query("""
                         UPDATE UserStatsJpaEntity us
                         SET us.postCount = us.postCount - 1

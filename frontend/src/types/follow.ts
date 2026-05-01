@@ -20,7 +20,8 @@ export interface UserSummary {
     fullName: string;
     profilePictureUrl: string | null;
     isVerified: boolean;
-    isFollowing: boolean;
+    isPrivate: boolean
+    followStatus: FollowStatus | null;
 }
 
 export interface UserSummaryPage {

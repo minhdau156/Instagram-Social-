@@ -2,6 +2,7 @@ package com.instagram.application.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
@@ -126,16 +127,22 @@ public class FollowService implements FollowUserUseCase,
                     user.getFullName(),
                     user.getProfilePictureUrl(),
                     user.isVerified(),
-                    false);
+                    user.getPrivacyLevel() == PrivacyLevel.PRIVATE,
+                    FollowStatus.PENDING);
         }).toList();
     }
 
     @Override
     public List<UserSummary> getFollowers(GetFollowersUseCase.Query query) {
         Pageable pageable = PageRequest.of(query.page(), query.size());
+        Optional<User> targetUser = userRepository.findByUsername(query.targetUsername());
+        if (targetUser.isEmpty()) {
+            throw new UserNotFoundException(query.targetUsername());
+        }
+        UUID targetUserId = targetUser.get().getId();
 
         // 1 query: all accepted followers of the target user
-        List<Follow> follows = followRepository.findFollowersByUserId(query.currentUserId(), pageable);
+        List<Follow> follows = followRepository.findFollowersByUserId(targetUserId, pageable);
         if (follows.isEmpty())
             return List.of();
 
@@ -149,19 +156,20 @@ public class FollowService implements FollowUserUseCase,
         // 1 query: all people the current user already follows — for isFollowing flag
         List<Follow> currentUserFollowing = followRepository.findFollowingByUserId(
                 query.currentUserId(), Pageable.unpaged());
-        Set<UUID> followingIds = currentUserFollowing.stream()
-                .map(Follow::getFollowingId)
-                .collect(Collectors.toSet());
+        Map<UUID, FollowStatus> followingIds = currentUserFollowing.stream()
+                .collect(Collectors.toMap(Follow::getFollowingId, Follow::getStatus));
 
         return follows.stream().map(follow -> {
             User user = userById.get(follow.getFollowerId());
+            FollowStatus status = followingIds.getOrDefault(user.getId(), null);
             return new UserSummary(
                     user.getId(),
                     user.getUsername(),
                     user.getFullName(),
                     user.getProfilePictureUrl(),
                     user.isVerified(),
-                    followingIds.contains(user.getId()));
+                    user.getPrivacyLevel() == PrivacyLevel.PRIVATE,
+                    status);
         }).toList();
     }
 
@@ -169,8 +177,14 @@ public class FollowService implements FollowUserUseCase,
     public List<UserSummary> getFollowing(GetFollowingUseCase.Query query) {
         Pageable pageable = PageRequest.of(query.page(), query.size());
 
+        Optional<User> targetUser = userRepository.findByUsername(query.targetUsername());
+        if (targetUser.isEmpty()) {
+            throw new UserNotFoundException(query.targetUsername());
+        }
+        UUID targetUserId = targetUser.get().getId();
+
         // 1 query: all accepted follows made by the target user
-        List<Follow> follows = followRepository.findFollowingByUserId(query.currentUserId(), pageable);
+        List<Follow> follows = followRepository.findFollowingByUserId(targetUserId, pageable);
         if (follows.isEmpty())
             return List.of();
 
@@ -189,7 +203,8 @@ public class FollowService implements FollowUserUseCase,
                     user.getFullName(),
                     user.getProfilePictureUrl(),
                     user.isVerified(),
-                    true); // the current user is always following this person
+                    user.getPrivacyLevel() == PrivacyLevel.PRIVATE,
+                    FollowStatus.ACCEPTED);
         }).toList();
     }
 

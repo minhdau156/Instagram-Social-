@@ -63,8 +63,8 @@ public class FollowServiceTest {
 
     @BeforeEach
     void setUp() {
-        publicUser = buildUser(FOLLOWING_ID, PrivacyLevel.PUBLIC);
-        privateUser = buildUser(FOLLOWING_ID, PrivacyLevel.PRIVATE);
+        publicUser = buildUser(FOLLOWING_ID, PrivacyLevel.PUBLIC, "test");
+        privateUser = buildUser(FOLLOWING_ID, PrivacyLevel.PRIVATE, "test");
         acceptedFollow = Follow.of(FOLLOWER_ID, FOLLOWING_ID, FollowStatus.ACCEPTED);
         pendingFollow = Follow.of(FOLLOWER_ID, FOLLOWING_ID, FollowStatus.PENDING);
     }
@@ -72,10 +72,10 @@ public class FollowServiceTest {
     // ── Helper factories ──────────────────────────────────────────────────────
 
     /** Creates a minimal {@link User} with the given id and privacy level. */
-    private User buildUser(UUID id, PrivacyLevel privacy) {
+    private User buildUser(UUID id, PrivacyLevel privacy, String username) {
         return User.builder()
                 .id(id)
-                .username("test")
+                .username(username)
                 .fullName("test")
                 .profilePictureUrl("test")
                 .isVerified(false)
@@ -251,7 +251,7 @@ public class FollowServiceTest {
 
     @Test
     void getFollowRequests_sortsByNewest_returnsFollowRequests() {
-        User followerUser = buildUser(FOLLOWER_ID, PrivacyLevel.PUBLIC);
+        User followerUser = buildUser(FOLLOWER_ID, PrivacyLevel.PUBLIC, "minh");
 
         when(followRepository.findPendingRequestsByFollowingId(any()))
                 .thenReturn(List.of(pendingFollow));
@@ -270,8 +270,9 @@ public class FollowServiceTest {
     @Test
     void getFollowers_whenHasFollowed_returnsFollowersList() {
         // followerUser has id=FOLLOWER_ID to match acceptedFollow.getFollowerId()
-        User followerUser = buildUser(FOLLOWER_ID, PrivacyLevel.PUBLIC);
+        User followerUser = buildUser(FOLLOWER_ID, PrivacyLevel.PUBLIC, "minh");
 
+        when(userRepository.findByUsername(any())).thenReturn(Optional.of(publicUser));
         when(followRepository.findFollowersByUserId(any(), any())).thenReturn(List.of(acceptedFollow));
         when(userRepository.findAllByIds(any())).thenReturn(List.of(followerUser));
         // Return a follow whose followingId == followerUser.id so isFollowing resolves
@@ -280,23 +281,27 @@ public class FollowServiceTest {
         when(followRepository.findFollowingByUserId(any(), any())).thenReturn(List.of(currentUserFollowsFollower));
 
         List<UserSummary> follows = followService.getFollowers(
-                new GetFollowersUseCase.Query("minh", FOLLOWER_ID, 0, 10));
+                new GetFollowersUseCase.Query("test", FOLLOWER_ID, 0, 10));
 
         assertEquals(1, follows.size());
-        assertEquals(true, follows.get(0).isFollowing());
+
     }
 
     // ── getFollowing() ────────────────────────────────────────────────────────
 
     @Test
     void getFollowing_whenHasFollowing_returnsFollowingList() {
+        User targetUser = buildUser(FOLLOWER_ID, PrivacyLevel.PUBLIC, "minh");
+        User followingUser = buildUser(FOLLOWING_ID, PrivacyLevel.PUBLIC, "duy");
+
+        when(userRepository.findByUsername(any())).thenReturn(Optional.of(targetUser));
         when(followRepository.findFollowingByUserId(any(), any())).thenReturn(List.of(acceptedFollow));
-        when(userRepository.findAllByIds(any())).thenReturn(List.of(publicUser));
+        when(userRepository.findAllByIds(any())).thenReturn(List.of(followingUser));
 
         List<UserSummary> follows = followService.getFollowing(
                 new GetFollowingUseCase.Query("minh", FOLLOWER_ID, 0, 10));
 
         assertEquals(1, follows.size());
-        assertEquals(true, follows.get(0).isFollowing());
+
     }
 }

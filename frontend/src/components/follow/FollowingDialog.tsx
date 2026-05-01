@@ -7,10 +7,10 @@ import { useRef, useCallback } from "react";
 interface FollowingDialogProps {
     username: string;
     open: boolean;
-    onClose: () => void;
+    setOpen: (open: boolean) => void;
 }
 
-export const FollowingDialog = ({ username, open, onClose }: FollowingDialogProps) => {
+export const FollowingDialog = ({ username, open, setOpen }: FollowingDialogProps) => {
     const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useFollowing(username);
     const { profile } = useAuth();
 
@@ -32,7 +32,7 @@ export const FollowingDialog = ({ username, open, onClose }: FollowingDialogProp
     const isEmpty = following.length === 0 && !isLoading;
 
     return (
-        <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
+        <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="xs">
             <DialogTitle>Following</DialogTitle>
             <DialogContent dividers sx={{ p: 0, minHeight: 100 }}>
                 {isLoading ? (
@@ -49,9 +49,10 @@ export const FollowingDialog = ({ username, open, onClose }: FollowingDialogProp
                             const isLast = index === following.length - 1;
                             return (
                                 <div key={user.id} ref={isLast ? lastElementRef : null}>
-                                    <UserListItem 
-                                        user={user} 
-                                        currentUsername={profile?.user?.username} 
+                                    <UserListItem
+                                        user={user}
+                                        currentUsername={profile?.user?.username}
+                                        setOpen={setOpen}
                                     />
                                 </div>
                             );

@@ -6,6 +6,8 @@ import java.util.UUID;
 import com.instagram.domain.model.UserStats;
 
 public interface UserStatsRepository {
+    void create(UserStats userStats);
+
     Optional<UserStats> findByUserId(UUID userId);
 
     void incrementFollowerCount(UUID userId);

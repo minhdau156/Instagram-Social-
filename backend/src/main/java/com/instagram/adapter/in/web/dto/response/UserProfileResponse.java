@@ -13,13 +13,16 @@ public record UserProfileResponse(
 
         @Schema(description = "Number of accounts the user is following", example = "500") long followingCount,
 
-        @Schema(description = "Whether the current authenticated user is following this user", example = "true") boolean isFollowing) {
+        @Schema(description = "Whether the current authenticated user is following this user", example = "true") boolean isFollowing,
+        
+        @Schema(description = "Status of the follow relation", example = "ACCEPTED") com.instagram.domain.model.FollowStatus followStatus) {
     public static UserProfileResponse from(UserProfile profile) {
         return new UserProfileResponse(
                 UserResponse.from(profile.user()),
                 profile.stats().postCount(),
                 profile.stats().followerCount(),
                 profile.stats().followingCount(),
-                profile.isFollowing());
+                profile.isFollowing(),
+                profile.followStatus());
     }
 }

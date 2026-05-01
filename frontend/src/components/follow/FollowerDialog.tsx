@@ -3,14 +3,15 @@ import { useFollowers } from "../../hooks/follow/useFollowers";
 import { UserListItem } from "./UserListItem";
 import { useAuth } from "../../hooks/useAuth";
 import { useRef, useCallback } from "react";
+import { UserProfile } from "../../types/user";
 
 interface FollowerDialogProps {
     username: string;
     open: boolean;
-    onClose: () => void;
+    setOpen: (open: boolean) => void;
 }
 
-export const FollowerDialog = ({ username, open, onClose }: FollowerDialogProps) => {
+export const FollowerDialog = ({ username, open, setOpen }: FollowerDialogProps) => {
     const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useFollowers(username);
     const { profile } = useAuth();
 
@@ -32,7 +33,7 @@ export const FollowerDialog = ({ username, open, onClose }: FollowerDialogProps)
     const isEmpty = followers.length === 0 && !isLoading;
 
     return (
-        <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
+        <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="xs">
             <DialogTitle>Followers</DialogTitle>
             <DialogContent dividers sx={{ p: 0, minHeight: 100 }}>
                 {isLoading ? (
@@ -52,6 +53,7 @@ export const FollowerDialog = ({ username, open, onClose }: FollowerDialogProps)
                                     <UserListItem
                                         user={user}
                                         currentUsername={profile?.user?.username}
+                                        setOpen={setOpen}
                                     />
                                 </div>
                             );

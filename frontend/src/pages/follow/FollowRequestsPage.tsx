@@ -9,10 +9,19 @@ import PersonAddDisabledOutlined from "@mui/icons-material/PersonAddDisabledOutl
 
 import { Alert, Avatar, Link, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function FollowRequestsPage() {
     const { data: requests, error, isLoading, approveMutation, declineMutation } = useFollowRequests();
+    const [actionStatus, setActionStatus] = useState<Record<string, 'ACCEPTED'>>({});
+
+    const handleApprove = (id: string) => {
+        approveMutation.mutate(id, {
+            onSuccess: () => {
+                setActionStatus(prev => ({ ...prev, [id]: 'ACCEPTED' }));
+            }
+        });
+    }
 
     useEffect(() => {
         document.title = "Follow Requests | Instagram";
@@ -55,22 +64,28 @@ export default function FollowRequestsPage() {
                                 secondary={request.fullName || undefined}
                             />
                             <Box sx={{ display: 'flex', gap: 1 }}>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={() => approveMutation.mutate(request.id)}
-                                    disabled={approveMutation.isPending}
-                                >
-                                    {approveMutation.isPending ? <CircularProgress size={20} /> : "Accept"}
-                                </Button>
-                                <Button
-                                    variant="contained"
-                                    color="error"
-                                    onClick={() => declineMutation.mutate(request.id)}
-                                    disabled={declineMutation.isPending}
-                                >
-                                    {declineMutation.isPending ? <CircularProgress size={20} /> : "Decline"}
-                                </Button>
+                                {actionStatus[request.id] === 'ACCEPTED' ? (
+                                    <Button variant="outlined" color="primary" disabled>Accepted</Button>
+                                ) : (
+                                    <>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => handleApprove(request.id)}
+                                            disabled={approveMutation.isPending && approveMutation.variables === request.id}
+                                        >
+                                            {(approveMutation.isPending && approveMutation.variables === request.id) ? <CircularProgress size={20} /> : "Accept"}
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            color="error"
+                                            onClick={() => declineMutation.mutate(request.id)}
+                                            disabled={declineMutation.isPending && declineMutation.variables === request.id}
+                                        >
+                                            {(declineMutation.isPending && declineMutation.variables === request.id) ? <CircularProgress size={20} /> : "Decline"}
+                                        </Button>
+                                    </>
+                                )}
                             </Box>
                         </ListItem>
                     ))}

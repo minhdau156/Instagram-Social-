@@ -15,6 +15,7 @@ export interface UserProfile {
     followerCount: number;
     followingCount: number;
     isFollowing: boolean;
+    followStatus?: import("./follow").FollowStatus | null;
 }
 
 export interface UpdateProfilePayload {
