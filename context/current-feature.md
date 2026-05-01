@@ -1,23 +1,17 @@
-# Current Feature: TASK-3.18 — Follow Requests Page
+# Current Feature
 
 ## Status
 Not Started
 
 ## Goals
-- Create `FollowRequestsPage` in `frontend/src/pages/follow/`.
-- Ensure it's a protected route (redirect to `/login` if not authenticated).
-- Use `useFollowRequests()` hook to fetch data.
-- Implement loading state with MUI `CircularProgress`.
-- Implement empty state "No pending follow requests".
-- Render request list with Accept and Decline buttons (with visual feedback).
-- Set page title to "Follow Requests | Instagram".
-- Responsive layout using MUI `Container maxWidth="sm"`.
-- Error state using MUI `Alert`.
+<!-- List bullet points of what success looks like -->
 
 ## Notes
-- Refer to `docs/tasks/phase-3/TASK-3.18-pages.md` for full checklist.
+<!-- Additional context, constraints, or details from spec -->
 
 ## History
+
+- TASK-3.18 — Follow Requests Page
 
 - TASK-3.15 — API Services
 - TASK-3.14 — TypeScript Types
