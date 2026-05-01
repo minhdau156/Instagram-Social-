@@ -32,7 +32,7 @@ export async function getFollowing(username: string, page: number = 0, size: num
 }
 
 /** Get all pending follow requests for the current user. */
-export async function getFollowRequests(): Promise<Follow[]> {
+export async function getFollowRequests(): Promise<UserSummary[]> {
     const { data } = await api.get(`${BASE}/follow-requests`);
     return data.data;
 }

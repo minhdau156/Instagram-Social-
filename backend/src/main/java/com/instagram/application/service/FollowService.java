@@ -108,8 +108,26 @@ public class FollowService implements FollowUserUseCase,
     }
 
     @Override
-    public List<Follow> getFollowRequests(GetFollowRequestsUseCase.Query query) {
-        return followRepository.findPendingRequestsByFollowingId(query.userId());
+    public List<UserSummary> getFollowRequests(GetFollowRequestsUseCase.Query query) {
+        List<Follow> pendingFollows = followRepository.findPendingRequestsByFollowingId(query.userId());
+        Set<UUID> followerIds = pendingFollows.stream()
+                .map(Follow::getFollowerId)
+                .collect(Collectors.toSet());
+        Map<UUID, User> userById = userRepository.findAllByIds(followerIds).stream()
+                .collect(Collectors.toMap(User::getId, Function.identity()));
+
+        // 1 query: all people the current user already follows — for isFollowing flag
+
+        return pendingFollows.stream().map(follow -> {
+            User user = userById.get(follow.getFollowerId());
+            return new UserSummary(
+                    user.getId(),
+                    user.getUsername(),
+                    user.getFullName(),
+                    user.getProfilePictureUrl(),
+                    user.isVerified(),
+                    false);
+        }).toList();
     }
 
     @Override
@@ -118,7 +136,8 @@ public class FollowService implements FollowUserUseCase,
 
         // 1 query: all accepted followers of the target user
         List<Follow> follows = followRepository.findFollowersByUserId(query.currentUserId(), pageable);
-        if (follows.isEmpty()) return List.of();
+        if (follows.isEmpty())
+            return List.of();
 
         // 1 query: batch-load all follower User objects — no N+1
         Set<UUID> followerIds = follows.stream()
@@ -152,7 +171,8 @@ public class FollowService implements FollowUserUseCase,
 
         // 1 query: all accepted follows made by the target user
         List<Follow> follows = followRepository.findFollowingByUserId(query.currentUserId(), pageable);
-        if (follows.isEmpty()) return List.of();
+        if (follows.isEmpty())
+            return List.of();
 
         // 1 query: batch-load all followed User objects — no N+1
         Set<UUID> followingIds = follows.stream()

@@ -42,19 +42,22 @@ import com.instagram.domain.port.out.UserStatsRepository;
 public class FollowServiceTest {
 
     // ── Fixed UUIDs used across tests ────────────────────────────────────────
-    static final UUID FOLLOWER_ID  = UUID.fromString("12345678-1234-5678-1234-567812345679");
+    static final UUID FOLLOWER_ID = UUID.fromString("12345678-1234-5678-1234-567812345679");
     static final UUID FOLLOWING_ID = UUID.fromString("12345678-1234-5678-1234-567812345678");
 
-    @Mock FollowRepository     followRepository;
-    @Mock UserRepository       userRepository;
-    @Mock UserStatsRepository  userStatsRepository;
+    @Mock
+    FollowRepository followRepository;
+    @Mock
+    UserRepository userRepository;
+    @Mock
+    UserStatsRepository userStatsRepository;
 
     @InjectMocks
     FollowService followService;
 
     // ── Shared fixtures ───────────────────────────────────────────────────────
-    User   publicUser;
-    User   privateUser;
+    User publicUser;
+    User privateUser;
     Follow acceptedFollow;
     Follow pendingFollow;
 
@@ -63,7 +66,7 @@ public class FollowServiceTest {
         publicUser = buildUser(FOLLOWING_ID, PrivacyLevel.PUBLIC);
         privateUser = buildUser(FOLLOWING_ID, PrivacyLevel.PRIVATE);
         acceptedFollow = Follow.of(FOLLOWER_ID, FOLLOWING_ID, FollowStatus.ACCEPTED);
-        pendingFollow  = Follow.of(FOLLOWER_ID, FOLLOWING_ID, FollowStatus.PENDING);
+        pendingFollow = Follow.of(FOLLOWER_ID, FOLLOWING_ID, FollowStatus.PENDING);
     }
 
     // ── Helper factories ──────────────────────────────────────────────────────
@@ -107,7 +110,7 @@ public class FollowServiceTest {
         Follow saved = followService.follow(new FollowUserUseCase.Command(FOLLOWER_ID, "test"));
 
         assertEquals(FollowStatus.ACCEPTED, saved.getStatus());
-        assertEquals(FOLLOWER_ID,  saved.getFollowerId());
+        assertEquals(FOLLOWER_ID, saved.getFollowerId());
         assertEquals(FOLLOWING_ID, saved.getFollowingId());
         verify(followRepository).save(any(Follow.class));
         verify(userStatsRepository).incrementFollowerCount(FOLLOWING_ID);
@@ -118,8 +121,8 @@ public class FollowServiceTest {
     void follow_canNotFindUser_throwsUserNotFoundException() {
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
 
-        assertThrows(UserNotFoundException.class, () ->
-                followService.follow(new FollowUserUseCase.Command(FOLLOWER_ID, "test")));
+        assertThrows(UserNotFoundException.class,
+                () -> followService.follow(new FollowUserUseCase.Command(FOLLOWER_ID, "test")));
     }
 
     @Test
@@ -127,8 +130,8 @@ public class FollowServiceTest {
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(publicUser));
 
         // Follower id == following id → self-follow
-        assertThrows(CannotFollowYourselfException.class, () ->
-                followService.follow(new FollowUserUseCase.Command(FOLLOWING_ID, "test")));
+        assertThrows(CannotFollowYourselfException.class,
+                () -> followService.follow(new FollowUserUseCase.Command(FOLLOWING_ID, "test")));
     }
 
     @Test
@@ -137,8 +140,8 @@ public class FollowServiceTest {
         when(followRepository.findByFollowerIdAndFollowingId(any(), any()))
                 .thenReturn(Optional.of(pendingFollow));
 
-        assertThrows(AlreadyFollowingException.class, () ->
-                followService.follow(new FollowUserUseCase.Command(FOLLOWER_ID, "test")));
+        assertThrows(AlreadyFollowingException.class,
+                () -> followService.follow(new FollowUserUseCase.Command(FOLLOWER_ID, "test")));
     }
 
     @Test
@@ -150,7 +153,7 @@ public class FollowServiceTest {
         Follow saved = followService.follow(new FollowUserUseCase.Command(FOLLOWER_ID, "test"));
 
         assertEquals(FollowStatus.PENDING, saved.getStatus());
-        assertEquals(FOLLOWER_ID,  saved.getFollowerId());
+        assertEquals(FOLLOWER_ID, saved.getFollowerId());
         assertEquals(FOLLOWING_ID, saved.getFollowingId());
         verify(followRepository).save(any(Follow.class));
     }
@@ -187,8 +190,8 @@ public class FollowServiceTest {
     void unfollow_canNotFindUser_throwsUserNotFoundException() {
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
 
-        assertThrows(UserNotFoundException.class, () ->
-                followService.unfollow(new UnfollowUserUseCase.Command(FOLLOWER_ID, "test")));
+        assertThrows(UserNotFoundException.class,
+                () -> followService.unfollow(new UnfollowUserUseCase.Command(FOLLOWER_ID, "test")));
     }
 
     @Test
@@ -196,8 +199,8 @@ public class FollowServiceTest {
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(publicUser));
         when(followRepository.findByFollowerIdAndFollowingId(any(), any())).thenReturn(Optional.empty());
 
-        assertThrows(FollowRequestNotFoundException.class, () ->
-                followService.unfollow(new UnfollowUserUseCase.Command(FOLLOWER_ID, "test")));
+        assertThrows(FollowRequestNotFoundException.class,
+                () -> followService.unfollow(new UnfollowUserUseCase.Command(FOLLOWER_ID, "test")));
     }
 
     // ── approve() ─────────────────────────────────────────────────────────────
@@ -220,9 +223,8 @@ public class FollowServiceTest {
     void approve_canNotFindFollowRequest_throwsFollowRequestNotFoundException() {
         when(followRepository.findByFollowerIdAndFollowingId(any(), any())).thenReturn(Optional.empty());
 
-        assertThrows(FollowRequestNotFoundException.class, () ->
-                followService.approve(
-                        new ApproveFollowRequestUseCase.Command(FOLLOWING_ID, FOLLOWER_ID)));
+        assertThrows(FollowRequestNotFoundException.class, () -> followService.approve(
+                new ApproveFollowRequestUseCase.Command(FOLLOWING_ID, FOLLOWER_ID)));
     }
 
     // ── decline() ─────────────────────────────────────────────────────────────
@@ -241,23 +243,26 @@ public class FollowServiceTest {
     void decline_canNotFindFollowRequest_throwsFollowRequestNotFoundException() {
         when(followRepository.findByFollowerIdAndFollowingId(any(), any())).thenReturn(Optional.empty());
 
-        assertThrows(FollowRequestNotFoundException.class, () ->
-                followService.decline(
-                        new DeclineFollowRequestUseCase.Command(FOLLOWING_ID, FOLLOWER_ID)));
+        assertThrows(FollowRequestNotFoundException.class, () -> followService.decline(
+                new DeclineFollowRequestUseCase.Command(FOLLOWING_ID, FOLLOWER_ID)));
     }
 
     // ── getFollowRequests() ───────────────────────────────────────────────────
 
     @Test
     void getFollowRequests_sortsByNewest_returnsFollowRequests() {
+        User followerUser = buildUser(FOLLOWER_ID, PrivacyLevel.PUBLIC);
+
         when(followRepository.findPendingRequestsByFollowingId(any()))
                 .thenReturn(List.of(pendingFollow));
+        when(userRepository.findAllByIds(any()))
+                .thenReturn(List.of(followerUser));
 
-        List<Follow> follows = followService.getFollowRequests(
-                new GetFollowRequestsUseCase.Query(FOLLOWER_ID));
+        List<UserSummary> followRequests = followService.getFollowRequests(
+                new GetFollowRequestsUseCase.Query(FOLLOWING_ID));
 
-        assertEquals(1, follows.size());
-        assertEquals(FollowStatus.PENDING, follows.get(0).getStatus());
+        assertEquals(1, followRequests.size());
+
     }
 
     // ── getFollowers() ────────────────────────────────────────────────────────
@@ -269,7 +274,8 @@ public class FollowServiceTest {
 
         when(followRepository.findFollowersByUserId(any(), any())).thenReturn(List.of(acceptedFollow));
         when(userRepository.findAllByIds(any())).thenReturn(List.of(followerUser));
-        // Return a follow whose followingId == followerUser.id so isFollowing resolves to true
+        // Return a follow whose followingId == followerUser.id so isFollowing resolves
+        // to true
         Follow currentUserFollowsFollower = Follow.of(FOLLOWING_ID, FOLLOWER_ID, FollowStatus.ACCEPTED);
         when(followRepository.findFollowingByUserId(any(), any())).thenReturn(List.of(currentUserFollowsFollower));
 
