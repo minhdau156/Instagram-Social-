@@ -16,4 +16,8 @@ public interface PostRepository {
     Page<Post> findByUserId(UUID userId, Pageable pageable);
 
     void deleteById(UUID id);
+
+    void incrementLikeCount(UUID postId);
+
+    void decrementLikeCount(UUID postId);
 }

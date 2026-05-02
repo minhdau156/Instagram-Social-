@@ -1,0 +1,123 @@
+package com.instagram.application.service;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.Optional;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.instagram.domain.exception.AlreadyLikedException;
+import com.instagram.domain.exception.NotLikedException;
+import com.instagram.domain.model.Follow;
+import com.instagram.domain.model.FollowStatus;
+import com.instagram.domain.model.PrivacyLevel;
+import com.instagram.domain.model.User;
+import com.instagram.domain.model.UserSummary;
+import com.instagram.domain.port.in.like.GetPostLikersUseCase;
+import com.instagram.domain.port.in.like.LikeCommentUseCase;
+import com.instagram.domain.port.in.like.LikePostUseCase;
+import com.instagram.domain.port.in.like.UnlikeCommentUseCase;
+import com.instagram.domain.port.in.like.UnlikePostUseCase;
+import com.instagram.domain.port.out.CommentRepository;
+import com.instagram.domain.port.out.FollowRepository;
+import com.instagram.domain.port.out.LikeRepository;
+import com.instagram.domain.port.out.UserRepository;
+import com.instagram.domain.port.out.PostRepository;
+
+@Service
+public class LikeService implements LikePostUseCase,
+        UnlikePostUseCase,
+        LikeCommentUseCase,
+        UnlikeCommentUseCase,
+        GetPostLikersUseCase {
+
+    private final LikeRepository likeRepository;
+    private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
+    private final FollowRepository followRepository;
+
+    public LikeService(LikeRepository likeRepository,
+            PostRepository postRepository,
+            CommentRepository commentRepository,
+            UserRepository userRepository,
+            FollowRepository followRepository) {
+        this.likeRepository = likeRepository;
+        this.postRepository = postRepository;
+        this.commentRepository = commentRepository;
+        this.userRepository = userRepository;
+        this.followRepository = followRepository;
+    }
+
+    @Override
+    @Transactional
+    public void like(LikePostUseCase.Command command) {
+        if (likeRepository.hasLikedPost(command.postId(), command.userId())) {
+            throw new AlreadyLikedException("post", command.postId());
+        }
+        likeRepository.likePost(command.postId(), command.userId());
+        postRepository.incrementLikeCount(command.postId());
+    }
+
+    @Override
+    @Transactional
+    public void unlike(UnlikePostUseCase.Command command) {
+        if (!likeRepository.hasLikedPost(command.postId(), command.userId())) {
+            throw new NotLikedException("post", command.postId());
+        }
+        likeRepository.unlikePost(command.postId(), command.userId());
+        postRepository.decrementLikeCount(command.postId());
+    }
+
+    @Override
+    @Transactional
+    public void likeComment(LikeCommentUseCase.Command command) {
+        if (likeRepository.hasLikedComment(command.commentId(), command.userId())) {
+            throw new AlreadyLikedException("comment", command.commentId());
+        }
+        likeRepository.likeComment(command.commentId(), command.userId());
+        commentRepository.incrementLikeCount(command.commentId());
+    }
+
+    @Override
+    @Transactional
+    public void unlikeComment(UnlikeCommentUseCase.Command command) {
+        if (!likeRepository.hasLikedComment(command.commentId(), command.userId())) {
+            throw new NotLikedException("comment", command.commentId());
+        }
+        likeRepository.unlikeComment(command.commentId(), command.userId());
+        commentRepository.decrementLikeCount(command.commentId());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<UserSummary> getLikers(GetPostLikersUseCase.Query query) {
+        Pageable pageable = PageRequest.of(query.page(), query.size());
+
+        List<UUID> postLikerIds = likeRepository.findPostLikerIds(query.postId(), pageable);
+        List<User> users = userRepository.findAllByIds(postLikerIds);
+
+        return users.stream().map(user -> {
+            FollowStatus followStatus = null;
+            if (query.requestingUserId() != null) {
+                Optional<Follow> followOpt = followRepository.findByFollowerIdAndFollowingId(query.requestingUserId(),
+                        user.getId());
+                if (followOpt.isPresent()) {
+                    followStatus = followOpt.get().getStatus();
+                }
+            }
+
+            return new UserSummary(
+                    user.getId(),
+                    user.getUsername(),
+                    user.getFullName(),
+                    user.getProfilePictureUrl(),
+                    user.isVerified(),
+                    user.getPrivacyLevel() == PrivacyLevel.PRIVATE,
+                    followStatus);
+        }).toList();
+    }
+}

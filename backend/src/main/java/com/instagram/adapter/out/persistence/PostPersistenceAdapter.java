@@ -66,6 +66,16 @@ public class PostPersistenceAdapter implements PostRepository {
                 });
     }
 
+    @Override
+    public void incrementLikeCount(UUID postId) {
+        jpaRepository.incrementLikeCount(postId);
+    }
+
+    @Override
+    public void decrementLikeCount(UUID postId) {
+        jpaRepository.decrementLikeCount(postId);
+    }
+
     // ── Mapping ──────────────────────────────────────────────────────────── //
 
     private PostJpaEntity toEntity(Post post) {

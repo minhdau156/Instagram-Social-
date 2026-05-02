@@ -3,9 +3,14 @@ package com.instagram.adapter.out.persistence.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.instagram.adapter.out.persistence.entity.PostJpaEntity;
 import com.instagram.domain.model.PostStatus;
+
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,4 +31,14 @@ public interface PostJpaRepository extends JpaRepository<PostJpaEntity, UUID> {
 
     // Single post lookup that skips soft-deleted
     Optional<PostJpaEntity> findByIdAndStatusNot(UUID id, PostStatus status);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE PostJpaEntity p SET p.likeCount = p.likeCount + 1 WHERE p.id = :postId")
+    void incrementLikeCount(@Param("postId") UUID postId);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE PostJpaEntity p SET p.likeCount = p.likeCount - 1 WHERE p.id = :postId")
+    void decrementLikeCount(@Param("postId") UUID postId);
 }
