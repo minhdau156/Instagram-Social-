@@ -1,26 +1,17 @@
-# Current Feature: TASK-4.4 — In-Ports: Like Use Cases
+# Current Feature
 
 ## Status
 Not Started
 
 ## Goals
-- Create `LikePostUseCase` interface with nested `Command`
-- Create `UnlikePostUseCase` interface with nested `Command`
-- Create `LikeCommentUseCase` interface with nested `Command`
-- Create `UnlikeCommentUseCase` interface with nested `Command`
-- Create `GetPostLikersUseCase` interface with nested `Query` returning `Page<UserSummary>`
+- 
 
 ## Notes
-- Lives in `domain/port/in/` — no Spring or JPA annotations.
-- Each interface declares exactly one method.
-- Commands/Queries are record types nested inside the interface.
-- Follow the naming and structure of existing use cases.
-- `GetPostLikersUseCase` returns a domain `Page<UserSummary>`.
-- `requestingUserId` may be `null` for unauthenticated callers.
-- Verify that all `Command` / `Query` field types are `UUID`, `int`, or domain types only.
+- 
 
 ## History
 
+- TASK-4.4 — In-Ports: Like Use Cases
 - TASK-4.3 — Out-Port: LikeRepository
 - TASK-4.2 — Domain Exceptions: AlreadyLikedException & NotLikedException + GlobalExceptionHandler mappings
 - TASK-4.1 — Domain Models: PostLike & CommentLike
