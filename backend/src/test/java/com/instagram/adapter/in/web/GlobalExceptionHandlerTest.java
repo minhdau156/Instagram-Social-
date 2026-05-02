@@ -2,9 +2,11 @@ package com.instagram.adapter.in.web;
 
 import com.instagram.adapter.in.web.dto.response.ApiResponse;
 import com.instagram.domain.exception.AlreadyFollowingException;
+import com.instagram.domain.exception.AlreadyLikedException;
 import com.instagram.domain.exception.CannotFollowYourselfException;
 import com.instagram.domain.exception.FollowRequestNotFoundException;
 import com.instagram.domain.exception.InvalidCredentialsException;
+import com.instagram.domain.exception.NotLikedException;
 import com.instagram.domain.exception.PasswordResetTokenExpiredException;
 
 import com.instagram.domain.exception.UserAlreadyExistsException;
@@ -163,5 +165,29 @@ class GlobalExceptionHandlerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals("You cannot follow yourself.", response.getBody().error());
+    }
+
+    @Test
+    void handleAlreadyLiked_Returns409() {
+        AlreadyLikedException ex = new AlreadyLikedException("comment",
+                UUID.fromString("123e4567-e89b-12d3-a456-426614174000"));
+        ResponseEntity<ApiResponse<Void>> response = exceptionHandler.handleAlreadyLiked(ex);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("User has already liked comment '123e4567-e89b-12d3-a456-426614174000'",
+                response.getBody().error());
+    }
+
+    @Test
+    void handleNotLiked_Returns404() {
+        NotLikedException ex = new NotLikedException("comment",
+                UUID.fromString("123e4567-e89b-12d3-a456-426614174000"));
+        ResponseEntity<ApiResponse<Void>> response = exceptionHandler.handleNotLiked(ex);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("User has not liked comment '123e4567-e89b-12d3-a456-426614174000'",
+                response.getBody().error());
     }
 }

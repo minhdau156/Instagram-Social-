@@ -30,7 +30,7 @@ backend/src/main/java/com/instagram/domain/exception/NotLikedException.java
 
 ### `AlreadyLikedException.java`
 
-- [ ] Create `AlreadyLikedException extends RuntimeException`:
+- [x] Create `AlreadyLikedException extends RuntimeException`:
   ```java
   public class AlreadyLikedException extends RuntimeException {
       public AlreadyLikedException(String targetType, UUID targetId) {
@@ -42,7 +42,7 @@ backend/src/main/java/com/instagram/domain/exception/NotLikedException.java
 
 ### `NotLikedException.java`
 
-- [ ] Create `NotLikedException extends RuntimeException`:
+- [x] Create `NotLikedException extends RuntimeException`:
   ```java
   public class NotLikedException extends RuntimeException {
       public NotLikedException(String targetType, UUID targetId) {
@@ -53,7 +53,7 @@ backend/src/main/java/com/instagram/domain/exception/NotLikedException.java
 
 ### `GlobalExceptionHandler` Update
 
-- [ ] In the existing `GlobalExceptionHandler.java`, add:
+- [x] In the existing `GlobalExceptionHandler.java`, add:
   ```java
   @ExceptionHandler(AlreadyLikedException.class)
   public ResponseEntity<ApiResponse<Void>> handleAlreadyLiked(AlreadyLikedException ex) {
