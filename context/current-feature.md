@@ -11,6 +11,7 @@ Not Started
 
 ## History
 
+- TASK-4.3 — Out-Port: LikeRepository
 - TASK-4.2 — Domain Exceptions: AlreadyLikedException & NotLikedException + GlobalExceptionHandler mappings
 - TASK-4.1 — Domain Models: PostLike & CommentLike
 - TASK-3.19 — Integrate FollowButton into ProfilePage
