@@ -1,12 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { usersApi } from "../../api/usersApi";
-import { Container, Alert, Avatar, Box, Button, Stack, Typography } from "@mui/material";
+import { Container, Alert, Avatar, Box, Stack, Typography } from "@mui/material";
 import { PageLoader } from "../../components/common/PageLoader";
 import { followKeys } from "../../hooks/follow/queryKeys";
 import { useAuth } from "../../hooks/useAuth";
 import { FollowButton } from "../../components/follow/FollowButton";
-import { FollowStatus } from "../../types/follow";
 import { useState } from "react";
 import { FollowingDialog } from "../../components/follow/FollowingDialog";
 import { FollowerDialog } from "../../components/follow/FollowerDialog";

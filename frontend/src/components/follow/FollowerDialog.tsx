@@ -3,7 +3,7 @@ import { useFollowers } from "../../hooks/follow/useFollowers";
 import { UserListItem } from "./UserListItem";
 import { useAuth } from "../../hooks/useAuth";
 import { useRef, useCallback } from "react";
-import { UserProfile } from "../../types/user";
+
 
 interface FollowerDialogProps {
     username: string;
