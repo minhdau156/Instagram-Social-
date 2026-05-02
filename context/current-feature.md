@@ -1,28 +1,17 @@
-# Current Feature: TASK-4.5 — Domain Service: LikeService
+# Current Feature
 
 ## Status
 Not Started
 
 ## Goals
-- Create `LikeService.java` annotated with `@Service`
-- Add constructor accepting `LikeRepository`, `PostRepository`, `CommentRepository`, `UserRepository`
-- Implement `LikePostUseCase`
-- Implement `UnlikePostUseCase`
-- Implement `LikeCommentUseCase`
-- Implement `UnlikeCommentUseCase`
-- Implement `GetPostLikersUseCase`
-- Write unit tests for `LikeService`
+<!-- Add feature goals here -->
 
 ## Notes
-- **Double-like guard**: before saving, call `likeRepository.hasLikedPost(...)` or `likeRepository.hasLikedComment(...)` -> if `true`, throw `AlreadyLikedException`.
-- **Unlike guard**: before deleting, call `likeRepository.hasLikedPost(...)` or `likeRepository.hasLikedComment(...)` -> if `false`, throw `NotLikedException`.
-- **Count update**: use `postRepository.incrementLikeCount(postId)`, etc. (do NOT load the full entity just to update a counter).
-- **Visibility check**: trust that the calling controller has already resolved access; `LikeService` does not re-check visibility.
-- Never calls JPA repositories directly — only through out-port interfaces.
-
+<!-- Add feature notes here -->
 
 ## History
 
+- TASK-4.5 — Domain Service: LikeService
 - TASK-4.4 — In-Ports: Like Use Cases
 - TASK-4.3 — Out-Port: LikeRepository
 - TASK-4.2 — Domain Exceptions: AlreadyLikedException & NotLikedException + GlobalExceptionHandler mappings
