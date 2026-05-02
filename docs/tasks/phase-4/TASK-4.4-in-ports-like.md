@@ -28,7 +28,7 @@ backend/src/main/java/com/instagram/domain/port/in/
 
 ### `LikePostUseCase.java`
 
-- [ ] Create interface:
+- [x] Create interface:
   ```java
   public interface LikePostUseCase {
       void like(Command command);
@@ -39,7 +39,7 @@ backend/src/main/java/com/instagram/domain/port/in/
 
 ### `UnlikePostUseCase.java`
 
-- [ ] Create interface:
+- [x] Create interface:
   ```java
   public interface UnlikePostUseCase {
       void unlike(Command command);
@@ -50,7 +50,7 @@ backend/src/main/java/com/instagram/domain/port/in/
 
 ### `LikeCommentUseCase.java`
 
-- [ ] Create interface:
+- [x] Create interface:
   ```java
   public interface LikeCommentUseCase {
       void like(Command command);
@@ -61,7 +61,7 @@ backend/src/main/java/com/instagram/domain/port/in/
 
 ### `UnlikeCommentUseCase.java`
 
-- [ ] Create interface:
+- [x] Create interface:
   ```java
   public interface UnlikeCommentUseCase {
       void unlike(Command command);
@@ -72,10 +72,10 @@ backend/src/main/java/com/instagram/domain/port/in/
 
 ### `GetPostLikersUseCase.java`
 
-- [ ] Create interface:
+- [x] Create interface:
   ```java
   public interface GetPostLikersUseCase {
-      Page<UserSummary> getLikers(Query query);
+      <UserSummary> getLikers(Query query);
 
       record Query(UUID postId, UUID requestingUserId, int page, int size) {}
   }
@@ -83,4 +83,4 @@ backend/src/main/java/com/instagram/domain/port/in/
   - Returns a `Page<UserSummary>` (from domain, not Spring's `Page` — use the same pattern as `GetFollowersUseCase`).
   - `requestingUserId` may be `null` for unauthenticated callers.
 
-- [ ] Verify that all `Command` / `Query` field types are `UUID`, `int`, or domain types only.
+- [x] Verify that all `Command` / `Query` field types are `UUID`, `int`, or domain types only.
