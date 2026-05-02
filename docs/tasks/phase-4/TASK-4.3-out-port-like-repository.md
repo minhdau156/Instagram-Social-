@@ -20,7 +20,7 @@ backend/src/main/java/com/instagram/domain/port/out/LikeRepository.java
 
 ## Checklist
 
-- [ ] Create `LikeRepository.java` interface with the following methods:
+- [x] Create `LikeRepository.java` interface with the following methods:
 
   ```java
   public interface LikeRepository {
@@ -67,6 +67,6 @@ backend/src/main/java/com/instagram/domain/port/out/LikeRepository.java
   }
   ```
 
-- [ ] Import `java.util.List`, `java.util.UUID`, `org.springframework.data.domain.Pageable`
-- [ ] Add Javadoc on each method explaining preconditions and postconditions
-- [ ] Verify method names align with `LikeService` implementation in TASK-4.5
+- [x] Import `java.util.List`, `java.util.UUID`, `org.springframework.data.domain.Pageable`
+- [x] Add Javadoc on each method explaining preconditions and postconditions
+- [x] Verify method names align with `LikeService` implementation in TASK-4.5
