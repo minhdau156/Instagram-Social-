@@ -31,20 +31,20 @@ backend/src/main/java/com/instagram/domain/model/CommentLike.java
 
 ### `PostLike.java`
 
-- [ ] Create `PostLike.java` with fields:
+- [x] Create `PostLike.java` with fields:
   ```java
   private UUID postId;
   private UUID userId;
   private Instant createdAt;
   ```
 
-- [ ] Implement private no-arg constructor (used by Builder only)
+- [x] Implement private no-arg constructor (used by Builder only)
 
-- [ ] Implement static inner `Builder` class with:
-  - [ ] Fluent setter methods returning `this` for each field
-  - [ ] `build()` that validates `postId` and `userId` are not null, throws `IllegalStateException` otherwise
+- [x] Implement static inner `Builder` class with:
+  - [x] Fluent setter methods returning `this` for each field
+  - [x] `build()` that validates `postId` and `userId` are not null, throws `IllegalStateException` otherwise
 
-- [ ] Add static factory method `of(UUID postId, UUID userId)`:
+- [x] Add static factory method `of(UUID postId, UUID userId)`:
   ```java
   public static PostLike of(UUID postId, UUID userId) {
       return new Builder()
@@ -55,32 +55,32 @@ backend/src/main/java/com/instagram/domain/model/CommentLike.java
   }
   ```
 
-- [ ] Implement public getters for all fields (no setters)
+- [x] Implement public getters for all fields (no setters)
 
 ---
 
 ### `CommentLike.java`
 
-- [ ] Create `CommentLike.java` with fields:
+- [x] Create `CommentLike.java` with fields:
   ```java
   private UUID commentId;
   private UUID userId;
   private Instant createdAt;
   ```
 
-- [ ] Same Builder pattern and static factory `of(UUID commentId, UUID userId)` as `PostLike`
+- [x] Same Builder pattern and static factory `of(UUID commentId, UUID userId)` as `PostLike`
 
-- [ ] Implement public getters for all fields (no setters)
+- [x] Implement public getters for all fields (no setters)
 
 ---
 
 ### Unit Tests
 
-- [ ] Write `PostLikeTest.java`:
-  - [ ] `of_createsPostLike_withCorrectFields()`
-  - [ ] `builder_throwsException_whenPostIdIsNull()`
-  - [ ] `builder_throwsException_whenUserIdIsNull()`
+- [x] Write `PostLikeTest.java`:
+  - [x] `of_createsPostLike_withCorrectFields()`
+  - [x] `builder_throwsException_whenPostIdIsNull()`
+  - [x] `builder_throwsException_whenUserIdIsNull()`
 
-- [ ] Write `CommentLikeTest.java`:
-  - [ ] `of_createsCommentLike_withCorrectFields()`
-  - [ ] `builder_throwsException_whenCommentIdIsNull()`
+- [x] Write `CommentLikeTest.java`:
+  - [x] `of_createsCommentLike_withCorrectFields()`
+  - [x] `builder_throwsException_whenCommentIdIsNull()`
