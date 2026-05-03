@@ -94,7 +94,7 @@ public class LikeService implements LikePostUseCase,
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserSummary> getLikers(GetPostLikersUseCase.Query query) {
+    public List<UserSummary> getPostLikers(GetPostLikersUseCase.Query query) {
         Pageable pageable = PageRequest.of(query.page(), query.size());
 
         List<UUID> postLikerIds = likeRepository.findPostLikerIds(query.postId(), pageable);

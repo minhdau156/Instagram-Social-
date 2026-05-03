@@ -11,6 +11,7 @@ Not Started
 
 ## History
 
+- TASK-4.8 — REST Controller: LikeController
 - TASK-4.7 — Persistence Adapter: LikePersistenceAdapter
 - TASK-4.6 — JPA Entities & Repositories: Likes
 - TASK-4.5 — Domain Service: LikeService
