@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.instagram.domain.model.UserSummary;
 
 public interface GetPostLikersUseCase {
-    List<UserSummary> getLikers(Query query);
+    List<UserSummary> getPostLikers(Query query);
 
     record Query(UUID postId, UUID requestingUserId, int page, int size) {
     }

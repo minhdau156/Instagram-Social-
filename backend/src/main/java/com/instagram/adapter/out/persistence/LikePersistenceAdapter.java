@@ -74,14 +74,14 @@ public class LikePersistenceAdapter implements LikeRepository {
         CommentLikeId id = new CommentLikeId(commentId, userId);
         CommentLikeJpaEntity commentLikeJpaEntity = new CommentLikeJpaEntity(id);
         commentLikeJpaRepository.save(commentLikeJpaEntity);
-        commentJpaRepository.incrementLikeCount(commentId);
+        // commentJpaRepository.incrementLikeCount(commentId);
     }
 
     @Override
     @Transactional
     public void unlikeComment(UUID commentId, UUID userId) {
         commentLikeJpaRepository.deleteByIdCommentIdAndIdUserId(commentId, userId);
-        commentJpaRepository.decrementLikeCount(commentId);
+        // commentJpaRepository.decrementLikeCount(commentId);
     }
 
     @Override

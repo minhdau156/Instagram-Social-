@@ -33,16 +33,16 @@ backend/src/main/java/com/instagram/adapter/in/web/LikeController.java
 
 ## Checklist
 
-- [ ] Annotate with `@RestController`, `@RequiredArgsConstructor`, `@Tag(name = "Likes")`
-- [ ] Inject via constructor: `LikePostUseCase`, `UnlikePostUseCase`, `LikeCommentUseCase`, `UnlikeCommentUseCase`, `GetPostLikersUseCase`
-- [ ] Add private helper:
+- [x] Annotate with `@RestController`, `@RequiredArgsConstructor`, `@Tag(name = "Likes")`
+- [x] Inject via constructor: `LikePostUseCase`, `UnlikePostUseCase`, `LikeCommentUseCase`, `UnlikeCommentUseCase`, `GetPostLikersUseCase`
+- [x] Add private helper:
   ```java
   private UUID currentUserId() {
       return (UUID) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
   }
   ```
 
-- [ ] Implement `POST /api/v1/posts/{id}/like`:
+- [x] Implement `POST /api/v1/posts/{id}/like`:
   ```java
   @PostMapping("/api/v1/posts/{id}/like")
   @PreAuthorize("isAuthenticated()")
@@ -53,24 +53,24 @@ backend/src/main/java/com/instagram/adapter/in/web/LikeController.java
   ```
   - Returns `204 No Content` on success.
 
-- [ ] Implement `DELETE /api/v1/posts/{id}/like`:
+- [x] Implement `DELETE /api/v1/posts/{id}/like`:
   - Calls `unlikePostUseCase.unlike(new Command(id, currentUserId()))`
   - Returns `204 No Content`
 
-- [ ] Implement `GET /api/v1/posts/{id}/likers`:
+- [x] Implement `GET /api/v1/posts/{id}/likers`:
   - Query params: `page` (default 0), `size` (default 20)
-  - Calls `getPostLikersUseCase.getLikers(new Query(id, currentUserIdOrNull(), page, size))`
+  - Calls `getPostLikersUseCase.getPostLikers(new Query(id, currentUserIdOrNull(), page, size))`
   - Returns `200 OK` with `ApiResponse<List<UserSummaryResponse>>`
 
-- [ ] Implement `POST /api/v1/comments/{id}/like`:
-  - Calls `likeCommentUseCase.like(new LikeCommentUseCase.Command(id, currentUserId()))`
+- [x] Implement `POST /api/v1/comments/{id}/like`:
+  - Calls `likeCommentUseCase.likeComment(new LikeCommentUseCase.Command(currentUserId(), id))`
   - Returns `204 No Content`
 
-- [ ] Implement `DELETE /api/v1/comments/{id}/like`:
-  - Calls `unlikeCommentUseCase.unlike(new Command(id, currentUserId()))`
+- [x] Implement `DELETE /api/v1/comments/{id}/like`:
+  - Calls `unlikeCommentUseCase.unlikeComment(new UnlikeCommentUseCase.Command(currentUserId(), id))`
   - Returns `204 No Content`
 
-- [ ] Add a `@Nullable`-safe `currentUserIdOrNull()` helper for the public likers endpoint:
+- [x] Add a `@Nullable`-safe `currentUserIdOrNull()` helper for the public likers endpoint:
   ```java
   @Nullable
   private UUID currentUserIdOrNull() {
@@ -81,5 +81,3 @@ backend/src/main/java/com/instagram/adapter/in/web/LikeController.java
       return (UUID) auth.getPrincipal();
   }
   ```
-
-- [ ] Add Swagger `@Operation` annotations on each endpoint with summary and response descriptions
