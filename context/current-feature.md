@@ -11,6 +11,7 @@ Not Started
 
 ## History
 
+- TASK-4.6 — JPA Entities & Repositories: Likes
 - TASK-4.5 — Domain Service: LikeService
 - TASK-4.4 — In-Ports: Like Use Cases
 - TASK-4.3 — Out-Port: LikeRepository

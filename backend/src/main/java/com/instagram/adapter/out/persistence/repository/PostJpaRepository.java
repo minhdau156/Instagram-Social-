@@ -39,6 +39,6 @@ public interface PostJpaRepository extends JpaRepository<PostJpaEntity, UUID> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE PostJpaEntity p SET p.likeCount = p.likeCount - 1 WHERE p.id = :postId")
+    @Query("UPDATE PostJpaEntity p SET p.likeCount = GREATEST(p.likeCount - 1, 0) WHERE p.id = :postId")
     void decrementLikeCount(@Param("postId") UUID postId);
 }
