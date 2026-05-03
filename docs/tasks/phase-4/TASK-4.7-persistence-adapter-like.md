@@ -23,12 +23,12 @@ backend/src/main/java/com/instagram/adapter/out/persistence/LikePersistenceAdapt
 
 ## Checklist
 
-- [ ] Create `LikePersistenceAdapter.java` annotated with `@Component`
-- [ ] Implement `LikeRepository`
-- [ ] Inject via constructor: `PostLikeJpaRepository`, `CommentLikeJpaRepository`, `PostJpaRepository`, `CommentJpaRepository`
-- [ ] Declare all fields `private final`
+- [x] Create `LikePersistenceAdapter.java` annotated with `@Component`
+- [x] Implement `LikeRepository`
+- [x] Inject via constructor: `PostLikeJpaRepository`, `CommentLikeJpaRepository`, `PostJpaRepository`, `CommentJpaRepository`
+- [x] Declare all fields `private final`
 
-- [ ] Implement `likePost(UUID postId, UUID userId)`:
+- [x] Implement `likePost(UUID postId, UUID userId)`:
   ```java
   @Transactional
   public void likePost(UUID postId, UUID userId) {
@@ -38,7 +38,7 @@ backend/src/main/java/com/instagram/adapter/out/persistence/LikePersistenceAdapt
   }
   ```
 
-- [ ] Implement `unlikePost(UUID postId, UUID userId)`:
+- [x] Implement `unlikePost(UUID postId, UUID userId)`:
   ```java
   @Transactional
   public void unlikePost(UUID postId, UUID userId) {
@@ -47,14 +47,14 @@ backend/src/main/java/com/instagram/adapter/out/persistence/LikePersistenceAdapt
   }
   ```
 
-- [ ] Implement `hasLikedPost(UUID postId, UUID userId)`:
+- [x] Implement `hasLikedPost(UUID postId, UUID userId)`:
   ```java
   public boolean hasLikedPost(UUID postId, UUID userId) {
       return postLikeJpaRepository.existsByIdPostIdAndIdUserId(postId, userId);
   }
   ```
 
-- [ ] Implement `findPostLikerIds(UUID postId, Pageable pageable)`:
+- [x] Implement `findPostLikerIds(UUID postId, Pageable pageable)`:
   ```java
   public List<UUID> findPostLikerIds(UUID postId, Pageable pageable) {
       return postLikeJpaRepository
@@ -65,13 +65,13 @@ backend/src/main/java/com/instagram/adapter/out/persistence/LikePersistenceAdapt
   }
   ```
 
-- [ ] Implement `likeComment(UUID commentId, UUID userId)`:
+- [x] Implement `likeComment(UUID commentId, UUID userId)`:
   - Same pattern as `likePost` using `CommentLikeId`, `CommentLikeJpaRepository`, `commentJpaRepository.incrementLikeCount`
 
-- [ ] Implement `unlikeComment(UUID commentId, UUID userId)`:
+- [x] Implement `unlikeComment(UUID commentId, UUID userId)`:
   - Same pattern as `unlikePost`
 
-- [ ] Implement `hasLikedComment(UUID commentId, UUID userId)`:
+- [x] Implement `hasLikedComment(UUID commentId, UUID userId)`:
   - Delegates to `commentLikeJpaRepository.existsByIdCommentIdAndIdUserId(...)`
 
-- [ ] Annotate `likePost`, `unlikePost`, `likeComment`, `unlikeComment` with `@Transactional` to ensure count update and like record are in the same transaction
+- [x] Annotate `likePost`, `unlikePost`, `likeComment`, `unlikeComment` with `@Transactional` to ensure count update and like record are in the same transaction
